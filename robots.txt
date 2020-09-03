@@ -1,0 +1,7 @@
+# https://heychaw.cc robots.txt
+
+User-agent: * 
+
+Disallow:
+
+Sitemap: https://jared.top/baidusitemap.xml
