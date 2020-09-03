@@ -40,13 +40,32 @@
 <li>与JDBC相比，减少了50%以上的代码量，消除了JDBC大量冗余的代码，不需要手动开关连接；</li>
 <li>很好的与各种数据库兼容（因为MyBatis使用JDBC来连接数据库，所以只要JDBC支持的数据库MyBatis都支持）。</li>
 <li>能够与Spring很好的集成；</li>
-<li>提供映射标签，支持对象与数据库的ORM字段关系映射；提供对象关系映射标签，支持对象关系组件维护。<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id="MyBatis与Hibernate有哪些不同"><a href="#MyBatis与Hibernate有哪些不同" class="headerlink" title="MyBatis与Hibernate有哪些不同"></a>MyBatis与Hibernate有哪些不同</h2></li>
+<li>提供映射标签，支持对象与数据库的ORM字段关系映射；提供对象关系映射标签，支持对象关系组件维护。    </li>
+</ol>
+<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id="MyBatis与Hibernate有哪些不同"><a href="#MyBatis与Hibernate有哪些不同" class="headerlink" title="MyBatis与Hibernate有哪些不同"></a>MyBatis与Hibernate有哪些不同</h2><ol>
 <li>Mybatis和hibernate不同，它不完全是一个ORM框架，因为MyBatis需要程序员自己编写Sql语句。</li>
 <li>Mybatis直接编写原生态sql，可以严格控制sql执行性能，灵活度高，非常适合对关系数据模型要求不高的软件开发，因为这类软件需求变化频繁，一但需求变化要求迅速输出成果。但是灵活的前提是mybatis无法做到数据库无关性，如果需要实现支持多种数据库的软件，则需要自定义多套sql映射文件，工作量大。 </li>
 <li>Hibernate对象/关系映射能力强，数据库无关性好，对于关系模型要求高的软件，如果用hibernate开发可以节省很多代码，提高效率。 </li>
 </ol>
+<hr>
 <h2 id="和-的区别是什么"><a href="#和-的区别是什么" class="headerlink" title="#{}和${}的区别是什么?"></a>#{}和${}的区别是什么?</h2><p> #{} 是预编译处理， ${} 是字符串替换。<br>Mybatis在处理 #{} 时，会将sql中的 #{} 替换为 ? 号，调用PreparedStatement的set方法来赋值；<br>Mybatis在处理 ${} 时，就是把 ${} 替换成变量的值。<br>使用 #{} 可以有效的防止SQL注入，提高系统安全性。    </p>
-<p> </p>
+<hr>
+<h2 id="当实体类中的属性名和表中的字段名不一样-，怎么办？"><a href="#当实体类中的属性名和表中的字段名不一样-，怎么办？" class="headerlink" title="当实体类中的属性名和表中的字段名不一样 ，怎么办？"></a>当实体类中的属性名和表中的字段名不一样 ，怎么办？</h2><p>第1种： 通过在查询的sql语句中定义字段名的别名，让字段名的别名和实体类的属性名一致。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">”</span>&quot;<span class="attr">selectorder</span>&quot; <span class="attr">parametertype</span>=<span class="string">&quot;int&quot;</span> <span class="attr">resultetype</span>=<span class="string">&quot;top.jared.entity.order&quot;</span>&gt;</span></span><br><span class="line">    select order_id id, order_no orderno ,order_price price form orders where order_id=#&#123;id&#125;;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>第2种： 通过<code>&lt;resultMap&gt;</code>来映射字段名和实体类属性名的一一对应的关系。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getOrder&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;int&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;orderresultmap&quot;</span>&gt;</span></span><br><span class="line">    select * from orders where order_id=#&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">&quot;top.jared.entity.order&quot;</span> <span class="attr">id</span>=<span class="string">&quot;orderresultmap&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">!–用id属性来映射主键字段–</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> <span class="attr">column</span>=<span class="string">&quot;order_id&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">!–用result属性来映射非主键字段，property为实体类属性名，column为数据表中的属性–</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;orderno&quot;</span> <span class="attr">column</span>=<span class="string">&quot;order_no&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;price&quot;</span> <span class="attr">column</span>=<span class="string">&quot;order_price&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">reslutMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="模糊查询like语句该怎么写"><a href="#模糊查询like语句该怎么写" class="headerlink" title="模糊查询like语句该怎么写?"></a>模糊查询like语句该怎么写?</h2><p>第1种：在Java代码中添加sql通配符。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">String wildcardname = <span class="string">&quot;%smi%&quot;</span>;</span><br><span class="line">list&lt;name&gt; names = mapper.selectlike(wildcardname);</span><br><span class="line"> </span><br><span class="line">&lt;select id=<span class="string">&quot;selectlike&quot;</span>&gt;</span><br><span class="line"> select * from foo where bar like #&#123;value&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+<p>第2种：在sql语句中拼接通配符，会引起sql注入</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">string wildcardname = <span class="string">&quot;smi&quot;</span>;</span><br><span class="line">list&lt;name&gt; names = mapper.selectlike(wildcardname);</span><br><span class="line"> </span><br><span class="line">&lt;select id=<span class="string">&quot;selectlike&quot;</span>&gt;</span><br><span class="line">     select * from foo where bar like <span class="string">&quot;%&quot;</span>$&#123;value&#125;<span class="string">&quot;%&quot;</span></span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？"><a href="#通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？" class="headerlink" title="通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？"></a>通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？</h2><p>Dao接口即Mapper接口。接口的全限名，就是映射文件中的<code>namespace</code>的值；接口的方法名，就是映射文件中Mapper的Statement的id值；接口方法内的参数，就是传递给sql的参数。      </p>
+<p>Mapper接口是没有实现类的，当调用接口方法时，接口全限名+方法名拼接字符串作为key值，可唯一定位一个MapperStatement。在Mybatis中，每一个<code>&lt;select&gt;</code>、<code>&lt;insert&gt;</code>、<code>&lt;update&gt;</code>、<code>&lt;delete&gt;</code>标签，都会被解析为一个MapperStatement对象。      </p>
+<blockquote>
+<p>举例：com.mybatis3.mappers.StudentDao.findStudentById，可以唯一找到namespace为com.mybatis3.mappers.StudentDao下面 id 为 findStudentById 的 MapperStatement。</p>
+</blockquote>
+<hr>
 ]]></content>
       <categories>
         <category>Mybatis</category>
