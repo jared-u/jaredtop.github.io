@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>kafka相关操作及报错</title>
+    <url>/posts/18e29e3e.html</url>
+    <content><![CDATA[<h3 id="启动zookeeper和kafka"><a href="#启动zookeeper和kafka" class="headerlink" title="启动zookeeper和kafka"></a>启动zookeeper和kafka</h3><a id="more"></a>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">启动zookeeper</span><br><span class="line">nohup ./kafka_2.13-2.6.0/bin/zookeeper-server-start.sh ./kafka_2.13-2.6.0/config/zookeeper.properties &amp;</span><br><span class="line">启动kafka</span><br><span class="line">nohup ./bin/kafka-server-start.sh config/server.properties &amp;</span><br><span class="line"></span><br><span class="line">创建topic</span><br><span class="line">./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic hello</span><br><span class="line">./bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092</span><br><span class="line">查看topic</span><br><span class="line">./bin/kafka-topics.sh --list --zookeeper localhost:2181</span><br><span class="line">./bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092</span><br><span class="line">生产消息</span><br><span class="line">./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic hello</span><br><span class="line">./bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="报错解决方法"><a href="#报错解决方法" class="headerlink" title="报错解决方法"></a>报错解决方法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">创建消费者时候报错：</span><br><span class="line"></span><br><span class="line">.&#x2F;bin&#x2F;kafka-console-consumer.sh --zookeeper localhost:2181 --topic hello --from-beginning</span><br><span class="line">zookeeper is not a recognized option</span><br><span class="line">问题原因：</span><br><span class="line">新版本kafka中，--zookeeper这种启动方式已删除。</span><br><span class="line">解决办法：</span><br><span class="line">0.90版本之后启动消费者的方法如下：</span><br><span class="line"></span><br><span class="line">.&#x2F;bin&#x2F;kafka-console-consumer.sh --bootstrap-server localhost:2181 --topic hello --from-beginning</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>kafka</category>
+        <category>zookeeper</category>
+      </categories>
+      <tags>
+        <tag>kafka</tag>
+        <tag>zookeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/posts/4a17b156.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Mybatis常见面试题</title>
+    <url>/posts/8f175f96.html</url>
+    <content><![CDATA[<h1 id="什么是-MyBatis？"><a href="#什么是-MyBatis？" class="headerlink" title="什么是 MyBatis？"></a>什么是 MyBatis？</h1><p>MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</p>
+<a id="more"></a>
+<h1 id="Mybaits的优点"><a href="#Mybaits的优点" class="headerlink" title="Mybaits的优点"></a>Mybaits的优点</h1><ol>
+<li>基于SQL语句编程，相当灵活，不会对应用程序或者数据库的现有设计造成任何影响，SQL写在XML里，解除sql与程序代码的耦合，便于统一管理；提供XML标签，支持编写动态SQL语句，并可重用。</li>
+<li>与JDBC相比，减少了50%以上的代码量，消除了JDBC大量冗余的代码，不需要手动开关连接；</li>
+<li>很好的与各种数据库兼容（因为MyBatis使用JDBC来连接数据库，所以只要JDBC支持的数据库MyBatis都支持）。</li>
+<li>能够与Spring很好的集成；</li>
+<li>提供映射标签，支持对象与数据库的ORM字段关系映射；提供对象关系映射标签，支持对象关系组件维护。<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id="MyBatis与Hibernate有哪些不同"><a href="#MyBatis与Hibernate有哪些不同" class="headerlink" title="MyBatis与Hibernate有哪些不同"></a>MyBatis与Hibernate有哪些不同</h2></li>
+<li>Mybatis和hibernate不同，它不完全是一个ORM框架，因为MyBatis需要程序员自己编写Sql语句。</li>
+<li>Mybatis直接编写原生态sql，可以严格控制sql执行性能，灵活度高，非常适合对关系数据模型要求不高的软件开发，因为这类软件需求变化频繁，一但需求变化要求迅速输出成果。但是灵活的前提是mybatis无法做到数据库无关性，如果需要实现支持多种数据库的软件，则需要自定义多套sql映射文件，工作量大。 </li>
+<li>Hibernate对象/关系映射能力强，数据库无关性好，对于关系模型要求高的软件，如果用hibernate开发可以节省很多代码，提高效率。 </li>
+</ol>
+<h2 id="和-的区别是什么"><a href="#和-的区别是什么" class="headerlink" title="#{}和${}的区别是什么?"></a>#{}和${}的区别是什么?</h2><p> #{} 是预编译处理， ${} 是字符串替换。<br>Mybatis在处理 #{} 时，会将sql中的 #{} 替换为 ? 号，调用PreparedStatement的set方法来赋值；<br>Mybatis在处理 ${} 时，就是把 ${} 替换成变量的值。<br>使用 #{} 可以有效的防止SQL注入，提高系统安全性。    </p>
+<p> </p>
+]]></content>
+      <categories>
+        <category>Mybatis</category>
+        <category>面试题</category>
+      </categories>
+      <tags>
+        <tag>Mybatis</tag>
+        <tag>面试题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Lombok注解的使用</title>
+    <url>/posts/8340b4fb.html</url>
+    <content><![CDATA[<h3 id="POJO类常用注解"><a href="#POJO类常用注解" class="headerlink" title="POJO类常用注解:"></a>POJO类常用注解:</h3><p><strong>@Getter/@Setter: 作用类上，生成所有成员变量的getter/setter方法；作用于成员变量上，生成该成员变量的getter/setter方法。可以设定访问权限及是否懒加载等。</strong></p>
+<p><strong>@ToString：作用于类，覆盖默认的toString()方法，可以通过of属性限定显示某些字段，通过exclude属性排除某些字段。</strong></p>
+<a id="more"></a>
+<p><strong>@EqualsAndHashCode：作用于类，覆盖默认的equals和hashCode</strong></p>
+<p><strong>@NonNull：主要作用于成员变量和参数中，标识不能为空，否则抛出空指针异常。</strong></p>
+<p><strong>@NoArgsConstructor, @RequiredArgsConstructor, @AllArgsConstructor：作用于类上，用于生成构造函数。有staticName、access等属性。</strong></p>
+<p><strong>staticName属性一旦设定，将采用静态方法的方式生成实例，access属性可以限定访问权限。</strong></p>
+<p><strong>@NoArgsConstructor：生成无参构造器；</strong></p>
+<p><strong>@RequiredArgsConstructor：生成包含final和@NonNull注解的成员变量的构造器；</strong></p>
+<p><strong>@AllArgsConstructor：生成全参构造器</strong></p>
+<p><strong>@Data：作用于类上，是以下注解的集合：@ToString @EqualsAndHashCode @Getter @Setter @RequiredArgsConstructor</strong></p>
+<p><strong>@Builder：作用于类上，将类转变为建造者模式</strong></p>
+<p><strong>@Log：作用于类上，生成日志变量。针对不同的日志实现产品，有不同的注解：</strong></p>
+<h3 id="其他重要注解："><a href="#其他重要注解：" class="headerlink" title="其他重要注解："></a>其他重要注解：</h3><p><strong>@Cleanup：自动关闭资源，针对实现了java.io.Closeable接口的对象有效，如：典型的IO流对象</strong></p>
+<p><strong>@SneakyThrows：可以对受检异常进行捕捉并抛出，可以改写上述的main方法如下：</strong></p>
+<p><strong>@Synchronized：作用于方法级别，可以替换synchronize关键字或lock锁，用处不大.</strong></p>
+]]></content>
+      <categories>
+        <category>Lombok</category>
+        <category>插件</category>
+      </categories>
+      <tags>
+        <tag>Lombok</tag>
+        <tag>注解</tag>
+        <tag>插件</tag>
+      </tags>
+  </entry>
+</search>
