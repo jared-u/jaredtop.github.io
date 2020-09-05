@@ -31,7 +31,33 @@
       </tags>
   </entry>
   <entry>
-    <title>Mybatis常见面试题</title>
+    <title>Redis 常见面试题</title>
+    <url>/posts/51b0f5df.html</url>
+    <content><![CDATA[<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id=""><a href="#" class="headerlink" title=""></a></h2>]]></content>
+      <categories>
+        <category>面试题</category>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>面试题</tag>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring 常见面试题</title>
+    <url>/posts/228e4888.html</url>
+    <content><![CDATA[<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id=""><a href="#" class="headerlink" title=""></a></h2>]]></content>
+      <categories>
+        <category>面试题</category>
+        <category>Spring</category>
+      </categories>
+      <tags>
+        <tag>面试题</tag>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mybatis 常见面试题</title>
     <url>/posts/8f175f96.html</url>
     <content><![CDATA[<h1 id="什么是-MyBatis？"><a href="#什么是-MyBatis？" class="headerlink" title="什么是 MyBatis？"></a>什么是 MyBatis？</h1><p>MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</p>
 <a id="more"></a>
@@ -65,6 +91,19 @@
 <blockquote>
 <p>举例：com.mybatis3.mappers.StudentDao.findStudentById，可以唯一找到namespace为com.mybatis3.mappers.StudentDao下面 id 为 findStudentById 的 MapperStatement。</p>
 </blockquote>
+<hr>
+<h2 id="Mybatis是如何进行分页的？分页插件的原理是什么？"><a href="#Mybatis是如何进行分页的？分页插件的原理是什么？" class="headerlink" title="Mybatis是如何进行分页的？分页插件的原理是什么？"></a>Mybatis是如何进行分页的？分页插件的原理是什么？</h2><p>  Mybatis使用RowBounds对象进行分页，它是针对ResultSet结果集执行的内存分页，而非物理分页。可以在sql内直接书写带有物理分页的参数来完成物理分页功能，也可以使用分页插件来完成物理分页。<br>  分页插件的基本原理是使用Mybatis提供的插件接口，实现自定义插件，在插件的拦截方法内拦截待执行的sql，然后重写sql，根据dialect方言，添加对应的物理分页语句和物理分页参数。</p>
+<hr>
+<h2 id="Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？"><a href="#Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？" class="headerlink" title="Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？"></a>Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？</h2><p>第一种是使用<code>&lt;resultMap&gt;</code>标签，逐一定义数据库列名和对象属性名之间的映射关系。<br>第二种是使用sql列的别名功能，将列的别名书写为对象属性名。<br>有了列名与属性名的映射关系后，Mybatis通过反射创建对象，同时使用反射给对象的属性逐一赋值并返回，那些找不到映射关系的属性，是无法完成赋值的。</p>
+<hr>
+<h2 id="如何执行批量插入"><a href="#如何执行批量插入" class="headerlink" title="如何执行批量插入?"></a>如何执行批量插入?</h2><p>首先,创建一个简单的insert语句:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertname&quot;</span>&gt;</span></span><br><span class="line">  insert into names(name) values(#&#123;value&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后在java代码中像下面这样执行批处理插入: </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">list&lt;string&gt; names = <span class="keyword">new</span> arraylist();</span><br><span class="line">names.add(“fred”);</span><br><span class="line">names.add(“barney”);</span><br><span class="line">names.add(“betty”);</span><br><span class="line">names.add(“wilma”);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意这里 executortype.batch</span></span><br><span class="line">sqlsession sqlsession = sqlsessionfactory.opensession(executortype.batch);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    namemapper mapper = sqlsession.getmapper(namemapper.class);</span><br><span class="line">    <span class="keyword">for</span> (string name : names) &#123;</span><br><span class="line">        mapper.insertname(name);</span><br><span class="line">    &#125;</span><br><span class="line">    sqlsession.commit();</span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    sqlSession.rollback(); </span><br><span class="line">    <span class="keyword">throw</span> e; </span><br><span class="line">&#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">    sqlsession.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="如何获取自动生成的-主-键值"><a href="#如何获取自动生成的-主-键值" class="headerlink" title="如何获取自动生成的(主)键值?"></a>如何获取自动生成的(主)键值?</h2><p>insert 方法总是返回一个int值 ，这个值代表的是插入的行数。<br>如果采用自增长策略，自动生成的键值在 insert 方法执行完后可以被设置到传入的参数对象中。<br>示例： </p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertname&quot;</span> <span class="attr">usegeneratedkeys</span>=<span class="string">&quot;true&quot;</span> <span class="attr">keyproperty</span>=<span class="string">&quot;id&quot;</span>&gt;</span></span><br><span class="line">    insert into names (name) values (#&#123;name&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">name name = <span class="keyword">new</span> name();</span><br><span class="line">name.setname(<span class="string">&quot;fred&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> rows = mapper.insertname(name);</span><br><span class="line"><span class="comment">// 完成后,id已经被设置到对象中</span></span><br><span class="line">system.out.println(<span class="string">&quot;rows inserted = &quot;</span> + rows);</span><br><span class="line">system.out.println(<span class="string">&quot;generated key value = &quot;</span> + name.getid());</span><br></pre></td></tr></table></figure>
 <hr>
 ]]></content>
       <categories>
