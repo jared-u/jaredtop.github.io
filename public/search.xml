@@ -31,6 +31,40 @@
       </tags>
   </entry>
   <entry>
+    <title>vue 分析</title>
+    <url>/posts/48d08c37.html</url>
+    <content><![CDATA[<h2 id="数据代理"><a href="#数据代理" class="headerlink" title="数据代理"></a>数据代理</h2><ol>
+<li>数据代理：通过一个对象代理对另一个对象中属性的操作（读）</li>
+<li>vue数据代理：通过vm对象来代理data对象中所有属性的操作</li>
+<li>好处：更方便的操作data中的数据</li>
+<li>基本实现流程<ol>
+<li>通过Object.defineProperty()给vm添加与data对象的属性对应的属性描述符</li>
+<li>所有添加的属性都包含getter/setter</li>
+<li>getter/setter 内部去操作data中对应的属性数据</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h2 id="模板解析"><a href="#模板解析" class="headerlink" title="模板解析"></a>模板解析</h2><h3 id="模板解析的基本流程"><a href="#模板解析的基本流程" class="headerlink" title="模板解析的基本流程"></a>模板解析的基本流程</h3><ol>
+<li>将el的所有子节点取出，添加到一个新建的文档fragment对象中</li>
+<li>将fragment中的所有层次子节点递归进行编译解析处理<ul>
+<li>对表达式文本节点进行解析</li>
+<li>对元素节点的指令属性进行解析<ul>
+<li>事件指令解析</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redis 常见面试题</title>
     <url>/posts/51b0f5df.html</url>
     <content><![CDATA[<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id=""><a href="#" class="headerlink" title=""></a></h2>]]></content>
@@ -46,7 +80,45 @@
   <entry>
     <title>Spring 常见面试题</title>
     <url>/posts/228e4888.html</url>
-    <content><![CDATA[<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id=""><a href="#" class="headerlink" title=""></a></h2>]]></content>
+    <content><![CDATA[<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id="什么是Spring框架？包含哪些主要模块？"><a href="#什么是Spring框架？包含哪些主要模块？" class="headerlink" title="什么是Spring框架？包含哪些主要模块？"></a>什么是Spring框架？包含哪些主要模块？</h2><blockquote>
+<p>Spring框架是一个为Java应用程序的开发提供了综合、广泛的基础性支持的Java平台。<br>主要模块： 核心容器、数据访问/集成、Web、AOP（面向切面编程）、工具、消息和测试模块</p>
+</blockquote>
+<hr>
+<h2 id="使用Spring框架的好处？"><a href="#使用Spring框架的好处？" class="headerlink" title="使用Spring框架的好处？"></a>使用Spring框架的好处？</h2><ul>
+<li>Dependency Injection（DI）方法使得构造器和JavaBean properties文件中的依赖关系一目了然</li>
+<li>与EJB容器相比较，IoC容器更加趋向于轻量级。这样一来IoC容器在有限的内存和CPU资源的情况下进行应用程序的开发和发布就变得十分有利</li>
+<li>Spring利用了已有的技术，比如ORM框架、logging框架、J2EE、Quartz和JDK Timer，以及其他视图技术</li>
+<li>Spring框架是按照模块的形式来组织的。</li>
+<li>Spring提供了一个便捷的事务管理接口</li>
+<li>提供相应的测试环境代码</li>
+</ul>
+<hr>
+<h2 id="什么是控制反转（IOC）？什么是依赖注入？"><a href="#什么是控制反转（IOC）？什么是依赖注入？" class="headerlink" title="什么是控制反转（IOC）？什么是依赖注入？"></a>什么是控制反转（IOC）？什么是依赖注入？</h2><p>在Java中依赖注入有三种实现方式：构造器注入，setter方法注入，接口注入</p>
+<h2 id="BeanFactory和ApplicationContext-有什么区别？"><a href="#BeanFactory和ApplicationContext-有什么区别？" class="headerlink" title="BeanFactory和ApplicationContext 有什么区别？"></a>BeanFactory和ApplicationContext 有什么区别？</h2><p>BeanFactory可以理解为含有bean集合的工厂类。BeanFactory包含了种bean的定义，以便在接收到客户端请求时将对应的bean实例化。<br>BeanFactory还能在实例化对象时生成协作类之间的关系。此举将bean自身与bean客户端的配置中解放出来。BeanFactory还包含了bean生命周期的控制，调用客户端的初始化方法(initialization methods)和销毁方法(destruction methods)。<br>从表面上看，ApplicationContext如同BeanFactory一样具有bean定义、bean关联关系的设置，根据请求分发bean的功能。但ApplicationContext在此基础上还提供了其它的功能：</p>
+<blockquote>
+<ol>
+<li>提供了支持国际化的文本消息</li>
+<li>统一的资源文件读取方式</li>
+<li>已在监听器中注册的bean的事件</li>
+</ol>
+</blockquote>
+<p>以下是较常见的ApplicationContext实现方式：</p>
+<ol>
+<li>ClassPathXmlApplicationContext:从classpath的XML配置文件中读取上下文，并生成上下文定义。应用程序上下文从程序环境变量中<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;bean.xml&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>FileSystemXmlApplicationContext:由文件系统中的XML配置文件读取上下文。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ApplicationContext context = <span class="keyword">new</span> FileSystemXmlApplicationContext(<span class="string">&quot;bean.xml&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>XmlWebApplicationContext:由Web应用的XML文件读取上下文。</li>
+<li>AnnotationConfigApplicationContext(基于Java配置启动容器)</li>
+</ol>
+<hr>
+<h2 id="Spring有几种配置方式？"><a href="#Spring有几种配置方式？" class="headerlink" title="Spring有几种配置方式？"></a>Spring有几种配置方式？</h2><p>将Spring配置到应用开发中有以下三种方式：</p>
+<blockquote>
+<p>1.基于XML的配置<br>2.基于注解的配置<br>3.基于Java的配置</p>
+</blockquote>
+<h3 id="如何用基于XML配置的方式配置Spring？"><a href="#如何用基于XML配置的方式配置Spring？" class="headerlink" title="如何用基于XML配置的方式配置Spring？"></a>如何用基于XML配置的方式配置Spring？</h3><p>========</p>
+<h3 id="如何用基于Java配置的方式配置Spring？"><a href="#如何用基于Java配置的方式配置Spring？" class="headerlink" title="如何用基于Java配置的方式配置Spring？"></a>如何用基于Java配置的方式配置Spring？</h3><p>========</p>
+<h3 id="如何用基于注解配置的方式配置Spring？"><a href="#如何用基于注解配置的方式配置Spring？" class="headerlink" title="如何用基于注解配置的方式配置Spring？"></a>如何用基于注解配置的方式配置Spring？</h3><p>========</p>
+<h2 id="解释Spring-Bean的生命周期？"><a href="#解释Spring-Bean的生命周期？" class="headerlink" title="解释Spring Bean的生命周期？"></a>解释Spring Bean的生命周期？</h2><p>========</p>
+]]></content>
       <categories>
         <category>面试题</category>
         <category>Spring</category>
