@@ -27,7 +27,7 @@
 <meta property="og:description" content="Spring 常见面试题">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-04T11:06:17.000Z">
-<meta property="article:modified_time" content="2020-09-11T14:44:05.256Z">
+<meta property="article:modified_time" content="2020-09-15T14:12:02.337Z">
 <meta property="article:author" content="Jared">
 <meta property="article:tag" content="面试题">
 <meta property="article:tag" content="Spring">
@@ -236,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-11 22:44:05" itemprop="dateModified" datetime="2020-09-11T22:44:05+08:00">2020-09-11</time>
+                <time title="修改时间：2020-09-15 22:12:02" itemprop="dateModified" datetime="2020-09-15T22:12:02+08:00">2020-09-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,14 +279,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>6 分钟</span>
             </span>
             <div class="post-description">Spring 常见面试题</div>
 
@@ -337,6 +337,34 @@
 <h3 id="如何用基于Java配置的方式配置Spring？"><a href="#如何用基于Java配置的方式配置Spring？" class="headerlink" title="如何用基于Java配置的方式配置Spring？"></a>如何用基于Java配置的方式配置Spring？</h3><p>========</p>
 <h3 id="如何用基于注解配置的方式配置Spring？"><a href="#如何用基于注解配置的方式配置Spring？" class="headerlink" title="如何用基于注解配置的方式配置Spring？"></a>如何用基于注解配置的方式配置Spring？</h3><p>========</p>
 <h2 id="解释Spring-Bean的生命周期？"><a href="#解释Spring-Bean的生命周期？" class="headerlink" title="解释Spring Bean的生命周期？"></a>解释Spring Bean的生命周期？</h2><p>========</p>
+<h2 id="Spring-Bean的作用域区别？"><a href="#Spring-Bean的作用域区别？" class="headerlink" title="Spring Bean的作用域区别？"></a>Spring Bean的作用域区别？</h2><p>5个范围</p>
+<ol>
+<li>singleton：是默认的，这种范围确保不管接受到多个请求，每个容器中只有一个bean的实例，单例的模式由beanFactory自身来维护</li>
+<li>prototype：原型范围与单例范围相反，为每一个bean请求提供一个实例</li>
+<li>request：在请求bean范围内会为每一个来自客户端的网络请求创建一个实例，在请求完成以后，bean会失效并被垃圾回收器回收。</li>
+<li>session：与请求范围类似，确保每个session中有一个bean的实例，在session过去后，bean会随之失效。</li>
+<li>global-session：global-session和Portlet应用有关。当你的应用部署在Portlet容器中工作时，它包含很多portlet。如果你想要声明让所有的portlet共用全局的存储变量的话，那么这全局变量需要存储在global-session中。<br>全局作用域与Servlet中的session作用域效果相同。</li>
+</ol>
+<h2 id="请举例说明如何在Spring中注入一个Java-Collection？"><a href="#请举例说明如何在Spring中注入一个Java-Collection？" class="headerlink" title="请举例说明如何在Spring中注入一个Java Collection？"></a>请举例说明如何在Spring中注入一个Java Collection？</h2><p>Spring提供了以下四种集合类的配置元素：</p>
+<ul>
+<li><code>&lt;list&gt;</code>: 该标签用来装配可重复的list值。</li>
+<li><code>&lt;set&gt;</code>：该标签用来装配没有重复的set值。</li>
+<li><code>&lt;map&gt;</code>：该标签可用来注入键和值可以为任何类型的键值对。</li>
+<li><code>&lt;props&gt;</code>：该标签支持注入键和值都是字符串类型的键值对。</li>
+</ul>
+<h2 id="请解释自动装配模式的区别？"><a href="#请解释自动装配模式的区别？" class="headerlink" title="请解释自动装配模式的区别？"></a>请解释自动装配模式的区别？</h2><ul>
+<li>no:这是Spring的默认设置，在该设置下自动装配是关闭的，开发者需要自行在bean定义中用标签明确的设置依赖关系。</li>
+<li>byName：该选项可以根据bean名称设置依赖关系。当向一个bean中自动装配一个属性时，容器将根据bean的名称自动在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。</li>
+<li>byType：该选项可以根据bean的类型设置依赖关系。当想一个bean中自动装配一个属性时，容器将根据bean的类型自动在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。</li>
+<li>constructor：构造器的自动装配和byType模式类似，但是仅仅适用于与有构造器相同参数的bean，如果在容器总没有找到与构造器参数类型一致的bean，那么将会抛出异常。</li>
+<li>autodetect：该模式自动探测使用构造器自动装配或byType自动装配。首先，会尝试找合适的带参数的构造器，如果找到的话就是用构造器自动装配，如果在bean内部没有找到相应的构造器或者是无参构造器，容器就会自动选择byType的自动装配方式。</li>
+</ul>
+<h2 id="如何开启基于注解的自动装配？"><a href="#如何开启基于注解的自动装配？" class="headerlink" title="如何开启基于注解的自动装配？"></a>如何开启基于注解的自动装配？</h2><p>要使用<code>@Autowired</code>，需要注册<code>AutowiredAnnotationBeanPostProcessor</code>，可以有以下两种方式来实现：</p>
+<ol>
+<li>引入配置文件中的<code>&lt;beans&gt;</code>下引入<code>&lt;context:annotation-config&gt;</code><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;context:annotation-config&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></li>
+<li>在配置文件中直接引入<code>AutowiredAnnotationBeanPostProcessor</code><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;bean <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor&quot;</span>&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
     </div>
 
@@ -484,7 +512,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">常见面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFSpring%E6%A1%86%E6%9E%B6%EF%BC%9F%E5%8C%85%E5%90%AB%E5%93%AA%E4%BA%9B%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%9D%97%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Spring框架？包含哪些主要模块？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Spring%E6%A1%86%E6%9E%B6%E7%9A%84%E5%A5%BD%E5%A4%84%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">使用Spring框架的好处？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%EF%BC%88IOC%EF%BC%89%EF%BC%9F%E4%BB%80%E4%B9%88%E6%98%AF%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">什么是控制反转（IOC）？什么是依赖注入？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanFactory%E5%92%8CApplicationContext-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.4.</span> <span class="nav-text">BeanFactory和ApplicationContext 有什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring%E6%9C%89%E5%87%A0%E7%A7%8D%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="nav-number">1.5.</span> <span class="nav-text">Spring有几种配置方式？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8%E5%9F%BA%E4%BA%8EXML%E9%85%8D%E7%BD%AE%E7%9A%84%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AESpring%EF%BC%9F"><span class="nav-number">1.5.1.</span> <span class="nav-text">如何用基于XML配置的方式配置Spring？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8%E5%9F%BA%E4%BA%8EJava%E9%85%8D%E7%BD%AE%E7%9A%84%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AESpring%EF%BC%9F"><span class="nav-number">1.5.2.</span> <span class="nav-text">如何用基于Java配置的方式配置Spring？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AE%E7%9A%84%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AESpring%EF%BC%9F"><span class="nav-number">1.5.3.</span> <span class="nav-text">如何用基于注解配置的方式配置Spring？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%87%8ASpring-Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F"><span class="nav-number">1.6.</span> <span class="nav-text">解释Spring Bean的生命周期？</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">常见面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFSpring%E6%A1%86%E6%9E%B6%EF%BC%9F%E5%8C%85%E5%90%AB%E5%93%AA%E4%BA%9B%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%9D%97%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Spring框架？包含哪些主要模块？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Spring%E6%A1%86%E6%9E%B6%E7%9A%84%E5%A5%BD%E5%A4%84%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">使用Spring框架的好处？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%EF%BC%88IOC%EF%BC%89%EF%BC%9F%E4%BB%80%E4%B9%88%E6%98%AF%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">什么是控制反转（IOC）？什么是依赖注入？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanFactory%E5%92%8CApplicationContext-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.4.</span> <span class="nav-text">BeanFactory和ApplicationContext 有什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring%E6%9C%89%E5%87%A0%E7%A7%8D%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="nav-number">1.5.</span> <span class="nav-text">Spring有几种配置方式？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8%E5%9F%BA%E4%BA%8EXML%E9%85%8D%E7%BD%AE%E7%9A%84%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AESpring%EF%BC%9F"><span class="nav-number">1.5.1.</span> <span class="nav-text">如何用基于XML配置的方式配置Spring？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8%E5%9F%BA%E4%BA%8EJava%E9%85%8D%E7%BD%AE%E7%9A%84%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AESpring%EF%BC%9F"><span class="nav-number">1.5.2.</span> <span class="nav-text">如何用基于Java配置的方式配置Spring？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AE%E7%9A%84%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AESpring%EF%BC%9F"><span class="nav-number">1.5.3.</span> <span class="nav-text">如何用基于注解配置的方式配置Spring？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%87%8ASpring-Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F"><span class="nav-number">1.6.</span> <span class="nav-text">解释Spring Bean的生命周期？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Bean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.7.</span> <span class="nav-text">Spring Bean的作用域区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E4%B8%BE%E4%BE%8B%E8%AF%B4%E6%98%8E%E5%A6%82%E4%BD%95%E5%9C%A8Spring%E4%B8%AD%E6%B3%A8%E5%85%A5%E4%B8%80%E4%B8%AAJava-Collection%EF%BC%9F"><span class="nav-number">1.8.</span> <span class="nav-text">请举例说明如何在Spring中注入一个Java Collection？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E8%A7%A3%E9%87%8A%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.9.</span> <span class="nav-text">请解释自动装配模式的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%BC%80%E5%90%AF%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%EF%BC%9F"><span class="nav-number">1.10.</span> <span class="nav-text">如何开启基于注解的自动装配？</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -570,13 +598,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">8k</span>
+    <span title="站点总字数">10k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">17 分钟</span>
+    <span title="站点阅读时长">21 分钟</span>
 </div>
 
         
