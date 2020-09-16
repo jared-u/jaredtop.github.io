@@ -89,7 +89,37 @@
 </ol>
 <h3 id="四个重要对象"><a href="#四个重要对象" class="headerlink" title="四个重要对象"></a>四个重要对象</h3><ol>
 <li>Observer</li>
+<li>Dep<br>它的实例什么时候创建？<pre><code>答：初始化时给data的属性进行数据劫持时创建的</code></pre>
+个数？<pre><code>答：与data中的属性一一对应</code></pre>
+Dep的结构？<pre><code>答：
+id：标识
+subs：[] n个相关的watcher的容器</code></pre>
+</li>
+<li>Watcher<br>它的实例什么时候创建？<pre><code>答：初始化解析大括号表达式/一般指令时创建</code></pre>
+个数？<pre><code>答：与模板中表达式（不包含事件指令）一一对应</code></pre>
+watcher的结构？<pre><code>答：
+    this.cb = cb; //用于更新界面的回调
+    this.vm = vm; // vm
+    this.exp = exp; // 对应的表达式
+    this.depIds = &#123;depid, dep&#125;; // 相关的n个dep的容器对象
+    this.value = this.get(); // 当前表达式对应的value</code></pre>
+</li>
 <li></li>
+</ol>
+<h2 id="Dep与Watcher的关系"><a href="#Dep与Watcher的关系" class="headerlink" title="Dep与Watcher的关系"></a>Dep与Watcher的关系</h2><h3 id="什么关系？"><a href="#什么关系？" class="headerlink" title="什么关系？"></a>什么关系？</h3><pre><code>答：多对多的关系
+    name ==&gt; Dep ==&gt; n个watcher（模板中有多个表达式使用了此属性：&#123;&#123;a&#125;&#125; v-text=&quot;a&quot;）
+    表达式 ==&gt; Watcher ==&gt; n个Dep（多层表达式：a.b.c）</code></pre>
+<h3 id="如何建立的？"><a href="#如何建立的？" class="headerlink" title="如何建立的？"></a>如何建立的？</h3><pre><code>答：data中属性的get()中建立</code></pre>
+<h3 id="什么时候建立？"><a href="#什么时候建立？" class="headerlink" title="什么时候建立？"></a>什么时候建立？</h3><pre><code>答：初始化的解析模板中的表达式创建Watcher对象时
+    vm.name = &#39;abc&#39; ==&gt; data中的name属性值变化 ==&gt; name的set()调用 ==&gt; dep ==&gt; 相关的所有watcher
+     ==&gt; cb() ==&gt; updater</code></pre>
+<h2 id="双向数据绑定"><a href="#双向数据绑定" class="headerlink" title="双向数据绑定"></a>双向数据绑定</h2><ol>
+<li>双向数据绑定是建立在单向数据绑定（model ==&gt; View）的基础之上的</li>
+<li>双向数据绑定的实现流程：<ol>
+<li>在解析v-model指令时，给当前元素添加input监听</li>
+<li>当input的value发生变化时，将最新的值赋值给当前表达式所对应的data属性<h2 id="MVVM结构图"><a href="#MVVM结构图" class="headerlink" title="MVVM结构图"></a>MVVM结构图</h2>!(MVVM结构图)[/images/mvvm.png]</li>
+</ol>
+</li>
 </ol>
 ]]></content>
       <categories>

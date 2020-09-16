@@ -27,7 +27,7 @@
 <meta property="og:description" content="vue 分析 基于github上的mvvm实现mvvm。了解vue的双向数据绑定原理以及核心代码模块，缓解好奇心的同时了解如何实现双向绑定">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-09-08T14:32:21.000Z">
-<meta property="article:modified_time" content="2020-09-15T11:24:38.104Z">
+<meta property="article:modified_time" content="2020-09-16T08:08:48.822Z">
 <meta property="article:author" content="Jared">
 <meta property="article:tag" content="vue">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-15 19:24:38" itemprop="dateModified" datetime="2020-09-15T19:24:38+08:00">2020-09-15</time>
+                <time title="修改时间：2020-09-16 16:08:48" itemprop="dateModified" datetime="2020-09-16T16:08:48+08:00">2020-09-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -274,14 +274,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>809</span>
+              <span>1.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
             <div class="post-description">vue 分析 基于github上的mvvm实现<a href="http://github.com/DMQ/mvvm" target="_blank">mvvm</a>。了解vue的双向数据绑定原理以及核心代码模块，缓解好奇心的同时了解如何实现双向绑定</div>
 
@@ -350,7 +350,37 @@
 </ol>
 <h3 id="四个重要对象"><a href="#四个重要对象" class="headerlink" title="四个重要对象"></a>四个重要对象</h3><ol>
 <li>Observer</li>
+<li>Dep<br>它的实例什么时候创建？<pre><code>答：初始化时给data的属性进行数据劫持时创建的</code></pre>
+个数？<pre><code>答：与data中的属性一一对应</code></pre>
+Dep的结构？<pre><code>答：
+id：标识
+subs：[] n个相关的watcher的容器</code></pre>
+</li>
+<li>Watcher<br>它的实例什么时候创建？<pre><code>答：初始化解析大括号表达式/一般指令时创建</code></pre>
+个数？<pre><code>答：与模板中表达式（不包含事件指令）一一对应</code></pre>
+watcher的结构？<pre><code>答：
+    this.cb = cb; //用于更新界面的回调
+    this.vm = vm; // vm
+    this.exp = exp; // 对应的表达式
+    this.depIds = &#123;depid, dep&#125;; // 相关的n个dep的容器对象
+    this.value = this.get(); // 当前表达式对应的value</code></pre>
+</li>
 <li></li>
+</ol>
+<h2 id="Dep与Watcher的关系"><a href="#Dep与Watcher的关系" class="headerlink" title="Dep与Watcher的关系"></a>Dep与Watcher的关系</h2><h3 id="什么关系？"><a href="#什么关系？" class="headerlink" title="什么关系？"></a>什么关系？</h3><pre><code>答：多对多的关系
+    name ==&gt; Dep ==&gt; n个watcher（模板中有多个表达式使用了此属性：&#123;&#123;a&#125;&#125; v-text=&quot;a&quot;）
+    表达式 ==&gt; Watcher ==&gt; n个Dep（多层表达式：a.b.c）</code></pre>
+<h3 id="如何建立的？"><a href="#如何建立的？" class="headerlink" title="如何建立的？"></a>如何建立的？</h3><pre><code>答：data中属性的get()中建立</code></pre>
+<h3 id="什么时候建立？"><a href="#什么时候建立？" class="headerlink" title="什么时候建立？"></a>什么时候建立？</h3><pre><code>答：初始化的解析模板中的表达式创建Watcher对象时
+    vm.name = &#39;abc&#39; ==&gt; data中的name属性值变化 ==&gt; name的set()调用 ==&gt; dep ==&gt; 相关的所有watcher
+     ==&gt; cb() ==&gt; updater</code></pre>
+<h2 id="双向数据绑定"><a href="#双向数据绑定" class="headerlink" title="双向数据绑定"></a>双向数据绑定</h2><ol>
+<li>双向数据绑定是建立在单向数据绑定（model ==&gt; View）的基础之上的</li>
+<li>双向数据绑定的实现流程：<ol>
+<li>在解析v-model指令时，给当前元素添加input监听</li>
+<li>当input的value发生变化时，将最新的值赋值给当前表达式所对应的data属性<h2 id="MVVM结构图"><a href="#MVVM结构图" class="headerlink" title="MVVM结构图"></a>MVVM结构图</h2>!(MVVM结构图)[/images/mvvm.png]</li>
+</ol>
+</li>
 </ol>
 
     </div>
@@ -484,7 +514,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BB%A3%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">数据代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E8%A7%A3%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">模板解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E8%A7%A3%E6%9E%90%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">模板解析的基本流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%8B%AC%E5%8F%B7%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%A7%A3%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">大括号表达式解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E6%8C%87%E4%BB%A4%E8%A7%A3%E6%9E%90"><span class="nav-number">2.3.</span> <span class="nav-text">事件指令解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%8C%87%E4%BB%A4%E8%A7%A3%E6%9E%90"><span class="nav-number">2.4.</span> <span class="nav-text">一般指令解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="nav-number">3.</span> <span class="nav-text">数据绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A-1"><span class="nav-number">3.1.</span> <span class="nav-text">数据绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8A%AB%E6%8C%81"><span class="nav-number">3.2.</span> <span class="nav-text">数据劫持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E4%B8%AA%E9%87%8D%E8%A6%81%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.3.</span> <span class="nav-text">四个重要对象</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BB%A3%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">数据代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E8%A7%A3%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">模板解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E8%A7%A3%E6%9E%90%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">模板解析的基本流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%8B%AC%E5%8F%B7%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%A7%A3%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">大括号表达式解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E6%8C%87%E4%BB%A4%E8%A7%A3%E6%9E%90"><span class="nav-number">2.3.</span> <span class="nav-text">事件指令解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%8C%87%E4%BB%A4%E8%A7%A3%E6%9E%90"><span class="nav-number">2.4.</span> <span class="nav-text">一般指令解析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="nav-number">3.</span> <span class="nav-text">数据绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A-1"><span class="nav-number">3.1.</span> <span class="nav-text">数据绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8A%AB%E6%8C%81"><span class="nav-number">3.2.</span> <span class="nav-text">数据劫持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E4%B8%AA%E9%87%8D%E8%A6%81%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.3.</span> <span class="nav-text">四个重要对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dep%E4%B8%8EWatcher%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">4.</span> <span class="nav-text">Dep与Watcher的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB%EF%BC%9F"><span class="nav-number">4.1.</span> <span class="nav-text">什么关系？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%BB%BA%E7%AB%8B%E7%9A%84%EF%BC%9F"><span class="nav-number">4.2.</span> <span class="nav-text">如何建立的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%BB%BA%E7%AB%8B%EF%BC%9F"><span class="nav-number">4.3.</span> <span class="nav-text">什么时候建立？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="nav-number">5.</span> <span class="nav-text">双向数据绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="nav-number">6.</span> <span class="nav-text">MVVM结构图</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -570,13 +600,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">10k</span>
+    <span title="站点总字数">11k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">21 分钟</span>
+    <span title="站点阅读时长">23 分钟</span>
 </div>
 
         
