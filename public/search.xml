@@ -31,6 +31,69 @@
       </tags>
   </entry>
   <entry>
+    <title>vuex 学习</title>
+    <url>/posts/e61720a.html</url>
+    <content><![CDATA[<h1 id="Vuex-是什么？"><a href="#Vuex-是什么？" class="headerlink" title="Vuex 是什么？"></a>Vuex 是什么？</h1><p>Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。<br>这个状态自管理应用包含以下几个部分：</p>
+<ul>
+<li>state，驱动应用的数据源；</li>
+<li>view，以声明方式将 state 映射到视图；</li>
+<li>actions，响应在 view 上的用户输入导致的状态变化。</li>
+</ul>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><ol>
+<li>vuex管理的状态对象</li>
+<li>它应该是唯一的<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    xxx: initValue</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="mutations"><a href="#mutations" class="headerlink" title="mutations"></a>mutations</h3><ol>
+<li>包含多个直接更新state的方法(回调函数)的对象</li>
+<li>谁来触发：action中的commit(‘mutation名称’)</li>
+<li>只能包含同步的代码，不能写异步代码<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    yyy (state, data) &#123;</span><br><span class="line">        <span class="comment">// 更新state的某个属性</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="actions"><a href="#actions" class="headerlink" title="actions"></a>actions</h3><ol>
+<li>包含多个事件回调函数的对象</li>
+<li>通过执行：commit()来触发mutation的调用,间接更新state</li>
+<li>谁来触发：组件中：$store.dispatch(‘action名称’, data1) //‘zzz’</li>
+<li>可以包含异步代码（定时器，ajax）<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    zzz(&#123;commit, state&#125;, data1) &#123;</span><br><span class="line">        commit(<span class="string">&#x27;yyy&#x27;</span>, &#123;data1&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="getters"><a href="#getters" class="headerlink" title="getters"></a>getters</h3><ol>
+<li>包含多个计算属性（get）的对象</li>
+<li>谁来读取： 组件中： $store.getters.xxx<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">    mmm (state) &#123;</span><br><span class="line">        <span class="keyword">return</span> ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="modules"><a href="#modules" class="headerlink" title="modules"></a>modules</h3><ol>
+<li>包含多个module</li>
+<li>一个module是一个store的配置对象</li>
+<li>与一个组件（包含有共享数据）对应</li>
+</ol>
+<h3 id="向外暴露store对象"><a href="#向外暴露store对象" class="headerlink" title="向外暴露store对象"></a>向外暴露store对象</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state,</span><br><span class="line">  mutations,</span><br><span class="line">  actions,</span><br><span class="line">  getters</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="组件中"><a href="#组件中" class="headerlink" title="组件中"></a>组件中</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;mapState&#125;  <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"><span class="keyword">import</span> TodoItem <span class="keyword">from</span> <span class="string">&#x27;./TodoItem.vue&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">computed: &#123;</span><br><span class="line">  ...mapState([<span class="string">&#x27;todos&#x27;</span>])</span><br><span class="line">&#125;,</span><br><span class="line">components: &#123;</span><br><span class="line">  TodoItem</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="映射store"><a href="#映射store" class="headerlink" title="映射store"></a>映射store</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;./store&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  store</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="store对象"><a href="#store对象" class="headerlink" title="store对象"></a>store对象</h3><ol>
+<li>所有用vuex管理的组件中都多了一个属性$store，它就是一个store对象</li>
+<li>属性<ul>
+<li>state:注册的state对象</li>
+<li>getters:注册的getters对象</li>
+</ul>
+</li>
+<li>方法<br>dispath(actionName,data):分发调用action</li>
+</ol>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue 分析</title>
     <url>/posts/48d08c37.html</url>
     <content><![CDATA[<h2 id="数据代理"><a href="#数据代理" class="headerlink" title="数据代理"></a>数据代理</h2><ol>
@@ -88,23 +151,31 @@
 <li>基本思想：通过defineProperty()来监视data中所有属性（任意层次）数据的变化，一旦变化就去更新界面</li>
 </ol>
 <h3 id="四个重要对象"><a href="#四个重要对象" class="headerlink" title="四个重要对象"></a>四个重要对象</h3><ol>
-<li>Observer</li>
-<li>Dep<br>它的实例什么时候创建？<pre><code>答：初始化时给data的属性进行数据劫持时创建的</code></pre>
-个数？<pre><code>答：与data中的属性一一对应</code></pre>
-Dep的结构？<pre><code>答：
+<li><p>Observer</p>
+</li>
+<li><p>Dep<br>它的实例什么时候创建？</p>
+<pre><code>答：初始化时给data的属性进行数据劫持时创建的</code></pre>
+<p>个数？</p>
+<pre><code>答：与data中的属性一一对应</code></pre>
+<p>Dep的结构？</p>
+<pre><code>答：
 id：标识
 subs：[] n个相关的watcher的容器</code></pre>
 </li>
-<li>Watcher<br>它的实例什么时候创建？<pre><code>答：初始化解析大括号表达式/一般指令时创建</code></pre>
-个数？<pre><code>答：与模板中表达式（不包含事件指令）一一对应</code></pre>
-watcher的结构？<pre><code>答：
+<li><p>Compile</p>
+</li>
+<li><p>Watcher<br>它的实例什么时候创建？</p>
+<pre><code>答：初始化解析大括号表达式/一般指令时创建</code></pre>
+<p>个数？</p>
+<pre><code>答：与模板中表达式（不包含事件指令）一一对应</code></pre>
+<p>watcher的结构？</p>
+<pre><code>答：
     this.cb = cb; //用于更新界面的回调
     this.vm = vm; // vm
     this.exp = exp; // 对应的表达式
     this.depIds = &#123;depid, dep&#125;; // 相关的n个dep的容器对象
     this.value = this.get(); // 当前表达式对应的value</code></pre>
 </li>
-<li></li>
 </ol>
 <h2 id="Dep与Watcher的关系"><a href="#Dep与Watcher的关系" class="headerlink" title="Dep与Watcher的关系"></a>Dep与Watcher的关系</h2><h3 id="什么关系？"><a href="#什么关系？" class="headerlink" title="什么关系？"></a>什么关系？</h3><pre><code>答：多对多的关系
     name ==&gt; Dep ==&gt; n个watcher（模板中有多个表达式使用了此属性：&#123;&#123;a&#125;&#125; v-text=&quot;a&quot;）
@@ -117,10 +188,11 @@ watcher的结构？<pre><code>答：
 <li>双向数据绑定是建立在单向数据绑定（model ==&gt; View）的基础之上的</li>
 <li>双向数据绑定的实现流程：<ol>
 <li>在解析v-model指令时，给当前元素添加input监听</li>
-<li>当input的value发生变化时，将最新的值赋值给当前表达式所对应的data属性<h2 id="MVVM结构图"><a href="#MVVM结构图" class="headerlink" title="MVVM结构图"></a>MVVM结构图</h2>!(MVVM结构图)[/images/mvvm.png]</li>
+<li>当input的value发生变化时，将最新的值赋值给当前表达式所对应的data属性</li>
 </ol>
 </li>
 </ol>
+<h2 id="MVVM结构图"><a href="#MVVM结构图" class="headerlink" title="MVVM结构图"></a>MVVM结构图</h2><p><img src="/images/mvvm.png" alt="MVVM结构图"></p>
 ]]></content>
       <categories>
         <category>vue</category>
