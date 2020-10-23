@@ -31,6 +31,19 @@
       </tags>
   </entry>
   <entry>
+    <title>mybatis-mapper</title>
+    <url>/posts/886e92c3.html</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>mapper</category>
+        <category>mybatis插件</category>
+      </categories>
+      <tags>
+        <tag>mapper</tag>
+        <tag>mybatis插件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vuex 学习</title>
     <url>/posts/e61720a.html</url>
     <content><![CDATA[<h1 id="Vuex-是什么？"><a href="#Vuex-是什么？" class="headerlink" title="Vuex 是什么？"></a>Vuex 是什么？</h1><p>Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。<br>这个状态自管理应用包含以下几个部分：</p>
