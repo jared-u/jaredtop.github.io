@@ -31,14 +31,102 @@
       </tags>
   </entry>
   <entry>
-    <title>mybatis-mapper</title>
-    <url>/posts/886e92c3.html</url>
-    <content><![CDATA[]]></content>
+    <title>QBC查询</title>
+    <url>/posts/c233a97c.html</url>
+    <content><![CDATA[<h1 id="QBC查询"><a href="#QBC查询" class="headerlink" title="QBC查询"></a>QBC查询</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><strong>Query By Criteria</strong></p>
+<p>Criteria是Criterion的复数形式。意识是：规则、标准、准则。在SQL语句中相当于查询条件。</p>
+<p>QBC查询是将查询条件通过Java对象进行模块化封装。</p>
+]]></content>
       <categories>
+        <category>Mybatis</category>
         <category>mapper</category>
         <category>mybatis插件</category>
       </categories>
       <tags>
+        <tag>Mybatis</tag>
+        <tag>mybatis插件</tag>
+        <tag>Mapper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通用mapper常用注解和方法</title>
+    <url>/posts/83d0a7ff.html</url>
+    <content><![CDATA[<h1 id="常用注解"><a href="#常用注解" class="headerlink" title="常用注解"></a>常用注解</h1><h2 id="Table注解"><a href="#Table注解" class="headerlink" title="@Table注解"></a>@Table注解</h2><p><strong>作用：</strong>建立实体类和数据库表之间的对应关系。</p>
+<p><strong>默认规则：</strong>实体类类名首字母小写作为表明。Employee类→employee表</p>
+<p><strong>用法：</strong>在@Table注解的name属性中指定目标数据库表的表明</p>
+<p><img src="http://img.jared.top/202010241915_794.png" alt="@Table注解"></p>
+<h2 id="Column注解"><a href="#Column注解" class="headerlink" title="@Column注解"></a>@Column注解</h2><p><strong>作用：</strong>建立实体类字段和数据库表字段之间的对于关系</p>
+<p><strong>默认规则：</strong></p>
+<ul>
+<li>实体类字段：驼峰式命名</li>
+<li>数据库表字段：使用“-”区分各个单词</li>
+</ul>
+<p><strong>用法：</strong>在@Column注解的name属性中指定目标字段的字段名</p>
+<p><img src="http://img.jared.top/202010241913_362.png" alt="@Column注解"></p>
+<h2 id="Id注解"><a href="#Id注解" class="headerlink" title="@Id注解"></a>@Id注解</h2><p>通用Mapper在执行xxxByPrimaryKey(key)方法时，有两种情况。</p>
+<p>情况1：没有使用@Id注解明确指定主键字段</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> emp_id,emp_name,emp_salary,emp_age <span class="keyword">FROM</span> table_emp <span class="keyword">WHERE</span> emp_id = ? <span class="keyword">AND</span> emp_name = ? <span class="keyword">AND</span> emp_salary = ? <span class="keyword">AND</span> emp_age = ?</span><br></pre></td></tr></table></figure>
+
+<p>之所以会生成上面这样的WHERE子句是因为通用Mapper将实体类中的所有字段都拿来放在一起作为联合主键。</p>
+<p>情况2：使用@Id注解明确标记和数据库表中主键字段对应的实体类字段。</p>
+<p><img src="http://img.jared.top/202010241903_753.png" alt="@Id注解"></p>
+<h2 id="GeneratedValue注解"><a href="#GeneratedValue注解" class="headerlink" title="@GeneratedValue注解"></a>@GeneratedValue注解</h2><p><strong>作用：</strong>让通用Mapper在执行insert操作之后将数据库自动生成的主键值回写到实体类对象中。</p>
+<p><strong>自增主键方法：</strong></p>
+<p><img src="http://img.jared.top/202010242012_726.png"></p>
+<p><strong>序列主键用法：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Id</span></span><br><span class="line"><span class="meta">@GeneratedValue(</span></span><br><span class="line"><span class="meta">    strategy = GenerationType.IDENTITY,</span></span><br><span class="line"><span class="meta">	generator = &quot;select SEQ_ID.nextval from dual&quot;)</span></span><br><span class="line"><span class="keyword">private</span> Integer empId;</span><br></pre></td></tr></table></figure>
+
+<p>应用场景：购物车结账</p>
+<ul>
+<li>增加商品销量…</li>
+<li>减少商品库存…</li>
+<li>生成订单数据v→封装到Order对象中→保存Order对象→数据库自动生成主键值→回写到实体类对象Order中</li>
+<li>生成一系列订单详情数据→List<OrderItem>→在每一个OrderItem中设置Order对象的主键值作为外键→批量保存List<OrderItem></li>
+<li>…</li>
+</ul>
+<h1 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h1><h2 id="selectOne方法"><a href="#selectOne方法" class="headerlink" title="selectOne方法"></a>selectOne方法</h2><p><strong>通用Mapper替我们自动生成的sql语句情况</strong></p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">==&gt;  Preparing: SELECT emp_id,emp_name,emp_salary,emp_age FROM table_emp WHERE emp_name = ? AND emp_salary = ?</span><br><span class="line">==&gt; Parameters: bob(String), 5560.11(Double)</span><br><span class="line">&lt;==    Columns: emp_id, emp_name, emp_salary, emp_age</span><br><span class="line">&lt;==        Row: 3, bob, 5560.11, 40</span><br><span class="line">&lt;==      Total: 1</span><br></pre></td></tr></table></figure>
+
+<p><strong>实体类封装查询条件生成WHERE子句的规则</strong></p>
+<ul>
+<li>使用非空的值生成WHERE子句</li>
+<li>在条件表达式中使用“=”进行比较</li>
+</ul>
+<p><strong>要求必须返回一个实体类结果，如果有多个，则会抛出异常</strong></p>
+<h2 id="xxxByPrimaryKey-方法"><a href="#xxxByPrimaryKey-方法" class="headerlink" title="xxxByPrimaryKey 方法"></a>xxxByPrimaryKey 方法</h2><p>需要使用@Id注解明确标记和数据库主键字段对应的实体类字段，否则通用Mapper会将所有实体类字段作为联合主键。</p>
+<h2 id="xxxSelective-方法"><a href="#xxxSelective-方法" class="headerlink" title="xxxSelective 方法"></a>xxxSelective 方法</h2><p>非主键字段如果为null值，则不加入到SQL语句中。</p>
+]]></content>
+      <categories>
+        <category>Mybatis</category>
+        <category>mapper</category>
+        <category>mybatis插件</category>
+      </categories>
+      <tags>
+        <tag>Mybatis</tag>
+        <tag>mapper</tag>
+        <tag>mybatis插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通用Mapper</title>
+    <url>/posts/886e92c3.html</url>
+    <content><![CDATA[<h1 id="通用Mapper"><a href="#通用Mapper" class="headerlink" title="通用Mapper"></a>通用Mapper</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="构建springboot-mybatis项目"><a href="#构建springboot-mybatis项目" class="headerlink" title="构建springboot+mybatis项目"></a>构建springboot+mybatis项目</h3><h3 id="创建Java实体类"><a href="#创建Java实体类" class="headerlink" title="创建Java实体类"></a>创建Java实体类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Table(name=&quot;table_emp&quot;)</span> <span class="comment">//mybatis通用接口mapper依赖JPA实体类采用JPA</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Emploee</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="keyword">private</span> Integer empId;</span><br><span class="line">    <span class="meta">@Column(name= &quot;emp_name&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String empName;</span><br><span class="line">    <span class="meta">@Column(name= &quot;emp_salary&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Double empSalary;</span><br><span class="line">    <span class="meta">@Column(name= &quot;emp_age&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer empAge;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Emploee</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Emploee</span><span class="params">(Integer empId, String empName, Double empSalary, Integer empAge)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.empId = empId;</span><br><span class="line">        <span class="keyword">this</span>.empName = empName;</span><br><span class="line">        <span class="keyword">this</span>.empSalary = empSalary;</span><br><span class="line">        <span class="keyword">this</span>.empAge = empAge;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 省略getters和setters toString</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>tk.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mapper-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="创建公用接口继承通用Mapper和MySqlMapper"><a href="#创建公用接口继承通用Mapper和MySqlMapper" class="headerlink" title="创建公用接口继承通用Mapper和MySqlMapper"></a>创建公用接口继承通用Mapper和MySqlMapper</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BaseMapper</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">T</span>&gt;, <span class="title">MySqlMapper</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="application-properties配置"><a href="#application-properties配置" class="headerlink" title="application.properties配置"></a>application.properties配置</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"># mysql配置</span><br><span class="line">spring.datasource.url=jdbc:mysql://localhost:3306/common_mapper?useUnicode=true</span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=123456</span><br><span class="line">spring.datasource.driver-class-name=com.mysql.jdbc.Driver</span><br><span class="line"># mybatis配置</span><br><span class="line"># 实体类位置</span><br><span class="line">mybatis.type-aliases-package=com.jared.mapper.entity</span><br><span class="line"># 公用接口类路径</span><br><span class="line">mapper.mappers=com.jared.mapper.common.mapper.BaseMapper</span><br><span class="line">mapper.identity=MYSQL</span><br></pre></td></tr></table></figure>
+<h3 id="创建普通mapper"><a href="#创建普通mapper" class="headerlink" title="创建普通mapper"></a>创建普通mapper</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 员工通用接口继承公用接口,注意泛型</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Jared</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-10-23 16:21</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeMapper</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">Emploee</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="创建服务层接口"><a href="#创建服务层接口" class="headerlink" title="创建服务层接口"></a>创建服务层接口</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeService</span> </span>&#123;</span><br><span class="line">    <span class="function">Emploee <span class="title">getOne</span><span class="params">(Emploee employeeQueryCondition)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="创建服务实现层接口"><a href="#创建服务实现层接口" class="headerlink" title="创建服务实现层接口"></a>创建服务实现层接口</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeServiceImpl</span> <span class="keyword">implements</span> <span class="title">EmployeeService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> EmployeeMapper employeeMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Emploee <span class="title">getOne</span><span class="params">(Emploee employeeQueryCondition)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.employeeMapper.selectOne(employeeQueryCondition);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试接口"><a href="#测试接口" class="headerlink" title="测试接口"></a>测试接口</h2><h3 id="根据实体类对象封装数据查询结构"><a href="#根据实体类对象封装数据查询结构" class="headerlink" title="根据实体类对象封装数据查询结构"></a>根据实体类对象封装数据查询结构</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//1.创建封装查询条件的实体类对象</span></span><br><span class="line">    Emploee employeeQueryCondition = <span class="keyword">new</span> Emploee(<span class="keyword">null</span>,<span class="string">&quot;bob&quot;</span>,<span class="number">5560.11</span>,<span class="keyword">null</span>);</span><br><span class="line">    <span class="comment">//2.执行查询</span></span><br><span class="line">    Emploee emploeyeQueryResult=employeeService.getOne(employeeQueryCondition);</span><br><span class="line">    <span class="comment">//3.打印</span></span><br><span class="line">    System.out.println(emploeyeQueryResult);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Mybatis</category>
+        <category>mapper</category>
+        <category>mybatis插件</category>
+      </categories>
+      <tags>
+        <tag>Mybatis</tag>
         <tag>mapper</tag>
         <tag>mybatis插件</tag>
       </tags>
@@ -382,23 +470,5 @@ subs：[] n个相关的watcher的容器</code></pre>
         <tag>kafka</tag>
         <tag>zookeeper</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/posts/4a17b156.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
 </search>
