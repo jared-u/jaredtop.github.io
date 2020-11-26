@@ -1,313 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>springcloud——consul入门</title>
-    <url>/posts/ca26ff8a.html</url>
-    <content><![CDATA[<h1 id="consul-入门"><a href="#consul-入门" class="headerlink" title="consul 入门"></a>consul 入门</h1><p>Consul是一款由<a href="https://www.hashicorp.com/">HashiCorp</a>公司开源的，用于服务治理的软件，<a href="https://spring.io/projects/spring-cloud-consul">Spring Cloud Consul</a>对其进行了封装。Consul具有如下特点:</p>
+    <title>kafka相关操作及报错</title>
+    <url>/posts/18e29e3e.html</url>
+    <content><![CDATA[<h3 id="启动zookeeper和kafka"><a href="#启动zookeeper和kafka" class="headerlink" title="启动zookeeper和kafka"></a>启动zookeeper和kafka</h3><a id="more"></a>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">启动zookeeper</span><br><span class="line">nohup ./kafka_2.13-2.6.0/bin/zookeeper-server-start.sh ./kafka_2.13-2.6.0/config/zookeeper.properties &amp;</span><br><span class="line">启动kafka</span><br><span class="line">nohup ./bin/kafka-server-start.sh config/server.properties &amp;</span><br><span class="line"></span><br><span class="line">创建topic</span><br><span class="line">./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic hello</span><br><span class="line">./bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092</span><br><span class="line">查看topic</span><br><span class="line">./bin/kafka-topics.sh --list --zookeeper localhost:2181</span><br><span class="line">./bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092</span><br><span class="line">生产消息</span><br><span class="line">./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic hello</span><br><span class="line">./bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="报错解决方法"><a href="#报错解决方法" class="headerlink" title="报错解决方法"></a>报错解决方法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">创建消费者时候报错：</span><br><span class="line"></span><br><span class="line">.&#x2F;bin&#x2F;kafka-console-consumer.sh --zookeeper localhost:2181 --topic hello --from-beginning</span><br><span class="line">zookeeper is not a recognized option</span><br><span class="line">问题原因：</span><br><span class="line">新版本kafka中，--zookeeper这种启动方式已删除。</span><br><span class="line">解决办法：</span><br><span class="line">0.90版本之后启动消费者的方法如下：</span><br><span class="line"></span><br><span class="line">.&#x2F;bin&#x2F;kafka-console-consumer.sh --bootstrap-server localhost:2181 --topic hello --from-beginning</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>kafka</category>
+        <category>zookeeper</category>
+      </categories>
+      <tags>
+        <tag>kafka</tag>
+        <tag>zookeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Lombok注解的使用</title>
+    <url>/posts/8340b4fb.html</url>
+    <content><![CDATA[<h3 id="POJO类常用注解"><a href="#POJO类常用注解" class="headerlink" title="POJO类常用注解:"></a>POJO类常用注解:</h3><p><strong>@Getter/@Setter: 作用类上，生成所有成员变量的getter/setter方法；作用于成员变量上，生成该成员变量的getter/setter方法。可以设定访问权限及是否懒加载等。</strong></p>
+<p><strong>@ToString：作用于类，覆盖默认的toString()方法，可以通过of属性限定显示某些字段，通过exclude属性排除某些字段。</strong></p>
+<a id="more"></a>
+<p><strong>@EqualsAndHashCode：作用于类，覆盖默认的equals和hashCode</strong></p>
+<p><strong>@NonNull：主要作用于成员变量和参数中，标识不能为空，否则抛出空指针异常。</strong></p>
+<p><strong>@NoArgsConstructor, @RequiredArgsConstructor, @AllArgsConstructor：作用于类上，用于生成构造函数。有staticName、access等属性。</strong></p>
+<p><strong>staticName属性一旦设定，将采用静态方法的方式生成实例，access属性可以限定访问权限。</strong></p>
+<p><strong>@NoArgsConstructor：生成无参构造器；</strong></p>
+<p><strong>@RequiredArgsConstructor：生成包含final和@NonNull注解的成员变量的构造器；</strong></p>
+<p><strong>@AllArgsConstructor：生成全参构造器</strong></p>
+<p><strong>@Data：作用于类上，是以下注解的集合：@ToString @EqualsAndHashCode @Getter @Setter @RequiredArgsConstructor</strong></p>
+<p><strong>@Builder：作用于类上，将类转变为建造者模式</strong></p>
+<p><strong>@Log：作用于类上，生成日志变量。针对不同的日志实现产品，有不同的注解：</strong></p>
+<h3 id="其他重要注解："><a href="#其他重要注解：" class="headerlink" title="其他重要注解："></a>其他重要注解：</h3><p><strong>@Cleanup：自动关闭资源，针对实现了java.io.Closeable接口的对象有效，如：典型的IO流对象</strong></p>
+<p><strong>@SneakyThrows：可以对受检异常进行捕捉并抛出，可以改写上述的main方法如下：</strong></p>
+<p><strong>@Synchronized：作用于方法级别，可以替换synchronize关键字或lock锁，用处不大.</strong></p>
+]]></content>
+      <categories>
+        <category>Lombok</category>
+        <category>插件</category>
+      </categories>
+      <tags>
+        <tag>Lombok</tag>
+        <tag>注解</tag>
+        <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mybatis 常见面试题</title>
+    <url>/posts/8f175f96.html</url>
+    <content><![CDATA[<h1 id="什么是-MyBatis？"><a href="#什么是-MyBatis？" class="headerlink" title="什么是 MyBatis？"></a>什么是 MyBatis？</h1><p>MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</p>
+<a id="more"></a>
+<h1 id="Mybaits的优点"><a href="#Mybaits的优点" class="headerlink" title="Mybaits的优点"></a>Mybaits的优点</h1><ol>
+<li>基于SQL语句编程，相当灵活，不会对应用程序或者数据库的现有设计造成任何影响，SQL写在XML里，解除sql与程序代码的耦合，便于统一管理；提供XML标签，支持编写动态SQL语句，并可重用。</li>
+<li>与JDBC相比，减少了50%以上的代码量，消除了JDBC大量冗余的代码，不需要手动开关连接；</li>
+<li>很好的与各种数据库兼容（因为MyBatis使用JDBC来连接数据库，所以只要JDBC支持的数据库MyBatis都支持）。</li>
+<li>能够与Spring很好的集成；</li>
+<li>提供映射标签，支持对象与数据库的ORM字段关系映射；提供对象关系映射标签，支持对象关系组件维护。    </li>
+</ol>
+<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id="MyBatis与Hibernate有哪些不同"><a href="#MyBatis与Hibernate有哪些不同" class="headerlink" title="MyBatis与Hibernate有哪些不同"></a>MyBatis与Hibernate有哪些不同</h2><ol>
+<li>Mybatis和hibernate不同，它不完全是一个ORM框架，因为MyBatis需要程序员自己编写Sql语句。</li>
+<li>Mybatis直接编写原生态sql，可以严格控制sql执行性能，灵活度高，非常适合对关系数据模型要求不高的软件开发，因为这类软件需求变化频繁，一但需求变化要求迅速输出成果。但是灵活的前提是mybatis无法做到数据库无关性，如果需要实现支持多种数据库的软件，则需要自定义多套sql映射文件，工作量大。 </li>
+<li>Hibernate对象/关系映射能力强，数据库无关性好，对于关系模型要求高的软件，如果用hibernate开发可以节省很多代码，提高效率。 </li>
+</ol>
+<hr>
+<h2 id="和-的区别是什么"><a href="#和-的区别是什么" class="headerlink" title="#{}和${}的区别是什么?"></a>#{}和${}的区别是什么?</h2><p> #{} 是预编译处理， ${} 是字符串替换。<br>Mybatis在处理 #{} 时，会将sql中的 #{} 替换为 ? 号，调用PreparedStatement的set方法来赋值；<br>Mybatis在处理 ${} 时，就是把 ${} 替换成变量的值。<br>使用 #{} 可以有效的防止SQL注入，提高系统安全性。    </p>
+<hr>
+<h2 id="当实体类中的属性名和表中的字段名不一样-，怎么办？"><a href="#当实体类中的属性名和表中的字段名不一样-，怎么办？" class="headerlink" title="当实体类中的属性名和表中的字段名不一样 ，怎么办？"></a>当实体类中的属性名和表中的字段名不一样 ，怎么办？</h2><p>第1种： 通过在查询的sql语句中定义字段名的别名，让字段名的别名和实体类的属性名一致。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">”</span>&quot;<span class="attr">selectorder</span>&quot; <span class="attr">parametertype</span>=<span class="string">&quot;int&quot;</span> <span class="attr">resultetype</span>=<span class="string">&quot;top.jared.entity.order&quot;</span>&gt;</span></span><br><span class="line">    select order_id id, order_no orderno ,order_price price form orders where order_id=#&#123;id&#125;;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>第2种： 通过<code>&lt;resultMap&gt;</code>来映射字段名和实体类属性名的一一对应的关系。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getOrder&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;int&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;orderresultmap&quot;</span>&gt;</span></span><br><span class="line">    select * from orders where order_id=#&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">&quot;top.jared.entity.order&quot;</span> <span class="attr">id</span>=<span class="string">&quot;orderresultmap&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">!–用id属性来映射主键字段–</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> <span class="attr">column</span>=<span class="string">&quot;order_id&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">!–用result属性来映射非主键字段，property为实体类属性名，column为数据表中的属性–</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;orderno&quot;</span> <span class="attr">column</span>=<span class="string">&quot;order_no&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;price&quot;</span> <span class="attr">column</span>=<span class="string">&quot;order_price&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">reslutMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="模糊查询like语句该怎么写"><a href="#模糊查询like语句该怎么写" class="headerlink" title="模糊查询like语句该怎么写?"></a>模糊查询like语句该怎么写?</h2><p>第1种：在Java代码中添加sql通配符。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">String wildcardname = <span class="string">&quot;%smi%&quot;</span>;</span><br><span class="line">list&lt;name&gt; names = mapper.selectlike(wildcardname);</span><br><span class="line"> </span><br><span class="line">&lt;select id=<span class="string">&quot;selectlike&quot;</span>&gt;</span><br><span class="line"> select * from foo where bar like #&#123;value&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+<p>第2种：在sql语句中拼接通配符，会引起sql注入</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">string wildcardname = <span class="string">&quot;smi&quot;</span>;</span><br><span class="line">list&lt;name&gt; names = mapper.selectlike(wildcardname);</span><br><span class="line"> </span><br><span class="line">&lt;select id=<span class="string">&quot;selectlike&quot;</span>&gt;</span><br><span class="line">     select * from foo where bar like <span class="string">&quot;%&quot;</span>$&#123;value&#125;<span class="string">&quot;%&quot;</span></span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？"><a href="#通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？" class="headerlink" title="通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？"></a>通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？</h2><p>Dao接口即Mapper接口。接口的全限名，就是映射文件中的<code>namespace</code>的值；接口的方法名，就是映射文件中Mapper的Statement的id值；接口方法内的参数，就是传递给sql的参数。      </p>
+<p>Mapper接口是没有实现类的，当调用接口方法时，接口全限名+方法名拼接字符串作为key值，可唯一定位一个MapperStatement。在Mybatis中，每一个<code>&lt;select&gt;</code>、<code>&lt;insert&gt;</code>、<code>&lt;update&gt;</code>、<code>&lt;delete&gt;</code>标签，都会被解析为一个MapperStatement对象。      </p>
+<blockquote>
+<p>举例：com.mybatis3.mappers.StudentDao.findStudentById，可以唯一找到namespace为com.mybatis3.mappers.StudentDao下面 id 为 findStudentById 的 MapperStatement。</p>
+</blockquote>
+<hr>
+<h2 id="Mybatis是如何进行分页的？分页插件的原理是什么？"><a href="#Mybatis是如何进行分页的？分页插件的原理是什么？" class="headerlink" title="Mybatis是如何进行分页的？分页插件的原理是什么？"></a>Mybatis是如何进行分页的？分页插件的原理是什么？</h2><p>  Mybatis使用RowBounds对象进行分页，它是针对ResultSet结果集执行的内存分页，而非物理分页。可以在sql内直接书写带有物理分页的参数来完成物理分页功能，也可以使用分页插件来完成物理分页。<br>  分页插件的基本原理是使用Mybatis提供的插件接口，实现自定义插件，在插件的拦截方法内拦截待执行的sql，然后重写sql，根据dialect方言，添加对应的物理分页语句和物理分页参数。</p>
+<hr>
+<h2 id="Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？"><a href="#Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？" class="headerlink" title="Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？"></a>Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？</h2><p>第一种是使用<code>&lt;resultMap&gt;</code>标签，逐一定义数据库列名和对象属性名之间的映射关系。<br>第二种是使用sql列的别名功能，将列的别名书写为对象属性名。<br>有了列名与属性名的映射关系后，Mybatis通过反射创建对象，同时使用反射给对象的属性逐一赋值并返回，那些找不到映射关系的属性，是无法完成赋值的。</p>
+<hr>
+<h2 id="如何执行批量插入"><a href="#如何执行批量插入" class="headerlink" title="如何执行批量插入?"></a>如何执行批量插入?</h2><p>首先,创建一个简单的insert语句:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertname&quot;</span>&gt;</span></span><br><span class="line">  insert into names(name) values(#&#123;value&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后在java代码中像下面这样执行批处理插入: </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">list&lt;string&gt; names = <span class="keyword">new</span> arraylist();</span><br><span class="line">names.add(“fred”);</span><br><span class="line">names.add(“barney”);</span><br><span class="line">names.add(“betty”);</span><br><span class="line">names.add(“wilma”);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意这里 executortype.batch</span></span><br><span class="line">sqlsession sqlsession = sqlsessionfactory.opensession(executortype.batch);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    namemapper mapper = sqlsession.getmapper(namemapper.class);</span><br><span class="line">    <span class="keyword">for</span> (string name : names) &#123;</span><br><span class="line">        mapper.insertname(name);</span><br><span class="line">    &#125;</span><br><span class="line">    sqlsession.commit();</span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    sqlSession.rollback(); </span><br><span class="line">    <span class="keyword">throw</span> e; </span><br><span class="line">&#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">    sqlsession.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="如何获取自动生成的-主-键值"><a href="#如何获取自动生成的-主-键值" class="headerlink" title="如何获取自动生成的(主)键值?"></a>如何获取自动生成的(主)键值?</h2><p>insert 方法总是返回一个int值 ，这个值代表的是插入的行数。<br>如果采用自增长策略，自动生成的键值在 insert 方法执行完后可以被设置到传入的参数对象中。<br>示例： </p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertname&quot;</span> <span class="attr">usegeneratedkeys</span>=<span class="string">&quot;true&quot;</span> <span class="attr">keyproperty</span>=<span class="string">&quot;id&quot;</span>&gt;</span></span><br><span class="line">    insert into names (name) values (#&#123;name&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">name name = <span class="keyword">new</span> name();</span><br><span class="line">name.setname(<span class="string">&quot;fred&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> rows = mapper.insertname(name);</span><br><span class="line"><span class="comment">// 完成后,id已经被设置到对象中</span></span><br><span class="line">system.out.println(<span class="string">&quot;rows inserted = &quot;</span> + rows);</span><br><span class="line">system.out.println(<span class="string">&quot;generated key value = &quot;</span> + name.getid());</span><br></pre></td></tr></table></figure>
+<hr>
+]]></content>
+      <categories>
+        <category>Mybatis</category>
+        <category>面试题</category>
+      </categories>
+      <tags>
+        <tag>Mybatis</tag>
+        <tag>面试题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring 常见面试题</title>
+    <url>/posts/228e4888.html</url>
+    <content><![CDATA[<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id="什么是Spring框架？包含哪些主要模块？"><a href="#什么是Spring框架？包含哪些主要模块？" class="headerlink" title="什么是Spring框架？包含哪些主要模块？"></a>什么是Spring框架？包含哪些主要模块？</h2><blockquote>
+<p>Spring框架是一个为Java应用程序的开发提供了综合、广泛的基础性支持的Java平台。<br>主要模块： 核心容器、数据访问/集成、Web、AOP（面向切面编程）、工具、消息和测试模块</p>
+</blockquote>
+<hr>
+<h2 id="使用Spring框架的好处？"><a href="#使用Spring框架的好处？" class="headerlink" title="使用Spring框架的好处？"></a>使用Spring框架的好处？</h2><ul>
+<li>Dependency Injection（DI）方法使得构造器和JavaBean properties文件中的依赖关系一目了然</li>
+<li>与EJB容器相比较，IoC容器更加趋向于轻量级。这样一来IoC容器在有限的内存和CPU资源的情况下进行应用程序的开发和发布就变得十分有利</li>
+<li>Spring利用了已有的技术，比如ORM框架、logging框架、J2EE、Quartz和JDK Timer，以及其他视图技术</li>
+<li>Spring框架是按照模块的形式来组织的。</li>
+<li>Spring提供了一个便捷的事务管理接口</li>
+<li>提供相应的测试环境代码</li>
+</ul>
+<hr>
+<h2 id="什么是控制反转（IOC）？什么是依赖注入？"><a href="#什么是控制反转（IOC）？什么是依赖注入？" class="headerlink" title="什么是控制反转（IOC）？什么是依赖注入？"></a>什么是控制反转（IOC）？什么是依赖注入？</h2><p>在Java中依赖注入有三种实现方式：构造器注入，setter方法注入，接口注入</p>
+<h2 id="BeanFactory和ApplicationContext-有什么区别？"><a href="#BeanFactory和ApplicationContext-有什么区别？" class="headerlink" title="BeanFactory和ApplicationContext 有什么区别？"></a>BeanFactory和ApplicationContext 有什么区别？</h2><p>BeanFactory可以理解为含有bean集合的工厂类。BeanFactory包含了种bean的定义，以便在接收到客户端请求时将对应的bean实例化。<br>BeanFactory还能在实例化对象时生成协作类之间的关系。此举将bean自身与bean客户端的配置中解放出来。BeanFactory还包含了bean生命周期的控制，调用客户端的初始化方法(initialization methods)和销毁方法(destruction methods)。<br>从表面上看，ApplicationContext如同BeanFactory一样具有bean定义、bean关联关系的设置，根据请求分发bean的功能。但ApplicationContext在此基础上还提供了其它的功能：</p>
+<blockquote>
 <ol>
-<li>服务注册 - 自动注册和取消注册服务实例的网络位置</li>
-<li>运行状况检查 - 检测服务实例何时启动并运行</li>
-<li>分布式配置 - 确保所有服务实例使用相同的配置</li>
+<li>提供了支持国际化的文本消息</li>
+<li>统一的资源文件读取方式</li>
+<li>已在监听器中注册的bean的事件</li>
 </ol>
-<p>Consul agent有两种运行模式：Server和Client。这里的Server和Client只是Consul集群层面的区分，与搭建在Cluster之上 的应用服务无关。 以Server模式运行的Consul agent节点用于维护Consul集群的状态，官方建议每个Consul Cluster至少有3个或以上的运行在Server mode的Agent，Client节点不限。</p>
-<h2 id="安装consul"><a href="#安装consul" class="headerlink" title="安装consul"></a>安装consul</h2><p>Consul下载地址：<a href="https://www.consul.io/downloads.html">https://www.consul.io/downloads.html</a></p>
-<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>查看版本：<code>consul --version</code></p>
-<p>启动：<code>consul agent -dev</code></p>
-<p>访问consul首页：<code>http://localhost:8500</code></p>
-]]></content>
-      <categories>
-        <category>springcloud</category>
-        <category>consul</category>
-      </categories>
-      <tags>
-        <tag>springcloud</tag>
-        <tag>consul</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>springcloud——Eureka入门</title>
-    <url>/posts/43f5250c.html</url>
-    <content><![CDATA[<h1 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h1><h2 id="服务治理"><a href="#服务治理" class="headerlink" title="服务治理"></a>服务治理</h2><p><img src="http://img.jared.top/202011011027_580.png" alt="服务治理"></p>
-<h2 id="服务注册与发现"><a href="#服务注册与发现" class="headerlink" title="服务注册与发现"></a>服务注册与发现</h2><p><img src="http://img.jared.top/202011011027_96.png" alt="服务注册与发现"></p>
-<h2 id="Eureka系统结构"><a href="#Eureka系统结构" class="headerlink" title="Eureka系统结构"></a>Eureka系统结构</h2><p><img src="http://img.jared.top/202011011028_379.png" alt="Eureka系统结构"></p>
-<h2 id="Eureka的两个组件"><a href="#Eureka的两个组件" class="headerlink" title="Eureka的两个组件"></a>Eureka的两个组件</h2><h3 id="Eureka-Server"><a href="#Eureka-Server" class="headerlink" title="Eureka Server"></a>Eureka Server</h3><p><strong>Eureka Server提供服务注册服务</strong></p>
-<p>各个微服务节点通过配置启动后，会在EurekaServer中进行注册，这样EurekaServer中的服务注册表中将会存储所有可用服务节点的信息，服务节点的信息可以在界面中直观看到。</p>
-<h3 id="Eureka-Client"><a href="#Eureka-Client" class="headerlink" title="Eureka Client"></a>Eureka Client</h3><p><strong>EurekaClient通过注册中心进行访问</strong></p>
-<p>是一个Java客户端，用于简化Eureka Server的交互，客户端同时也具备一个内置的、使用轮询（round-robin）负载算法的负载均衡器。在应用启动后，将会向Eureka Server发送心跳（默认周期为30秒）。如果Eureka Server在多个心跳周期内没有接受到某个节点的心跳，EurekaServer将会从服务注册表中将这个服务节点移除（默认90秒）</p>
-<h2 id="单机Eureka构建步骤"><a href="#单机Eureka构建步骤" class="headerlink" title="单机Eureka构建步骤"></a>单机Eureka构建步骤</h2><h3 id="IDEA生成EurekaServer端服务注册中心"><a href="#IDEA生成EurekaServer端服务注册中心" class="headerlink" title="IDEA生成EurekaServer端服务注册中心"></a>IDEA生成EurekaServer端服务注册中心</h3><p><strong>建module</strong></p>
-<p><strong>cloud-eureka-server7001</strong></p>
-<p><strong>改POM</strong></p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--eureka-server--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>写YML</strong></p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">7001</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">localhost</span> <span class="comment">#eureka服务端的实例名称</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment"># false 表示不向注册中心注册自己</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># false 表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务</span></span><br><span class="line">    <span class="attr">fetch-registry:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="comment">#设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://$&#123;eureka.instance.hostname&#125;:$&#123;server.port&#125;/eureka/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>主启动</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaServer</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EurekaMain7001</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(EurekaMain7001.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>测试</strong></p>
-<p><img src="http://img.jared.top/202011011049_957.png"></p>
-<h3 id="EurekaClient端cloud-provider-payment8001"><a href="#EurekaClient端cloud-provider-payment8001" class="headerlink" title="EurekaClient端cloud-provider-payment8001"></a>EurekaClient端cloud-provider-payment8001</h3><p>将注册进EurekaServer成为服务提供者provider</p>
-<p><strong>改POM</strong></p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--eureka-client--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>写YML</strong></p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8001</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-payment-service</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">com.alibaba.druid.pool.DruidDataSource</span> <span class="comment">#当前数据源操作类型</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span>    <span class="comment">#mysql驱动包</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/db2019?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment">#表示是否将自己注册进EurekaServer默认为true。</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment">#是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡</span></span><br><span class="line">    <span class="attr">fetchRegistry:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="comment">#单机版</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:7001/eureka</span></span><br><span class="line"></span><br><span class="line"><span class="attr">mybatis:</span></span><br><span class="line">  <span class="attr">mapper-locations:</span> <span class="string">classpath:mapper/*.xml</span></span><br><span class="line">  <span class="attr">type-aliases-package:</span> <span class="string">com.atguigu.springcloud.entities</span> <span class="comment">#所有Entity别名类所在包</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>主启动</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentMain8001</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(PaymentMain8001.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>测试</strong></p>
-<p><img src="http://img.jared.top/202011011054_205.png"></p>
-<h3 id="EurekaClient端cloud-consumer-order80"><a href="#EurekaClient端cloud-consumer-order80" class="headerlink" title="EurekaClient端cloud-consumer-order80"></a>EurekaClient端cloud-consumer-order80</h3><p>将注册进EurekaServer成为服务消费者consumer</p>
-<p><strong>改POM</strong></p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--eureka-client--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>写YML</strong></p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-order-service</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment">#表示是否将自己注册进EurekaServer默认为true。</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment">#是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡</span></span><br><span class="line">    <span class="attr">fetchRegistry:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line"><span class="comment">#      单机版</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:7001/eureka</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><strong>主启动</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentMain8001</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(PaymentMain8001.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>测试</strong></p>
-<p><strong>测试</strong></p>
-<p><img src="http://img.jared.top/202011011102_602.png"></p>
-<h2 id="集群Eureka构建步骤"><a href="#集群Eureka构建步骤" class="headerlink" title="集群Eureka构建步骤"></a>集群Eureka构建步骤</h2><p>服务注册：将服务信息注册进注册中心</p>
-<p>服务发现：从注册中心上获取服务信息</p>
-<p>实质：存key服务命令 取value调用地址</p>
-<p>步骤：</p>
+</blockquote>
+<p>以下是较常见的ApplicationContext实现方式：</p>
 <ol>
-<li>先启动eureka注册中心</li>
-<li>启动服务提供者payment支付服务</li>
-<li>支付服务启动后会把自身信息（比如服务地址以别名方式注册进eureka）</li>
-<li>消费者order服务在需要调用接口时，使用服务别名去注册中心获取实际的RPC远程调用地址</li>
-<li>消费者获取调用地址后，底层实际是利用HttpClient技术实现远程调用</li>
-<li>消费者获得服务地址后会缓存在本地jvm内存中，默认每间隔30秒更新一次服务调用地址</li>
+<li>ClassPathXmlApplicationContext:从classpath的XML配置文件中读取上下文，并生成上下文定义。应用程序上下文从程序环境变量中<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;bean.xml&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>FileSystemXmlApplicationContext:由文件系统中的XML配置文件读取上下文。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ApplicationContext context = <span class="keyword">new</span> FileSystemXmlApplicationContext(<span class="string">&quot;bean.xml&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+<li>XmlWebApplicationContext:由Web应用的XML文件读取上下文。</li>
+<li>AnnotationConfigApplicationContext(基于Java配置启动容器)</li>
 </ol>
-<p>微服务RPC远程服务调用最核心的是<strong>高可用</strong>，如果注册中心只有一个，出故障就over了。</p>
-<p>解决办法：搭建Eureka注册中心集群，实现负载均衡+故障容错</p>
-<h3 id="參考cloud-eureka-server7001"><a href="#參考cloud-eureka-server7001" class="headerlink" title="參考cloud-eureka-server7001"></a>參考cloud-eureka-server7001</h3><h3 id="新建cloud-eureka-server7002"><a href="#新建cloud-eureka-server7002" class="headerlink" title="新建cloud-eureka-server7002"></a>新建cloud-eureka-server7002</h3><h3 id="改pom"><a href="#改pom" class="headerlink" title="改pom"></a>改pom</h3><h3 id="修改映射配置改hosts"><a href="#修改映射配置改hosts" class="headerlink" title="修改映射配置改hosts"></a>修改映射配置改hosts</h3><p><code>127.0.0.1    eureka7001.com 127.0.0.1    eureka7002.com</code></p>
-<h3 id="7001改yml"><a href="#7001改yml" class="headerlink" title="7001改yml"></a>7001改yml</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">7001</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">eureka7001.com</span> <span class="comment">#eureka服务端的实例名称</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment"># false 表示不向注册中心注册自己</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># false 表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务</span></span><br><span class="line">    <span class="attr">fetch-registry:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="comment">#设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://eureka7002.com:7002/eureka/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="7002改yml"><a href="#7002改yml" class="headerlink" title="7002改yml"></a>7002改yml</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">7002</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">eureka7002.com</span> <span class="comment">#eureka服务端的实例名称</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment"># false 表示不向注册中心注册自己</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># false 表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务</span></span><br><span class="line">    <span class="attr">fetch-registry:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="comment">#设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://eureka7001.com:7001/eureka/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="7002主启动"><a href="#7002主启动" class="headerlink" title="7002主启动"></a>7002主启动</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaServer</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EurekaMain7002</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(EurekaMain7002.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="LoadBalanced-注解赋予RestTemplate负载均衡的能力"><a href="#LoadBalanced-注解赋予RestTemplate负载均衡的能力" class="headerlink" title="@LoadBalanced 注解赋予RestTemplate负载均衡的能力"></a>@LoadBalanced 注解赋予RestTemplate负载均衡的能力</h3><h2 id="actuator微服务信息完善"><a href="#actuator微服务信息完善" class="headerlink" title="actuator微服务信息完善"></a>actuator微服务信息完善</h2><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">instance-id:</span> <span class="string">payment8001</span></span><br><span class="line">    <span class="attr">prefer-ip-address:</span> <span class="literal">true</span>  <span class="comment"># 访问路径可以显示ip地址</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="服务发现Discovery"><a href="#服务发现Discovery" class="headerlink" title="服务发现Discovery"></a>服务发现Discovery</h2><p>对于注册进Eureka里面的微服务，可以通过服务发现来获得该服务的信息</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="keyword">private</span> DiscoveryClient discoveryClient;</span><br><span class="line"><span class="meta">@GetMapping(value = &quot;/payment/discovery&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">discovery</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;String&gt; list=discoveryClient.getServices();</span><br><span class="line">        <span class="keyword">for</span> (String element : list) &#123;</span><br><span class="line">            log.info(<span class="string">&quot;******element: &quot;</span>+element);</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(<span class="string">&quot;CLOUD-PAYMENT-SERVICE&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (ServiceInstance instance : instances) &#123;</span><br><span class="line">            log.info(<span class="string">&quot;******instance: &quot;</span>+instance.getServiceId()+<span class="string">&quot;\t&quot;</span>+instance.getHost()+<span class="string">&quot;\t&quot;</span>+instance.getPort()+<span class="string">&quot;\t&quot;</span>+instance.getUri());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.discoveryClient;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Eureka自我保护"><a href="#Eureka自我保护" class="headerlink" title="Eureka自我保护"></a>Eureka自我保护</h2><p>导致原因：某时刻某一个微服务不可用了，eureka不会立刻清理，依旧会对该微服务的信息进行保存，属于CAP里面的AP分支</p>
-]]></content>
-      <categories>
-        <category>springcloud</category>
-        <category>Eureka</category>
-      </categories>
-      <tags>
-        <tag>springcloud</tag>
-        <tag>Eureka</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通用Mapper 逆向工程</title>
-    <url>/posts/f2bf6669.html</url>
-    <content><![CDATA[<h1 id="MYBATIS-GENERATOR-插件"><a href="#MYBATIS-GENERATOR-插件" class="headerlink" title="MYBATIS GENERATOR 插件"></a>MYBATIS GENERATOR 插件</h1><p>使用该插件可以很方便的生成实体类、Mapper接口以及对应的XML文件。</p>
-<h2 id="使用通用-Mapper-插件"><a href="#使用通用-Mapper-插件" class="headerlink" title="使用通用 Mapper 插件"></a>使用通用 Mapper 插件</h2><p><strong>引入依赖：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;tk.mybatis&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mapper-spring-boot-starter&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.1.5&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用Maven执行MBG"><a href="#使用Maven执行MBG" class="headerlink" title="使用Maven执行MBG"></a>使用Maven执行MBG</h2><p><strong>配置pom.xml:</strong></p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- $&#123;basedir&#125; 引用工程跟目录 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetJavaProject ：声明存放源码的地方--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetJavaProject</span>&gt;</span>$&#123;basedir&#125;/src/main/java<span class="tag">&lt;/<span class="name">targetJavaProject</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetMapperPackage: 声明MBG生成XxxMapper接口后存在的package位置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetMapperPackage</span>&gt;</span>com.jared.mapper.mapper<span class="tag">&lt;/<span class="name">targetMapperPackage</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetModelPackage： 声明MBG生成实体类后存放的package位置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetModelPackage</span>&gt;</span>com.jared.mapper.entity<span class="tag">&lt;/<span class="name">targetModelPackage</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetResourcesProject声明存放资源文件和XML配置文件的目录位置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetResourcesProject</span>&gt;</span>$&#123;basedir&#125;/src/main/resources<span class="tag">&lt;/<span class="name">targetResourcesProject</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetXMLPackage:声明存在具体XxxMapper.xml文件的目录位置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetXMLPackage</span>&gt;</span>mapper<span class="tag">&lt;/<span class="name">targetXMLPackage</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--  依赖版本  --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper.version</span>&gt;</span>4.1.5<span class="tag">&lt;/<span class="name">mapper.version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mysql.version</span>&gt;</span>5.1.47<span class="tag">&lt;/<span class="name">mysql.version</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--这里配置了MBG配置文件中常用到的几个路径以及包名。还包含了通用Mapper的版本和数据库JDBC驱动的版本。--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--web依赖--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.47<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>tk.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mapper-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--配置了MBG插件，并且配置了generatorConfig.xml配置文件的路径。另外还有两个依赖，分别是JDBC驱动以及通用Mapper--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.generator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-generator-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">configurationFile</span>&gt;</span>$&#123;basedir&#125;/src/main/resources/generator/generatorConfig.xml<span class="tag">&lt;/<span class="name">configurationFile</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">overwrite</span>&gt;</span>true<span class="tag">&lt;/<span class="name">overwrite</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">verbose</span>&gt;</span>true<span class="tag">&lt;/<span class="name">verbose</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;mysql.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>tk.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mapper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;mapper.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="generatorConfig-xml配置文件"><a href="#generatorConfig-xml配置文件" class="headerlink" title="generatorConfig.xml配置文件"></a>generatorConfig.xml配置文件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE generatorConfiguration</span><br><span class="line">        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD MyBatis Generator Configuration 1.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-generator-config_1_0.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;generatorConfiguration&gt;</span><br><span class="line">    &lt;!-- 引入外部属性文件 --&gt;</span><br><span class="line">    &lt;properties resource&#x3D;&quot;config.properties&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;context id&#x3D;&quot;Mysql&quot; targetRuntime&#x3D;&quot;MyBatis3Simple&quot; defaultModelType&#x3D;&quot;flat&quot;&gt;</span><br><span class="line">        &lt;property name&#x3D;&quot;beginningDelimiter&quot; value&#x3D;&quot;&#96;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;property name&#x3D;&quot;endingDelimiter&quot; value&#x3D;&quot;&#96;&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 配置通用Mapper的MBG插件相关信息 --&gt;</span><br><span class="line">        &lt;plugin type&#x3D;&quot;$&#123;mapper.plugin&#125;&quot;&gt;</span><br><span class="line">            &lt;property name&#x3D;&quot;mappers&quot; value&#x3D;&quot;$&#123;mapper.Mapper&#125;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;plugin&gt;</span><br><span class="line">        &lt;!-- 数据库相关信息 --&gt;</span><br><span class="line">        &lt;jdbcConnection driverClass&#x3D;&quot;$&#123;jdbc.driverClass&#125;&quot;</span><br><span class="line">                        connectionURL&#x3D;&quot;$&#123;jdbc.url&#125;&quot;</span><br><span class="line">                        userId&#x3D;&quot;$&#123;jdbc.user&#125;&quot;</span><br><span class="line">                        password&#x3D;&quot;$&#123;jdbc.password&#125;&quot;&gt;</span><br><span class="line">        &lt;&#x2F;jdbcConnection&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 配置Java实体类存放位置--&gt;</span><br><span class="line">        &lt;javaModelGenerator</span><br><span class="line">                targetPackage&#x3D;&quot;$&#123;targetModelPackage&#125;&quot;</span><br><span class="line">                targetProject&#x3D;&quot;$&#123;targetJavaProject&#125;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;!-- 配置XxxMapper.xml存放位置--&gt;</span><br><span class="line">        &lt;sqlMapGenerator</span><br><span class="line">                targetPackage&#x3D;&quot;$&#123;targetXMLPackage&#125;&quot;</span><br><span class="line">                targetProject&#x3D;&quot;$&#123;targetResourcesProject&#125;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;!-- 配置XxxMapper.java存放位置--&gt;</span><br><span class="line">        &lt;javaClientGenerator</span><br><span class="line">                targetPackage&#x3D;&quot;$&#123;targetMapperPackage&#125;&quot;</span><br><span class="line">                targetProject&#x3D;&quot;$&#123;targetJavaProject&#125;&quot;</span><br><span class="line">                type&#x3D;&quot;XMLMAPPER&quot; &#x2F;&gt;</span><br><span class="line">        &lt;!-- 配置根据数据库表生成Java文件的相关规则--&gt;</span><br><span class="line">        &lt;!-- tableName&#x3D;&quot;%&quot; 表示数据库中所有表都参与逆向工程，此时使用默认规则 --&gt;</span><br><span class="line">        &lt;!-- 默认规则：table_dept-&gt;TableDept--&gt;</span><br><span class="line">        &lt;!-- 不符合默认规则时需要使用tableName和domainObjectName两个属性明确指定 --&gt;</span><br><span class="line">        &lt;table tableName&#x3D;&quot;table_emp&quot; domainObjectName&#x3D;&quot;Employee&quot; &gt;</span><br><span class="line">            &lt;!-- 配置主键生成策略--&gt;</span><br><span class="line">            &lt;generatedKey column&#x3D;&quot;emp_id&quot; sqlStatement&#x3D;&quot;Mysql&quot; identity&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;table&gt;</span><br><span class="line">    &lt;&#x2F;context&gt;</span><br><span class="line">&lt;&#x2F;generatorConfiguration&gt;</span><br></pre></td></tr></table></figure>
-
-<p>使用<code>&lt;properties resource=&quot;config.properties&quot;/&gt;</code>引入了<code>config.properties</code>属性配置，该文件内容如下：</p>
-<h2 id="config-properties"><a href="#config-properties" class="headerlink" title="config.properties"></a>config.properties</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 数据库配置</span></span><br><span class="line"><span class="meta">jdbc.driverClass</span> = <span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line"><span class="meta">jdbc.url</span> = <span class="string">jdbc:mysql://localhost:3306/common_mapper?useUnicode=true&amp;useSSL=false</span></span><br><span class="line"><span class="meta">jdbc.user</span> = <span class="string">root</span></span><br><span class="line"><span class="meta">jdbc.password</span> = <span class="string">123456</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#c3p0</span></span><br><span class="line"><span class="meta">jdbc.maxPoolSize</span>=<span class="string">50</span></span><br><span class="line"><span class="meta">jdbc.minPoolSize</span>=<span class="string">10</span></span><br><span class="line"><span class="meta">jdbc.maxStatements</span>=<span class="string">100</span></span><br><span class="line"><span class="meta">jdbc.testConnection</span>=<span class="string">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通用Mapper配置</span></span><br><span class="line"><span class="meta">mapper.plugin</span> = <span class="string">tk.mybatis.mapper.generator.MapperPlugin</span></span><br><span class="line"><span class="meta">mapper.Mapper</span> = <span class="string">com.jared.mapper.common.mapper.BaseMapper</span></span><br></pre></td></tr></table></figure>
-
-<p>在pom.xml这一级目录的命令行窗口执行<code>mvn mybatis-generator:generate</code>即可（前提是配置了mvn）。</p>
-<p>或者IDEA双击插件</p>
-<p><img src="http://img.jared.top/202010251432_429.png" alt="IDEA双击插件"></p>
-<p>成功生成结果</p>
-<p><img src="http://img.jared.top/202010251433_179.png" alt="成功生成结果"></p>
-]]></content>
-      <categories>
-        <category>Mybatis</category>
-        <category>mapper</category>
-        <category>mybatis插件</category>
-      </categories>
-      <tags>
-        <tag>Mybatis</tag>
-        <tag>mapper</tag>
-        <tag>mybatis插件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>QBC查询</title>
-    <url>/posts/c233a97c.html</url>
-    <content><![CDATA[<h1 id="QBC查询"><a href="#QBC查询" class="headerlink" title="QBC查询"></a>QBC查询</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><strong>Query By Criteria</strong></p>
-<p>Criteria是Criterion的复数形式。意识是：规则、标准、准则。在SQL语句中相当于查询条件。</p>
-<p>QBC查询是将查询条件通过Java对象进行模块化封装。</p>
-]]></content>
-      <categories>
-        <category>Mybatis</category>
-        <category>mapper</category>
-        <category>mybatis插件</category>
-      </categories>
-      <tags>
-        <tag>Mybatis</tag>
-        <tag>mybatis插件</tag>
-        <tag>Mapper</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通用mapper常用注解和方法</title>
-    <url>/posts/83d0a7ff.html</url>
-    <content><![CDATA[<h1 id="常用注解"><a href="#常用注解" class="headerlink" title="常用注解"></a>常用注解</h1><h2 id="Table注解"><a href="#Table注解" class="headerlink" title="@Table注解"></a>@Table注解</h2><p><strong>作用：</strong>建立实体类和数据库表之间的对应关系。</p>
-<p><strong>默认规则：</strong>实体类类名首字母小写作为表明。Employee类→employee表</p>
-<p><strong>用法：</strong>在@Table注解的name属性中指定目标数据库表的表明</p>
-<p><img src="http://img.jared.top/202010241915_794.png" alt="@Table注解"></p>
-<h2 id="Column注解"><a href="#Column注解" class="headerlink" title="@Column注解"></a>@Column注解</h2><p><strong>作用：</strong>建立实体类字段和数据库表字段之间的对于关系</p>
-<p><strong>默认规则：</strong></p>
+<hr>
+<h2 id="Spring有几种配置方式？"><a href="#Spring有几种配置方式？" class="headerlink" title="Spring有几种配置方式？"></a>Spring有几种配置方式？</h2><p>将Spring配置到应用开发中有以下三种方式：</p>
+<blockquote>
+<p>1.基于XML的配置<br>2.基于注解的配置<br>3.基于Java的配置</p>
+</blockquote>
+<h3 id="如何用基于XML配置的方式配置Spring？"><a href="#如何用基于XML配置的方式配置Spring？" class="headerlink" title="如何用基于XML配置的方式配置Spring？"></a>如何用基于XML配置的方式配置Spring？</h3><p>========</p>
+<h3 id="如何用基于Java配置的方式配置Spring？"><a href="#如何用基于Java配置的方式配置Spring？" class="headerlink" title="如何用基于Java配置的方式配置Spring？"></a>如何用基于Java配置的方式配置Spring？</h3><p>========</p>
+<h3 id="如何用基于注解配置的方式配置Spring？"><a href="#如何用基于注解配置的方式配置Spring？" class="headerlink" title="如何用基于注解配置的方式配置Spring？"></a>如何用基于注解配置的方式配置Spring？</h3><p>========</p>
+<h2 id="解释Spring-Bean的生命周期？"><a href="#解释Spring-Bean的生命周期？" class="headerlink" title="解释Spring Bean的生命周期？"></a>解释Spring Bean的生命周期？</h2><p>========</p>
+<h2 id="Spring-Bean的作用域区别？"><a href="#Spring-Bean的作用域区别？" class="headerlink" title="Spring Bean的作用域区别？"></a>Spring Bean的作用域区别？</h2><p>5个范围</p>
+<ol>
+<li>singleton：是默认的，这种范围确保不管接受到多个请求，每个容器中只有一个bean的实例，单例的模式由beanFactory自身来维护</li>
+<li>prototype：原型范围与单例范围相反，为每一个bean请求提供一个实例</li>
+<li>request：在请求bean范围内会为每一个来自客户端的网络请求创建一个实例，在请求完成以后，bean会失效并被垃圾回收器回收。</li>
+<li>session：与请求范围类似，确保每个session中有一个bean的实例，在session过去后，bean会随之失效。</li>
+<li>global-session：global-session和Portlet应用有关。当你的应用部署在Portlet容器中工作时，它包含很多portlet。如果你想要声明让所有的portlet共用全局的存储变量的话，那么这全局变量需要存储在global-session中。<br>全局作用域与Servlet中的session作用域效果相同。</li>
+</ol>
+<h2 id="请举例说明如何在Spring中注入一个Java-Collection？"><a href="#请举例说明如何在Spring中注入一个Java-Collection？" class="headerlink" title="请举例说明如何在Spring中注入一个Java Collection？"></a>请举例说明如何在Spring中注入一个Java Collection？</h2><p>Spring提供了以下四种集合类的配置元素：</p>
 <ul>
-<li>实体类字段：驼峰式命名</li>
-<li>数据库表字段：使用“-”区分各个单词</li>
+<li><code>&lt;list&gt;</code>: 该标签用来装配可重复的list值。</li>
+<li><code>&lt;set&gt;</code>：该标签用来装配没有重复的set值。</li>
+<li><code>&lt;map&gt;</code>：该标签可用来注入键和值可以为任何类型的键值对。</li>
+<li><code>&lt;props&gt;</code>：该标签支持注入键和值都是字符串类型的键值对。</li>
 </ul>
-<p><strong>用法：</strong>在@Column注解的name属性中指定目标字段的字段名</p>
-<p><img src="http://img.jared.top/202010241913_362.png" alt="@Column注解"></p>
-<h2 id="Id注解"><a href="#Id注解" class="headerlink" title="@Id注解"></a>@Id注解</h2><p>通用Mapper在执行xxxByPrimaryKey(key)方法时，有两种情况。</p>
-<p>情况1：没有使用@Id注解明确指定主键字段</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> emp_id,emp_name,emp_salary,emp_age <span class="keyword">FROM</span> table_emp <span class="keyword">WHERE</span> emp_id = ? <span class="keyword">AND</span> emp_name = ? <span class="keyword">AND</span> emp_salary = ? <span class="keyword">AND</span> emp_age = ?</span><br></pre></td></tr></table></figure>
-
-<p>之所以会生成上面这样的WHERE子句是因为通用Mapper将实体类中的所有字段都拿来放在一起作为联合主键。</p>
-<p>情况2：使用@Id注解明确标记和数据库表中主键字段对应的实体类字段。</p>
-<p><img src="http://img.jared.top/202010241903_753.png" alt="@Id注解"></p>
-<h2 id="GeneratedValue注解"><a href="#GeneratedValue注解" class="headerlink" title="@GeneratedValue注解"></a>@GeneratedValue注解</h2><p><strong>作用：</strong>让通用Mapper在执行insert操作之后将数据库自动生成的主键值回写到实体类对象中。</p>
-<p><strong>自增主键方法：</strong></p>
-<p><img src="http://img.jared.top/202010242012_726.png"></p>
-<p><strong>序列主键用法：</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Id</span></span><br><span class="line"><span class="meta">@GeneratedValue(</span></span><br><span class="line"><span class="meta">    strategy = GenerationType.IDENTITY,</span></span><br><span class="line"><span class="meta">	generator = &quot;select SEQ_ID.nextval from dual&quot;)</span></span><br><span class="line"><span class="keyword">private</span> Integer empId;</span><br></pre></td></tr></table></figure>
-
-<p>应用场景：购物车结账</p>
-<ul>
-<li>增加商品销量…</li>
-<li>减少商品库存…</li>
-<li>生成订单数据v→封装到Order对象中→保存Order对象→数据库自动生成主键值→回写到实体类对象Order中</li>
-<li>生成一系列订单详情数据→List<OrderItem>→在每一个OrderItem中设置Order对象的主键值作为外键→批量保存List<OrderItem></li>
-<li>…</li>
+<h2 id="请解释自动装配模式的区别？"><a href="#请解释自动装配模式的区别？" class="headerlink" title="请解释自动装配模式的区别？"></a>请解释自动装配模式的区别？</h2><ul>
+<li>no:这是Spring的默认设置，在该设置下自动装配是关闭的，开发者需要自行在bean定义中用标签明确的设置依赖关系。</li>
+<li>byName：该选项可以根据bean名称设置依赖关系。当向一个bean中自动装配一个属性时，容器将根据bean的名称自动在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。</li>
+<li>byType：该选项可以根据bean的类型设置依赖关系。当想一个bean中自动装配一个属性时，容器将根据bean的类型自动在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。</li>
+<li>constructor：构造器的自动装配和byType模式类似，但是仅仅适用于与有构造器相同参数的bean，如果在容器总没有找到与构造器参数类型一致的bean，那么将会抛出异常。</li>
+<li>autodetect：该模式自动探测使用构造器自动装配或byType自动装配。首先，会尝试找合适的带参数的构造器，如果找到的话就是用构造器自动装配，如果在bean内部没有找到相应的构造器或者是无参构造器，容器就会自动选择byType的自动装配方式。</li>
 </ul>
-<h2 id="Transient注解（JPA）"><a href="#Transient注解（JPA）" class="headerlink" title="@Transient注解（JPA）"></a>@Transient注解（JPA）</h2><p>忽略非数据库字段</p>
-<h1 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h1><h2 id="selectOne方法"><a href="#selectOne方法" class="headerlink" title="selectOne方法"></a>selectOne方法</h2><p><strong>通用Mapper替我们自动生成的sql语句情况</strong></p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">==&gt;  Preparing: SELECT emp_id,emp_name,emp_salary,emp_age FROM table_emp WHERE emp_name = ? AND emp_salary = ?</span><br><span class="line">==&gt; Parameters: bob(String), 5560.11(Double)</span><br><span class="line">&lt;==    Columns: emp_id, emp_name, emp_salary, emp_age</span><br><span class="line">&lt;==        Row: 3, bob, 5560.11, 40</span><br><span class="line">&lt;==      Total: 1</span><br></pre></td></tr></table></figure>
-
-<p><strong>实体类封装查询条件生成WHERE子句的规则</strong></p>
-<ul>
-<li>使用非空的值生成WHERE子句</li>
-<li>在条件表达式中使用“=”进行比较</li>
-</ul>
-<p><strong>要求必须返回一个实体类结果，如果有多个，则会抛出异常</strong></p>
-<h2 id="xxxByPrimaryKey-方法"><a href="#xxxByPrimaryKey-方法" class="headerlink" title="xxxByPrimaryKey 方法"></a>xxxByPrimaryKey 方法</h2><p>需要使用@Id注解明确标记和数据库主键字段对应的实体类字段，否则通用Mapper会将所有实体类字段作为联合主键。</p>
-<h2 id="xxxSelective-方法"><a href="#xxxSelective-方法" class="headerlink" title="xxxSelective 方法"></a>xxxSelective 方法</h2><p>非主键字段如果为null值，则不加入到SQL语句中。</p>
+<h2 id="如何开启基于注解的自动装配？"><a href="#如何开启基于注解的自动装配？" class="headerlink" title="如何开启基于注解的自动装配？"></a>如何开启基于注解的自动装配？</h2><p>要使用<code>@Autowired</code>，需要注册<code>AutowiredAnnotationBeanPostProcessor</code>，可以有以下两种方式来实现：</p>
+<ol>
+<li>引入配置文件中的<code>&lt;beans&gt;</code>下引入<code>&lt;context:annotation-config&gt;</code><figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;context:annotation-config&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></li>
+<li>在配置文件中直接引入<code>AutowiredAnnotationBeanPostProcessor</code><figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;bean <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor&quot;</span>&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 ]]></content>
       <categories>
-        <category>Mybatis</category>
-        <category>mapper</category>
-        <category>mybatis插件</category>
+        <category>面试题</category>
+        <category>Spring</category>
       </categories>
       <tags>
-        <tag>Mybatis</tag>
-        <tag>mapper</tag>
-        <tag>mybatis插件</tag>
+        <tag>面试题</tag>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
-    <title>通用Mapper</title>
-    <url>/posts/886e92c3.html</url>
-    <content><![CDATA[<h1 id="通用Mapper"><a href="#通用Mapper" class="headerlink" title="通用Mapper"></a>通用Mapper</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="构建springboot-mybatis项目"><a href="#构建springboot-mybatis项目" class="headerlink" title="构建springboot+mybatis项目"></a>构建springboot+mybatis项目</h3><h3 id="创建Java实体类"><a href="#创建Java实体类" class="headerlink" title="创建Java实体类"></a>创建Java实体类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Table(name=&quot;table_emp&quot;)</span> <span class="comment">//mybatis通用接口mapper依赖JPA实体类采用JPA</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Emploee</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="keyword">private</span> Integer empId;</span><br><span class="line">    <span class="meta">@Column(name= &quot;emp_name&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String empName;</span><br><span class="line">    <span class="meta">@Column(name= &quot;emp_salary&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Double empSalary;</span><br><span class="line">    <span class="meta">@Column(name= &quot;emp_age&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer empAge;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Emploee</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Emploee</span><span class="params">(Integer empId, String empName, Double empSalary, Integer empAge)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.empId = empId;</span><br><span class="line">        <span class="keyword">this</span>.empName = empName;</span><br><span class="line">        <span class="keyword">this</span>.empSalary = empSalary;</span><br><span class="line">        <span class="keyword">this</span>.empAge = empAge;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 省略getters和setters toString</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>tk.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mapper-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="创建公用接口继承通用Mapper和MySqlMapper"><a href="#创建公用接口继承通用Mapper和MySqlMapper" class="headerlink" title="创建公用接口继承通用Mapper和MySqlMapper"></a>创建公用接口继承通用Mapper和MySqlMapper</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BaseMapper</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">T</span>&gt;, <span class="title">MySqlMapper</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="application-properties配置"><a href="#application-properties配置" class="headerlink" title="application.properties配置"></a>application.properties配置</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"># mysql配置</span><br><span class="line">spring.datasource.url=jdbc:mysql://localhost:3306/common_mapper?useUnicode=true</span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=123456</span><br><span class="line">spring.datasource.driver-class-name=com.mysql.jdbc.Driver</span><br><span class="line"># mybatis配置</span><br><span class="line"># 实体类位置</span><br><span class="line">mybatis.type-aliases-package=com.jared.mapper.entity</span><br><span class="line"># 公用接口类路径</span><br><span class="line">mapper.mappers=com.jared.mapper.common.mapper.BaseMapper</span><br><span class="line">mapper.identity=MYSQL</span><br></pre></td></tr></table></figure>
-<h3 id="创建普通mapper"><a href="#创建普通mapper" class="headerlink" title="创建普通mapper"></a>创建普通mapper</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 员工通用接口继承公用接口,注意泛型</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Jared</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-10-23 16:21</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeMapper</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">Emploee</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="创建服务层接口"><a href="#创建服务层接口" class="headerlink" title="创建服务层接口"></a>创建服务层接口</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeService</span> </span>&#123;</span><br><span class="line">    <span class="function">Emploee <span class="title">getOne</span><span class="params">(Emploee employeeQueryCondition)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="创建服务实现层接口"><a href="#创建服务实现层接口" class="headerlink" title="创建服务实现层接口"></a>创建服务实现层接口</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeServiceImpl</span> <span class="keyword">implements</span> <span class="title">EmployeeService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> EmployeeMapper employeeMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Emploee <span class="title">getOne</span><span class="params">(Emploee employeeQueryCondition)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.employeeMapper.selectOne(employeeQueryCondition);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="测试接口"><a href="#测试接口" class="headerlink" title="测试接口"></a>测试接口</h2><h3 id="根据实体类对象封装数据查询结构"><a href="#根据实体类对象封装数据查询结构" class="headerlink" title="根据实体类对象封装数据查询结构"></a>根据实体类对象封装数据查询结构</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//1.创建封装查询条件的实体类对象</span></span><br><span class="line">    Emploee employeeQueryCondition = <span class="keyword">new</span> Emploee(<span class="keyword">null</span>,<span class="string">&quot;bob&quot;</span>,<span class="number">5560.11</span>,<span class="keyword">null</span>);</span><br><span class="line">    <span class="comment">//2.执行查询</span></span><br><span class="line">    Emploee emploeyeQueryResult=employeeService.getOne(employeeQueryCondition);</span><br><span class="line">    <span class="comment">//3.打印</span></span><br><span class="line">    System.out.println(emploeyeQueryResult);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
+    <title>Redis 常见面试题</title>
+    <url>/posts/51b0f5df.html</url>
+    <content><![CDATA[<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id=""><a href="#" class="headerlink" title=""></a></h2>]]></content>
       <categories>
-        <category>Mybatis</category>
-        <category>mapper</category>
-        <category>mybatis插件</category>
+        <category>面试题</category>
+        <category>Redis</category>
       </categories>
       <tags>
-        <tag>Mybatis</tag>
-        <tag>mapper</tag>
-        <tag>mybatis插件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>vuex 学习</title>
-    <url>/posts/e61720a.html</url>
-    <content><![CDATA[<h1 id="Vuex-是什么？"><a href="#Vuex-是什么？" class="headerlink" title="Vuex 是什么？"></a>Vuex 是什么？</h1><p>Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。<br>这个状态自管理应用包含以下几个部分：</p>
-<ul>
-<li>state，驱动应用的数据源；</li>
-<li>view，以声明方式将 state 映射到视图；</li>
-<li>actions，响应在 view 上的用户输入导致的状态变化。</li>
-</ul>
-<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><ol>
-<li>vuex管理的状态对象</li>
-<li>它应该是唯一的<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    xxx: initValue</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="mutations"><a href="#mutations" class="headerlink" title="mutations"></a>mutations</h3><ol>
-<li>包含多个直接更新state的方法(回调函数)的对象</li>
-<li>谁来触发：action中的commit(‘mutation名称’)</li>
-<li>只能包含同步的代码，不能写异步代码<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    yyy (state, data) &#123;</span><br><span class="line">        <span class="comment">// 更新state的某个属性</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="actions"><a href="#actions" class="headerlink" title="actions"></a>actions</h3><ol>
-<li>包含多个事件回调函数的对象</li>
-<li>通过执行：commit()来触发mutation的调用,间接更新state</li>
-<li>谁来触发：组件中：$store.dispatch(‘action名称’, data1) //‘zzz’</li>
-<li>可以包含异步代码（定时器，ajax）<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    zzz(&#123;commit, state&#125;, data1) &#123;</span><br><span class="line">        commit(<span class="string">&#x27;yyy&#x27;</span>, &#123;data1&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="getters"><a href="#getters" class="headerlink" title="getters"></a>getters</h3><ol>
-<li>包含多个计算属性（get）的对象</li>
-<li>谁来读取： 组件中： $store.getters.xxx<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">    mmm (state) &#123;</span><br><span class="line">        <span class="keyword">return</span> ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="modules"><a href="#modules" class="headerlink" title="modules"></a>modules</h3><ol>
-<li>包含多个module</li>
-<li>一个module是一个store的配置对象</li>
-<li>与一个组件（包含有共享数据）对应</li>
-</ol>
-<h3 id="向外暴露store对象"><a href="#向外暴露store对象" class="headerlink" title="向外暴露store对象"></a>向外暴露store对象</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state,</span><br><span class="line">  mutations,</span><br><span class="line">  actions,</span><br><span class="line">  getters</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="组件中"><a href="#组件中" class="headerlink" title="组件中"></a>组件中</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;mapState&#125;  <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"><span class="keyword">import</span> TodoItem <span class="keyword">from</span> <span class="string">&#x27;./TodoItem.vue&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">computed: &#123;</span><br><span class="line">  ...mapState([<span class="string">&#x27;todos&#x27;</span>])</span><br><span class="line">&#125;,</span><br><span class="line">components: &#123;</span><br><span class="line">  TodoItem</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="映射store"><a href="#映射store" class="headerlink" title="映射store"></a>映射store</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;./store&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  store</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="store对象"><a href="#store对象" class="headerlink" title="store对象"></a>store对象</h3><ol>
-<li>所有用vuex管理的组件中都多了一个属性$store，它就是一个store对象</li>
-<li>属性<ul>
-<li>state:注册的state对象</li>
-<li>getters:注册的getters对象</li>
-</ul>
-</li>
-<li>方法<br>dispath(actionName,data):分发调用action</li>
-</ol>
-]]></content>
-      <categories>
-        <category>vue</category>
-      </categories>
-      <tags>
-        <tag>vue</tag>
+        <tag>面试题</tag>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -419,202 +308,417 @@ subs：[] n个相关的watcher的容器</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Redis 常见面试题</title>
-    <url>/posts/51b0f5df.html</url>
-    <content><![CDATA[<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id=""><a href="#" class="headerlink" title=""></a></h2>]]></content>
-      <categories>
-        <category>面试题</category>
-        <category>Redis</category>
-      </categories>
-      <tags>
-        <tag>面试题</tag>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring 常见面试题</title>
-    <url>/posts/228e4888.html</url>
-    <content><![CDATA[<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id="什么是Spring框架？包含哪些主要模块？"><a href="#什么是Spring框架？包含哪些主要模块？" class="headerlink" title="什么是Spring框架？包含哪些主要模块？"></a>什么是Spring框架？包含哪些主要模块？</h2><blockquote>
-<p>Spring框架是一个为Java应用程序的开发提供了综合、广泛的基础性支持的Java平台。<br>主要模块： 核心容器、数据访问/集成、Web、AOP（面向切面编程）、工具、消息和测试模块</p>
-</blockquote>
-<hr>
-<h2 id="使用Spring框架的好处？"><a href="#使用Spring框架的好处？" class="headerlink" title="使用Spring框架的好处？"></a>使用Spring框架的好处？</h2><ul>
-<li>Dependency Injection（DI）方法使得构造器和JavaBean properties文件中的依赖关系一目了然</li>
-<li>与EJB容器相比较，IoC容器更加趋向于轻量级。这样一来IoC容器在有限的内存和CPU资源的情况下进行应用程序的开发和发布就变得十分有利</li>
-<li>Spring利用了已有的技术，比如ORM框架、logging框架、J2EE、Quartz和JDK Timer，以及其他视图技术</li>
-<li>Spring框架是按照模块的形式来组织的。</li>
-<li>Spring提供了一个便捷的事务管理接口</li>
-<li>提供相应的测试环境代码</li>
-</ul>
-<hr>
-<h2 id="什么是控制反转（IOC）？什么是依赖注入？"><a href="#什么是控制反转（IOC）？什么是依赖注入？" class="headerlink" title="什么是控制反转（IOC）？什么是依赖注入？"></a>什么是控制反转（IOC）？什么是依赖注入？</h2><p>在Java中依赖注入有三种实现方式：构造器注入，setter方法注入，接口注入</p>
-<h2 id="BeanFactory和ApplicationContext-有什么区别？"><a href="#BeanFactory和ApplicationContext-有什么区别？" class="headerlink" title="BeanFactory和ApplicationContext 有什么区别？"></a>BeanFactory和ApplicationContext 有什么区别？</h2><p>BeanFactory可以理解为含有bean集合的工厂类。BeanFactory包含了种bean的定义，以便在接收到客户端请求时将对应的bean实例化。<br>BeanFactory还能在实例化对象时生成协作类之间的关系。此举将bean自身与bean客户端的配置中解放出来。BeanFactory还包含了bean生命周期的控制，调用客户端的初始化方法(initialization methods)和销毁方法(destruction methods)。<br>从表面上看，ApplicationContext如同BeanFactory一样具有bean定义、bean关联关系的设置，根据请求分发bean的功能。但ApplicationContext在此基础上还提供了其它的功能：</p>
-<blockquote>
-<ol>
-<li>提供了支持国际化的文本消息</li>
-<li>统一的资源文件读取方式</li>
-<li>已在监听器中注册的bean的事件</li>
-</ol>
-</blockquote>
-<p>以下是较常见的ApplicationContext实现方式：</p>
-<ol>
-<li>ClassPathXmlApplicationContext:从classpath的XML配置文件中读取上下文，并生成上下文定义。应用程序上下文从程序环境变量中<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;bean.xml&quot;</span>);</span><br></pre></td></tr></table></figure></li>
-<li>FileSystemXmlApplicationContext:由文件系统中的XML配置文件读取上下文。<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ApplicationContext context = <span class="keyword">new</span> FileSystemXmlApplicationContext(<span class="string">&quot;bean.xml&quot;</span>);</span><br></pre></td></tr></table></figure></li>
-<li>XmlWebApplicationContext:由Web应用的XML文件读取上下文。</li>
-<li>AnnotationConfigApplicationContext(基于Java配置启动容器)</li>
-</ol>
-<hr>
-<h2 id="Spring有几种配置方式？"><a href="#Spring有几种配置方式？" class="headerlink" title="Spring有几种配置方式？"></a>Spring有几种配置方式？</h2><p>将Spring配置到应用开发中有以下三种方式：</p>
-<blockquote>
-<p>1.基于XML的配置<br>2.基于注解的配置<br>3.基于Java的配置</p>
-</blockquote>
-<h3 id="如何用基于XML配置的方式配置Spring？"><a href="#如何用基于XML配置的方式配置Spring？" class="headerlink" title="如何用基于XML配置的方式配置Spring？"></a>如何用基于XML配置的方式配置Spring？</h3><p>========</p>
-<h3 id="如何用基于Java配置的方式配置Spring？"><a href="#如何用基于Java配置的方式配置Spring？" class="headerlink" title="如何用基于Java配置的方式配置Spring？"></a>如何用基于Java配置的方式配置Spring？</h3><p>========</p>
-<h3 id="如何用基于注解配置的方式配置Spring？"><a href="#如何用基于注解配置的方式配置Spring？" class="headerlink" title="如何用基于注解配置的方式配置Spring？"></a>如何用基于注解配置的方式配置Spring？</h3><p>========</p>
-<h2 id="解释Spring-Bean的生命周期？"><a href="#解释Spring-Bean的生命周期？" class="headerlink" title="解释Spring Bean的生命周期？"></a>解释Spring Bean的生命周期？</h2><p>========</p>
-<h2 id="Spring-Bean的作用域区别？"><a href="#Spring-Bean的作用域区别？" class="headerlink" title="Spring Bean的作用域区别？"></a>Spring Bean的作用域区别？</h2><p>5个范围</p>
-<ol>
-<li>singleton：是默认的，这种范围确保不管接受到多个请求，每个容器中只有一个bean的实例，单例的模式由beanFactory自身来维护</li>
-<li>prototype：原型范围与单例范围相反，为每一个bean请求提供一个实例</li>
-<li>request：在请求bean范围内会为每一个来自客户端的网络请求创建一个实例，在请求完成以后，bean会失效并被垃圾回收器回收。</li>
-<li>session：与请求范围类似，确保每个session中有一个bean的实例，在session过去后，bean会随之失效。</li>
-<li>global-session：global-session和Portlet应用有关。当你的应用部署在Portlet容器中工作时，它包含很多portlet。如果你想要声明让所有的portlet共用全局的存储变量的话，那么这全局变量需要存储在global-session中。<br>全局作用域与Servlet中的session作用域效果相同。</li>
-</ol>
-<h2 id="请举例说明如何在Spring中注入一个Java-Collection？"><a href="#请举例说明如何在Spring中注入一个Java-Collection？" class="headerlink" title="请举例说明如何在Spring中注入一个Java Collection？"></a>请举例说明如何在Spring中注入一个Java Collection？</h2><p>Spring提供了以下四种集合类的配置元素：</p>
+    <title>vuex 学习</title>
+    <url>/posts/e61720a.html</url>
+    <content><![CDATA[<h1 id="Vuex-是什么？"><a href="#Vuex-是什么？" class="headerlink" title="Vuex 是什么？"></a>Vuex 是什么？</h1><p>Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。<br>这个状态自管理应用包含以下几个部分：</p>
 <ul>
-<li><code>&lt;list&gt;</code>: 该标签用来装配可重复的list值。</li>
-<li><code>&lt;set&gt;</code>：该标签用来装配没有重复的set值。</li>
-<li><code>&lt;map&gt;</code>：该标签可用来注入键和值可以为任何类型的键值对。</li>
-<li><code>&lt;props&gt;</code>：该标签支持注入键和值都是字符串类型的键值对。</li>
+<li>state，驱动应用的数据源；</li>
+<li>view，以声明方式将 state 映射到视图；</li>
+<li>actions，响应在 view 上的用户输入导致的状态变化。</li>
 </ul>
-<h2 id="请解释自动装配模式的区别？"><a href="#请解释自动装配模式的区别？" class="headerlink" title="请解释自动装配模式的区别？"></a>请解释自动装配模式的区别？</h2><ul>
-<li>no:这是Spring的默认设置，在该设置下自动装配是关闭的，开发者需要自行在bean定义中用标签明确的设置依赖关系。</li>
-<li>byName：该选项可以根据bean名称设置依赖关系。当向一个bean中自动装配一个属性时，容器将根据bean的名称自动在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。</li>
-<li>byType：该选项可以根据bean的类型设置依赖关系。当想一个bean中自动装配一个属性时，容器将根据bean的类型自动在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。</li>
-<li>constructor：构造器的自动装配和byType模式类似，但是仅仅适用于与有构造器相同参数的bean，如果在容器总没有找到与构造器参数类型一致的bean，那么将会抛出异常。</li>
-<li>autodetect：该模式自动探测使用构造器自动装配或byType自动装配。首先，会尝试找合适的带参数的构造器，如果找到的话就是用构造器自动装配，如果在bean内部没有找到相应的构造器或者是无参构造器，容器就会自动选择byType的自动装配方式。</li>
-</ul>
-<h2 id="如何开启基于注解的自动装配？"><a href="#如何开启基于注解的自动装配？" class="headerlink" title="如何开启基于注解的自动装配？"></a>如何开启基于注解的自动装配？</h2><p>要使用<code>@Autowired</code>，需要注册<code>AutowiredAnnotationBeanPostProcessor</code>，可以有以下两种方式来实现：</p>
-<ol>
-<li>引入配置文件中的<code>&lt;beans&gt;</code>下引入<code>&lt;context:annotation-config&gt;</code><figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;context:annotation-config&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></li>
-<li>在配置文件中直接引入<code>AutowiredAnnotationBeanPostProcessor</code><figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;bean <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor&quot;</span>&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><ol>
+<li>vuex管理的状态对象</li>
+<li>它应该是唯一的<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;</span><br><span class="line">    xxx: initValue</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 </li>
+</ol>
+<h3 id="mutations"><a href="#mutations" class="headerlink" title="mutations"></a>mutations</h3><ol>
+<li>包含多个直接更新state的方法(回调函数)的对象</li>
+<li>谁来触发：action中的commit(‘mutation名称’)</li>
+<li>只能包含同步的代码，不能写异步代码<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> mutations = &#123;</span><br><span class="line">    yyy (state, data) &#123;</span><br><span class="line">        <span class="comment">// 更新state的某个属性</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="actions"><a href="#actions" class="headerlink" title="actions"></a>actions</h3><ol>
+<li>包含多个事件回调函数的对象</li>
+<li>通过执行：commit()来触发mutation的调用,间接更新state</li>
+<li>谁来触发：组件中：$store.dispatch(‘action名称’, data1) //‘zzz’</li>
+<li>可以包含异步代码（定时器，ajax）<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> actions = &#123;</span><br><span class="line">    zzz(&#123;commit, state&#125;, data1) &#123;</span><br><span class="line">        commit(<span class="string">&#x27;yyy&#x27;</span>, &#123;data1&#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="getters"><a href="#getters" class="headerlink" title="getters"></a>getters</h3><ol>
+<li>包含多个计算属性（get）的对象</li>
+<li>谁来读取： 组件中： $store.getters.xxx<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> getters = &#123;</span><br><span class="line">    mmm (state) &#123;</span><br><span class="line">        <span class="keyword">return</span> ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="modules"><a href="#modules" class="headerlink" title="modules"></a>modules</h3><ol>
+<li>包含多个module</li>
+<li>一个module是一个store的配置对象</li>
+<li>与一个组件（包含有共享数据）对应</li>
+</ol>
+<h3 id="向外暴露store对象"><a href="#向外暴露store对象" class="headerlink" title="向外暴露store对象"></a>向外暴露store对象</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state,</span><br><span class="line">  mutations,</span><br><span class="line">  actions,</span><br><span class="line">  getters</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="组件中"><a href="#组件中" class="headerlink" title="组件中"></a>组件中</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;mapState&#125;  <span class="keyword">from</span> <span class="string">&#x27;vuex&#x27;</span></span><br><span class="line"><span class="keyword">import</span> TodoItem <span class="keyword">from</span> <span class="string">&#x27;./TodoItem.vue&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">computed: &#123;</span><br><span class="line">  ...mapState([<span class="string">&#x27;todos&#x27;</span>])</span><br><span class="line">&#125;,</span><br><span class="line">components: &#123;</span><br><span class="line">  TodoItem</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="映射store"><a href="#映射store" class="headerlink" title="映射store"></a>映射store</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&quot;./store&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  store</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="store对象"><a href="#store对象" class="headerlink" title="store对象"></a>store对象</h3><ol>
+<li>所有用vuex管理的组件中都多了一个属性$store，它就是一个store对象</li>
+<li>属性<ul>
+<li>state:注册的state对象</li>
+<li>getters:注册的getters对象</li>
+</ul>
+</li>
+<li>方法<br>dispath(actionName,data):分发调用action</li>
 </ol>
 ]]></content>
       <categories>
-        <category>面试题</category>
-        <category>Spring</category>
+        <category>vue</category>
       </categories>
       <tags>
-        <tag>面试题</tag>
-        <tag>Spring</tag>
+        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
-    <title>Mybatis 常见面试题</title>
-    <url>/posts/8f175f96.html</url>
-    <content><![CDATA[<h1 id="什么是-MyBatis？"><a href="#什么是-MyBatis？" class="headerlink" title="什么是 MyBatis？"></a>什么是 MyBatis？</h1><p>MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</p>
-<a id="more"></a>
-<h1 id="Mybaits的优点"><a href="#Mybaits的优点" class="headerlink" title="Mybaits的优点"></a>Mybaits的优点</h1><ol>
-<li>基于SQL语句编程，相当灵活，不会对应用程序或者数据库的现有设计造成任何影响，SQL写在XML里，解除sql与程序代码的耦合，便于统一管理；提供XML标签，支持编写动态SQL语句，并可重用。</li>
-<li>与JDBC相比，减少了50%以上的代码量，消除了JDBC大量冗余的代码，不需要手动开关连接；</li>
-<li>很好的与各种数据库兼容（因为MyBatis使用JDBC来连接数据库，所以只要JDBC支持的数据库MyBatis都支持）。</li>
-<li>能够与Spring很好的集成；</li>
-<li>提供映射标签，支持对象与数据库的ORM字段关系映射；提供对象关系映射标签，支持对象关系组件维护。    </li>
-</ol>
-<h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id="MyBatis与Hibernate有哪些不同"><a href="#MyBatis与Hibernate有哪些不同" class="headerlink" title="MyBatis与Hibernate有哪些不同"></a>MyBatis与Hibernate有哪些不同</h2><ol>
-<li>Mybatis和hibernate不同，它不完全是一个ORM框架，因为MyBatis需要程序员自己编写Sql语句。</li>
-<li>Mybatis直接编写原生态sql，可以严格控制sql执行性能，灵活度高，非常适合对关系数据模型要求不高的软件开发，因为这类软件需求变化频繁，一但需求变化要求迅速输出成果。但是灵活的前提是mybatis无法做到数据库无关性，如果需要实现支持多种数据库的软件，则需要自定义多套sql映射文件，工作量大。 </li>
-<li>Hibernate对象/关系映射能力强，数据库无关性好，对于关系模型要求高的软件，如果用hibernate开发可以节省很多代码，提高效率。 </li>
-</ol>
-<hr>
-<h2 id="和-的区别是什么"><a href="#和-的区别是什么" class="headerlink" title="#{}和${}的区别是什么?"></a>#{}和${}的区别是什么?</h2><p> #{} 是预编译处理， ${} 是字符串替换。<br>Mybatis在处理 #{} 时，会将sql中的 #{} 替换为 ? 号，调用PreparedStatement的set方法来赋值；<br>Mybatis在处理 ${} 时，就是把 ${} 替换成变量的值。<br>使用 #{} 可以有效的防止SQL注入，提高系统安全性。    </p>
-<hr>
-<h2 id="当实体类中的属性名和表中的字段名不一样-，怎么办？"><a href="#当实体类中的属性名和表中的字段名不一样-，怎么办？" class="headerlink" title="当实体类中的属性名和表中的字段名不一样 ，怎么办？"></a>当实体类中的属性名和表中的字段名不一样 ，怎么办？</h2><p>第1种： 通过在查询的sql语句中定义字段名的别名，让字段名的别名和实体类的属性名一致。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">”</span>&quot;<span class="attr">selectorder</span>&quot; <span class="attr">parametertype</span>=<span class="string">&quot;int&quot;</span> <span class="attr">resultetype</span>=<span class="string">&quot;top.jared.entity.order&quot;</span>&gt;</span></span><br><span class="line">    select order_id id, order_no orderno ,order_price price form orders where order_id=#&#123;id&#125;;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>第2种： 通过<code>&lt;resultMap&gt;</code>来映射字段名和实体类属性名的一一对应的关系。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getOrder&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;int&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;orderresultmap&quot;</span>&gt;</span></span><br><span class="line">    select * from orders where order_id=#&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">&quot;top.jared.entity.order&quot;</span> <span class="attr">id</span>=<span class="string">&quot;orderresultmap&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">!–用id属性来映射主键字段–</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span> <span class="attr">column</span>=<span class="string">&quot;order_id&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">!–用result属性来映射非主键字段，property为实体类属性名，column为数据表中的属性–</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;orderno&quot;</span> <span class="attr">column</span>=<span class="string">&quot;order_no&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">&quot;price&quot;</span> <span class="attr">column</span>=<span class="string">&quot;order_price&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">reslutMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="模糊查询like语句该怎么写"><a href="#模糊查询like语句该怎么写" class="headerlink" title="模糊查询like语句该怎么写?"></a>模糊查询like语句该怎么写?</h2><p>第1种：在Java代码中添加sql通配符。</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">String wildcardname = <span class="string">&quot;%smi%&quot;</span>;</span><br><span class="line">list&lt;name&gt; names = mapper.selectlike(wildcardname);</span><br><span class="line"> </span><br><span class="line">&lt;select id=<span class="string">&quot;selectlike&quot;</span>&gt;</span><br><span class="line"> select * from foo where bar like #&#123;value&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-<p>第2种：在sql语句中拼接通配符，会引起sql注入</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">string wildcardname = <span class="string">&quot;smi&quot;</span>;</span><br><span class="line">list&lt;name&gt; names = mapper.selectlike(wildcardname);</span><br><span class="line"> </span><br><span class="line">&lt;select id=<span class="string">&quot;selectlike&quot;</span>&gt;</span><br><span class="line">     select * from foo where bar like <span class="string">&quot;%&quot;</span>$&#123;value&#125;<span class="string">&quot;%&quot;</span></span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？"><a href="#通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？" class="headerlink" title="通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？"></a>通常一个Xml映射文件，都会写一个Dao接口与之对应，请问，这个Dao接口的工作原理是什么？Dao接口里的方法，参数不同时，方法能重载吗？</h2><p>Dao接口即Mapper接口。接口的全限名，就是映射文件中的<code>namespace</code>的值；接口的方法名，就是映射文件中Mapper的Statement的id值；接口方法内的参数，就是传递给sql的参数。      </p>
-<p>Mapper接口是没有实现类的，当调用接口方法时，接口全限名+方法名拼接字符串作为key值，可唯一定位一个MapperStatement。在Mybatis中，每一个<code>&lt;select&gt;</code>、<code>&lt;insert&gt;</code>、<code>&lt;update&gt;</code>、<code>&lt;delete&gt;</code>标签，都会被解析为一个MapperStatement对象。      </p>
-<blockquote>
-<p>举例：com.mybatis3.mappers.StudentDao.findStudentById，可以唯一找到namespace为com.mybatis3.mappers.StudentDao下面 id 为 findStudentById 的 MapperStatement。</p>
-</blockquote>
-<hr>
-<h2 id="Mybatis是如何进行分页的？分页插件的原理是什么？"><a href="#Mybatis是如何进行分页的？分页插件的原理是什么？" class="headerlink" title="Mybatis是如何进行分页的？分页插件的原理是什么？"></a>Mybatis是如何进行分页的？分页插件的原理是什么？</h2><p>  Mybatis使用RowBounds对象进行分页，它是针对ResultSet结果集执行的内存分页，而非物理分页。可以在sql内直接书写带有物理分页的参数来完成物理分页功能，也可以使用分页插件来完成物理分页。<br>  分页插件的基本原理是使用Mybatis提供的插件接口，实现自定义插件，在插件的拦截方法内拦截待执行的sql，然后重写sql，根据dialect方言，添加对应的物理分页语句和物理分页参数。</p>
-<hr>
-<h2 id="Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？"><a href="#Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？" class="headerlink" title="Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？"></a>Mybatis是如何将sql执行结果封装为目标对象并返回的？都有哪些映射形式？</h2><p>第一种是使用<code>&lt;resultMap&gt;</code>标签，逐一定义数据库列名和对象属性名之间的映射关系。<br>第二种是使用sql列的别名功能，将列的别名书写为对象属性名。<br>有了列名与属性名的映射关系后，Mybatis通过反射创建对象，同时使用反射给对象的属性逐一赋值并返回，那些找不到映射关系的属性，是无法完成赋值的。</p>
-<hr>
-<h2 id="如何执行批量插入"><a href="#如何执行批量插入" class="headerlink" title="如何执行批量插入?"></a>如何执行批量插入?</h2><p>首先,创建一个简单的insert语句:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertname&quot;</span>&gt;</span></span><br><span class="line">  insert into names(name) values(#&#123;value&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>然后在java代码中像下面这样执行批处理插入: </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">list&lt;string&gt; names = <span class="keyword">new</span> arraylist();</span><br><span class="line">names.add(“fred”);</span><br><span class="line">names.add(“barney”);</span><br><span class="line">names.add(“betty”);</span><br><span class="line">names.add(“wilma”);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意这里 executortype.batch</span></span><br><span class="line">sqlsession sqlsession = sqlsessionfactory.opensession(executortype.batch);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    namemapper mapper = sqlsession.getmapper(namemapper.class);</span><br><span class="line">    <span class="keyword">for</span> (string name : names) &#123;</span><br><span class="line">        mapper.insertname(name);</span><br><span class="line">    &#125;</span><br><span class="line">    sqlsession.commit();</span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    sqlSession.rollback(); </span><br><span class="line">    <span class="keyword">throw</span> e; </span><br><span class="line">&#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">    sqlsession.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="如何获取自动生成的-主-键值"><a href="#如何获取自动生成的-主-键值" class="headerlink" title="如何获取自动生成的(主)键值?"></a>如何获取自动生成的(主)键值?</h2><p>insert 方法总是返回一个int值 ，这个值代表的是插入的行数。<br>如果采用自增长策略，自动生成的键值在 insert 方法执行完后可以被设置到传入的参数对象中。<br>示例： </p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertname&quot;</span> <span class="attr">usegeneratedkeys</span>=<span class="string">&quot;true&quot;</span> <span class="attr">keyproperty</span>=<span class="string">&quot;id&quot;</span>&gt;</span></span><br><span class="line">    insert into names (name) values (#&#123;name&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">name name = <span class="keyword">new</span> name();</span><br><span class="line">name.setname(<span class="string">&quot;fred&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> rows = mapper.insertname(name);</span><br><span class="line"><span class="comment">// 完成后,id已经被设置到对象中</span></span><br><span class="line">system.out.println(<span class="string">&quot;rows inserted = &quot;</span> + rows);</span><br><span class="line">system.out.println(<span class="string">&quot;generated key value = &quot;</span> + name.getid());</span><br></pre></td></tr></table></figure>
-<hr>
+    <title>通用Mapper</title>
+    <url>/posts/886e92c3.html</url>
+    <content><![CDATA[<h1 id="通用Mapper"><a href="#通用Mapper" class="headerlink" title="通用Mapper"></a>通用Mapper</h1><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="构建springboot-mybatis项目"><a href="#构建springboot-mybatis项目" class="headerlink" title="构建springboot+mybatis项目"></a>构建springboot+mybatis项目</h3><h3 id="创建Java实体类"><a href="#创建Java实体类" class="headerlink" title="创建Java实体类"></a>创建Java实体类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Table(name=&quot;table_emp&quot;)</span> <span class="comment">//mybatis通用接口mapper依赖JPA实体类采用JPA</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Emploee</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="keyword">private</span> Integer empId;</span><br><span class="line">    <span class="meta">@Column(name= &quot;emp_name&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String empName;</span><br><span class="line">    <span class="meta">@Column(name= &quot;emp_salary&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Double empSalary;</span><br><span class="line">    <span class="meta">@Column(name= &quot;emp_age&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer empAge;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Emploee</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Emploee</span><span class="params">(Integer empId, String empName, Double empSalary, Integer empAge)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.empId = empId;</span><br><span class="line">        <span class="keyword">this</span>.empName = empName;</span><br><span class="line">        <span class="keyword">this</span>.empSalary = empSalary;</span><br><span class="line">        <span class="keyword">this</span>.empAge = empAge;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 省略getters和setters toString</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>tk.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mapper-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="创建公用接口继承通用Mapper和MySqlMapper"><a href="#创建公用接口继承通用Mapper和MySqlMapper" class="headerlink" title="创建公用接口继承通用Mapper和MySqlMapper"></a>创建公用接口继承通用Mapper和MySqlMapper</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BaseMapper</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">T</span>&gt;, <span class="title">MySqlMapper</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="application-properties配置"><a href="#application-properties配置" class="headerlink" title="application.properties配置"></a>application.properties配置</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"># mysql配置</span><br><span class="line">spring.datasource.url=jdbc:mysql://localhost:3306/common_mapper?useUnicode=true</span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=123456</span><br><span class="line">spring.datasource.driver-class-name=com.mysql.jdbc.Driver</span><br><span class="line"># mybatis配置</span><br><span class="line"># 实体类位置</span><br><span class="line">mybatis.type-aliases-package=com.jared.mapper.entity</span><br><span class="line"># 公用接口类路径</span><br><span class="line">mapper.mappers=com.jared.mapper.common.mapper.BaseMapper</span><br><span class="line">mapper.identity=MYSQL</span><br></pre></td></tr></table></figure>
+<h3 id="创建普通mapper"><a href="#创建普通mapper" class="headerlink" title="创建普通mapper"></a>创建普通mapper</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 员工通用接口继承公用接口,注意泛型</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Jared</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span> 2020-10-23 16:21</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeMapper</span> <span class="keyword">extends</span> <span class="title">BaseMapper</span>&lt;<span class="title">Emploee</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="创建服务层接口"><a href="#创建服务层接口" class="headerlink" title="创建服务层接口"></a>创建服务层接口</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeService</span> </span>&#123;</span><br><span class="line">    <span class="function">Emploee <span class="title">getOne</span><span class="params">(Emploee employeeQueryCondition)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="创建服务实现层接口"><a href="#创建服务实现层接口" class="headerlink" title="创建服务实现层接口"></a>创建服务实现层接口</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeServiceImpl</span> <span class="keyword">implements</span> <span class="title">EmployeeService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> EmployeeMapper employeeMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Emploee <span class="title">getOne</span><span class="params">(Emploee employeeQueryCondition)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.employeeMapper.selectOne(employeeQueryCondition);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试接口"><a href="#测试接口" class="headerlink" title="测试接口"></a>测试接口</h2><h3 id="根据实体类对象封装数据查询结构"><a href="#根据实体类对象封装数据查询结构" class="headerlink" title="根据实体类对象封装数据查询结构"></a>根据实体类对象封装数据查询结构</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSelectOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//1.创建封装查询条件的实体类对象</span></span><br><span class="line">    Emploee employeeQueryCondition = <span class="keyword">new</span> Emploee(<span class="keyword">null</span>,<span class="string">&quot;bob&quot;</span>,<span class="number">5560.11</span>,<span class="keyword">null</span>);</span><br><span class="line">    <span class="comment">//2.执行查询</span></span><br><span class="line">    Emploee emploeyeQueryResult=employeeService.getOne(employeeQueryCondition);</span><br><span class="line">    <span class="comment">//3.打印</span></span><br><span class="line">    System.out.println(emploeyeQueryResult);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Mybatis</category>
-        <category>面试题</category>
+        <category>mapper</category>
+        <category>mybatis插件</category>
       </categories>
       <tags>
         <tag>Mybatis</tag>
-        <tag>面试题</tag>
+        <tag>mapper</tag>
+        <tag>mybatis插件</tag>
       </tags>
   </entry>
   <entry>
-    <title>Lombok注解的使用</title>
-    <url>/posts/8340b4fb.html</url>
-    <content><![CDATA[<h3 id="POJO类常用注解"><a href="#POJO类常用注解" class="headerlink" title="POJO类常用注解:"></a>POJO类常用注解:</h3><p><strong>@Getter/@Setter: 作用类上，生成所有成员变量的getter/setter方法；作用于成员变量上，生成该成员变量的getter/setter方法。可以设定访问权限及是否懒加载等。</strong></p>
-<p><strong>@ToString：作用于类，覆盖默认的toString()方法，可以通过of属性限定显示某些字段，通过exclude属性排除某些字段。</strong></p>
-<a id="more"></a>
-<p><strong>@EqualsAndHashCode：作用于类，覆盖默认的equals和hashCode</strong></p>
-<p><strong>@NonNull：主要作用于成员变量和参数中，标识不能为空，否则抛出空指针异常。</strong></p>
-<p><strong>@NoArgsConstructor, @RequiredArgsConstructor, @AllArgsConstructor：作用于类上，用于生成构造函数。有staticName、access等属性。</strong></p>
-<p><strong>staticName属性一旦设定，将采用静态方法的方式生成实例，access属性可以限定访问权限。</strong></p>
-<p><strong>@NoArgsConstructor：生成无参构造器；</strong></p>
-<p><strong>@RequiredArgsConstructor：生成包含final和@NonNull注解的成员变量的构造器；</strong></p>
-<p><strong>@AllArgsConstructor：生成全参构造器</strong></p>
-<p><strong>@Data：作用于类上，是以下注解的集合：@ToString @EqualsAndHashCode @Getter @Setter @RequiredArgsConstructor</strong></p>
-<p><strong>@Builder：作用于类上，将类转变为建造者模式</strong></p>
-<p><strong>@Log：作用于类上，生成日志变量。针对不同的日志实现产品，有不同的注解：</strong></p>
-<h3 id="其他重要注解："><a href="#其他重要注解：" class="headerlink" title="其他重要注解："></a>其他重要注解：</h3><p><strong>@Cleanup：自动关闭资源，针对实现了java.io.Closeable接口的对象有效，如：典型的IO流对象</strong></p>
-<p><strong>@SneakyThrows：可以对受检异常进行捕捉并抛出，可以改写上述的main方法如下：</strong></p>
-<p><strong>@Synchronized：作用于方法级别，可以替换synchronize关键字或lock锁，用处不大.</strong></p>
+    <title>通用mapper常用注解和方法</title>
+    <url>/posts/83d0a7ff.html</url>
+    <content><![CDATA[<h1 id="常用注解"><a href="#常用注解" class="headerlink" title="常用注解"></a>常用注解</h1><h2 id="Table注解"><a href="#Table注解" class="headerlink" title="@Table注解"></a>@Table注解</h2><p><strong>作用：</strong>建立实体类和数据库表之间的对应关系。</p>
+<p><strong>默认规则：</strong>实体类类名首字母小写作为表明。Employee类→employee表</p>
+<p><strong>用法：</strong>在@Table注解的name属性中指定目标数据库表的表明</p>
+<p><img src="http://img.jared.top/202010241915_794.png" alt="@Table注解"></p>
+<h2 id="Column注解"><a href="#Column注解" class="headerlink" title="@Column注解"></a>@Column注解</h2><p><strong>作用：</strong>建立实体类字段和数据库表字段之间的对于关系</p>
+<p><strong>默认规则：</strong></p>
+<ul>
+<li>实体类字段：驼峰式命名</li>
+<li>数据库表字段：使用“-”区分各个单词</li>
+</ul>
+<p><strong>用法：</strong>在@Column注解的name属性中指定目标字段的字段名</p>
+<p><img src="http://img.jared.top/202010241913_362.png" alt="@Column注解"></p>
+<h2 id="Id注解"><a href="#Id注解" class="headerlink" title="@Id注解"></a>@Id注解</h2><p>通用Mapper在执行xxxByPrimaryKey(key)方法时，有两种情况。</p>
+<p>情况1：没有使用@Id注解明确指定主键字段</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> emp_id,emp_name,emp_salary,emp_age <span class="keyword">FROM</span> table_emp <span class="keyword">WHERE</span> emp_id = ? <span class="keyword">AND</span> emp_name = ? <span class="keyword">AND</span> emp_salary = ? <span class="keyword">AND</span> emp_age = ?</span><br></pre></td></tr></table></figure>
+
+<p>之所以会生成上面这样的WHERE子句是因为通用Mapper将实体类中的所有字段都拿来放在一起作为联合主键。</p>
+<p>情况2：使用@Id注解明确标记和数据库表中主键字段对应的实体类字段。</p>
+<p><img src="http://img.jared.top/202010241903_753.png" alt="@Id注解"></p>
+<h2 id="GeneratedValue注解"><a href="#GeneratedValue注解" class="headerlink" title="@GeneratedValue注解"></a>@GeneratedValue注解</h2><p><strong>作用：</strong>让通用Mapper在执行insert操作之后将数据库自动生成的主键值回写到实体类对象中。</p>
+<p><strong>自增主键方法：</strong></p>
+<p><img src="http://img.jared.top/202010242012_726.png"></p>
+<p><strong>序列主键用法：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Id</span></span><br><span class="line"><span class="meta">@GeneratedValue(</span></span><br><span class="line"><span class="meta">    strategy = GenerationType.IDENTITY,</span></span><br><span class="line"><span class="meta">	generator = &quot;select SEQ_ID.nextval from dual&quot;)</span></span><br><span class="line"><span class="keyword">private</span> Integer empId;</span><br></pre></td></tr></table></figure>
+
+<p>应用场景：购物车结账</p>
+<ul>
+<li>增加商品销量…</li>
+<li>减少商品库存…</li>
+<li>生成订单数据v→封装到Order对象中→保存Order对象→数据库自动生成主键值→回写到实体类对象Order中</li>
+<li>生成一系列订单详情数据→List<OrderItem>→在每一个OrderItem中设置Order对象的主键值作为外键→批量保存List<OrderItem></li>
+<li>…</li>
+</ul>
+<h2 id="Transient注解（JPA）"><a href="#Transient注解（JPA）" class="headerlink" title="@Transient注解（JPA）"></a>@Transient注解（JPA）</h2><p>忽略非数据库字段</p>
+<h1 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h1><h2 id="selectOne方法"><a href="#selectOne方法" class="headerlink" title="selectOne方法"></a>selectOne方法</h2><p><strong>通用Mapper替我们自动生成的sql语句情况</strong></p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">==&gt;  Preparing: SELECT emp_id,emp_name,emp_salary,emp_age FROM table_emp WHERE emp_name = ? AND emp_salary = ?</span><br><span class="line">==&gt; Parameters: bob(String), 5560.11(Double)</span><br><span class="line">&lt;==    Columns: emp_id, emp_name, emp_salary, emp_age</span><br><span class="line">&lt;==        Row: 3, bob, 5560.11, 40</span><br><span class="line">&lt;==      Total: 1</span><br></pre></td></tr></table></figure>
+
+<p><strong>实体类封装查询条件生成WHERE子句的规则</strong></p>
+<ul>
+<li>使用非空的值生成WHERE子句</li>
+<li>在条件表达式中使用“=”进行比较</li>
+</ul>
+<p><strong>要求必须返回一个实体类结果，如果有多个，则会抛出异常</strong></p>
+<h2 id="xxxByPrimaryKey-方法"><a href="#xxxByPrimaryKey-方法" class="headerlink" title="xxxByPrimaryKey 方法"></a>xxxByPrimaryKey 方法</h2><p>需要使用@Id注解明确标记和数据库主键字段对应的实体类字段，否则通用Mapper会将所有实体类字段作为联合主键。</p>
+<h2 id="xxxSelective-方法"><a href="#xxxSelective-方法" class="headerlink" title="xxxSelective 方法"></a>xxxSelective 方法</h2><p>非主键字段如果为null值，则不加入到SQL语句中。</p>
 ]]></content>
       <categories>
-        <category>Lombok</category>
-        <category>插件</category>
+        <category>Mybatis</category>
+        <category>mapper</category>
+        <category>mybatis插件</category>
       </categories>
       <tags>
-        <tag>Lombok</tag>
-        <tag>注解</tag>
-        <tag>插件</tag>
+        <tag>Mybatis</tag>
+        <tag>mapper</tag>
+        <tag>mybatis插件</tag>
       </tags>
   </entry>
   <entry>
-    <title>kafka相关操作及报错</title>
-    <url>/posts/18e29e3e.html</url>
-    <content><![CDATA[<h3 id="启动zookeeper和kafka"><a href="#启动zookeeper和kafka" class="headerlink" title="启动zookeeper和kafka"></a>启动zookeeper和kafka</h3><a id="more"></a>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">启动zookeeper</span><br><span class="line">nohup ./kafka_2.13-2.6.0/bin/zookeeper-server-start.sh ./kafka_2.13-2.6.0/config/zookeeper.properties &amp;</span><br><span class="line">启动kafka</span><br><span class="line">nohup ./bin/kafka-server-start.sh config/server.properties &amp;</span><br><span class="line"></span><br><span class="line">创建topic</span><br><span class="line">./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic hello</span><br><span class="line">./bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092</span><br><span class="line">查看topic</span><br><span class="line">./bin/kafka-topics.sh --list --zookeeper localhost:2181</span><br><span class="line">./bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server localhost:9092</span><br><span class="line">生产消息</span><br><span class="line">./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic hello</span><br><span class="line">./bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    <title>QBC查询</title>
+    <url>/posts/c233a97c.html</url>
+    <content><![CDATA[<h1 id="QBC查询"><a href="#QBC查询" class="headerlink" title="QBC查询"></a>QBC查询</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><strong>Query By Criteria</strong></p>
+<p>Criteria是Criterion的复数形式。意识是：规则、标准、准则。在SQL语句中相当于查询条件。</p>
+<p>QBC查询是将查询条件通过Java对象进行模块化封装。</p>
+]]></content>
+      <categories>
+        <category>Mybatis</category>
+        <category>mapper</category>
+        <category>mybatis插件</category>
+      </categories>
+      <tags>
+        <tag>Mybatis</tag>
+        <tag>mybatis插件</tag>
+        <tag>Mapper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通用Mapper 逆向工程</title>
+    <url>/posts/f2bf6669.html</url>
+    <content><![CDATA[<h1 id="MYBATIS-GENERATOR-插件"><a href="#MYBATIS-GENERATOR-插件" class="headerlink" title="MYBATIS GENERATOR 插件"></a>MYBATIS GENERATOR 插件</h1><p>使用该插件可以很方便的生成实体类、Mapper接口以及对应的XML文件。</p>
+<h2 id="使用通用-Mapper-插件"><a href="#使用通用-Mapper-插件" class="headerlink" title="使用通用 Mapper 插件"></a>使用通用 Mapper 插件</h2><p><strong>引入依赖：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;tk.mybatis&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;mapper-spring-boot-starter&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.1.5&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="报错解决方法"><a href="#报错解决方法" class="headerlink" title="报错解决方法"></a>报错解决方法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">创建消费者时候报错：</span><br><span class="line"></span><br><span class="line">.&#x2F;bin&#x2F;kafka-console-consumer.sh --zookeeper localhost:2181 --topic hello --from-beginning</span><br><span class="line">zookeeper is not a recognized option</span><br><span class="line">问题原因：</span><br><span class="line">新版本kafka中，--zookeeper这种启动方式已删除。</span><br><span class="line">解决办法：</span><br><span class="line">0.90版本之后启动消费者的方法如下：</span><br><span class="line"></span><br><span class="line">.&#x2F;bin&#x2F;kafka-console-consumer.sh --bootstrap-server localhost:2181 --topic hello --from-beginning</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="使用Maven执行MBG"><a href="#使用Maven执行MBG" class="headerlink" title="使用Maven执行MBG"></a>使用Maven执行MBG</h2><p><strong>配置pom.xml:</strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- $&#123;basedir&#125; 引用工程跟目录 --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetJavaProject ：声明存放源码的地方--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetJavaProject</span>&gt;</span>$&#123;basedir&#125;/src/main/java<span class="tag">&lt;/<span class="name">targetJavaProject</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetMapperPackage: 声明MBG生成XxxMapper接口后存在的package位置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetMapperPackage</span>&gt;</span>com.jared.mapper.mapper<span class="tag">&lt;/<span class="name">targetMapperPackage</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetModelPackage： 声明MBG生成实体类后存放的package位置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetModelPackage</span>&gt;</span>com.jared.mapper.entity<span class="tag">&lt;/<span class="name">targetModelPackage</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetResourcesProject声明存放资源文件和XML配置文件的目录位置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetResourcesProject</span>&gt;</span>$&#123;basedir&#125;/src/main/resources<span class="tag">&lt;/<span class="name">targetResourcesProject</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- targetXMLPackage:声明存在具体XxxMapper.xml文件的目录位置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetXMLPackage</span>&gt;</span>mapper<span class="tag">&lt;/<span class="name">targetXMLPackage</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--  依赖版本  --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mapper.version</span>&gt;</span>4.1.5<span class="tag">&lt;/<span class="name">mapper.version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mysql.version</span>&gt;</span>5.1.47<span class="tag">&lt;/<span class="name">mysql.version</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--这里配置了MBG配置文件中常用到的几个路径以及包名。还包含了通用Mapper的版本和数据库JDBC驱动的版本。--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--web依赖--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.47<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>tk.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mapper-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--配置了MBG插件，并且配置了generatorConfig.xml配置文件的路径。另外还有两个依赖，分别是JDBC驱动以及通用Mapper--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.generator<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-generator-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">configurationFile</span>&gt;</span>$&#123;basedir&#125;/src/main/resources/generator/generatorConfig.xml<span class="tag">&lt;/<span class="name">configurationFile</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">overwrite</span>&gt;</span>true<span class="tag">&lt;/<span class="name">overwrite</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">verbose</span>&gt;</span>true<span class="tag">&lt;/<span class="name">verbose</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;mysql.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>tk.mybatis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mapper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;mapper.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="generatorConfig-xml配置文件"><a href="#generatorConfig-xml配置文件" class="headerlink" title="generatorConfig.xml配置文件"></a>generatorConfig.xml配置文件</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE generatorConfiguration</span><br><span class="line">        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD MyBatis Generator Configuration 1.0&#x2F;&#x2F;EN&quot;</span><br><span class="line">        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-generator-config_1_0.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;generatorConfiguration&gt;</span><br><span class="line">    &lt;!-- 引入外部属性文件 --&gt;</span><br><span class="line">    &lt;properties resource&#x3D;&quot;config.properties&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;context id&#x3D;&quot;Mysql&quot; targetRuntime&#x3D;&quot;MyBatis3Simple&quot; defaultModelType&#x3D;&quot;flat&quot;&gt;</span><br><span class="line">        &lt;property name&#x3D;&quot;beginningDelimiter&quot; value&#x3D;&quot;&#96;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;property name&#x3D;&quot;endingDelimiter&quot; value&#x3D;&quot;&#96;&quot;&#x2F;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 配置通用Mapper的MBG插件相关信息 --&gt;</span><br><span class="line">        &lt;plugin type&#x3D;&quot;$&#123;mapper.plugin&#125;&quot;&gt;</span><br><span class="line">            &lt;property name&#x3D;&quot;mappers&quot; value&#x3D;&quot;$&#123;mapper.Mapper&#125;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;plugin&gt;</span><br><span class="line">        &lt;!-- 数据库相关信息 --&gt;</span><br><span class="line">        &lt;jdbcConnection driverClass&#x3D;&quot;$&#123;jdbc.driverClass&#125;&quot;</span><br><span class="line">                        connectionURL&#x3D;&quot;$&#123;jdbc.url&#125;&quot;</span><br><span class="line">                        userId&#x3D;&quot;$&#123;jdbc.user&#125;&quot;</span><br><span class="line">                        password&#x3D;&quot;$&#123;jdbc.password&#125;&quot;&gt;</span><br><span class="line">        &lt;&#x2F;jdbcConnection&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!-- 配置Java实体类存放位置--&gt;</span><br><span class="line">        &lt;javaModelGenerator</span><br><span class="line">                targetPackage&#x3D;&quot;$&#123;targetModelPackage&#125;&quot;</span><br><span class="line">                targetProject&#x3D;&quot;$&#123;targetJavaProject&#125;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;!-- 配置XxxMapper.xml存放位置--&gt;</span><br><span class="line">        &lt;sqlMapGenerator</span><br><span class="line">                targetPackage&#x3D;&quot;$&#123;targetXMLPackage&#125;&quot;</span><br><span class="line">                targetProject&#x3D;&quot;$&#123;targetResourcesProject&#125;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;!-- 配置XxxMapper.java存放位置--&gt;</span><br><span class="line">        &lt;javaClientGenerator</span><br><span class="line">                targetPackage&#x3D;&quot;$&#123;targetMapperPackage&#125;&quot;</span><br><span class="line">                targetProject&#x3D;&quot;$&#123;targetJavaProject&#125;&quot;</span><br><span class="line">                type&#x3D;&quot;XMLMAPPER&quot; &#x2F;&gt;</span><br><span class="line">        &lt;!-- 配置根据数据库表生成Java文件的相关规则--&gt;</span><br><span class="line">        &lt;!-- tableName&#x3D;&quot;%&quot; 表示数据库中所有表都参与逆向工程，此时使用默认规则 --&gt;</span><br><span class="line">        &lt;!-- 默认规则：table_dept-&gt;TableDept--&gt;</span><br><span class="line">        &lt;!-- 不符合默认规则时需要使用tableName和domainObjectName两个属性明确指定 --&gt;</span><br><span class="line">        &lt;table tableName&#x3D;&quot;table_emp&quot; domainObjectName&#x3D;&quot;Employee&quot; &gt;</span><br><span class="line">            &lt;!-- 配置主键生成策略--&gt;</span><br><span class="line">            &lt;generatedKey column&#x3D;&quot;emp_id&quot; sqlStatement&#x3D;&quot;Mysql&quot; identity&#x3D;&quot;true&quot;&#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;table&gt;</span><br><span class="line">    &lt;&#x2F;context&gt;</span><br><span class="line">&lt;&#x2F;generatorConfiguration&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>&lt;properties resource=&quot;config.properties&quot;/&gt;</code>引入了<code>config.properties</code>属性配置，该文件内容如下：</p>
+<h2 id="config-properties"><a href="#config-properties" class="headerlink" title="config.properties"></a>config.properties</h2><figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 数据库配置</span></span><br><span class="line"><span class="meta">jdbc.driverClass</span> = <span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line"><span class="meta">jdbc.url</span> = <span class="string">jdbc:mysql://localhost:3306/common_mapper?useUnicode=true&amp;useSSL=false</span></span><br><span class="line"><span class="meta">jdbc.user</span> = <span class="string">root</span></span><br><span class="line"><span class="meta">jdbc.password</span> = <span class="string">123456</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#c3p0</span></span><br><span class="line"><span class="meta">jdbc.maxPoolSize</span>=<span class="string">50</span></span><br><span class="line"><span class="meta">jdbc.minPoolSize</span>=<span class="string">10</span></span><br><span class="line"><span class="meta">jdbc.maxStatements</span>=<span class="string">100</span></span><br><span class="line"><span class="meta">jdbc.testConnection</span>=<span class="string">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通用Mapper配置</span></span><br><span class="line"><span class="meta">mapper.plugin</span> = <span class="string">tk.mybatis.mapper.generator.MapperPlugin</span></span><br><span class="line"><span class="meta">mapper.Mapper</span> = <span class="string">com.jared.mapper.common.mapper.BaseMapper</span></span><br></pre></td></tr></table></figure>
+
+<p>在pom.xml这一级目录的命令行窗口执行<code>mvn mybatis-generator:generate</code>即可（前提是配置了mvn）。</p>
+<p>或者IDEA双击插件</p>
+<p><img src="http://img.jared.top/202010251432_429.png" alt="IDEA双击插件"></p>
+<p>成功生成结果</p>
+<p><img src="http://img.jared.top/202010251433_179.png" alt="成功生成结果"></p>
+]]></content>
+      <categories>
+        <category>Mybatis</category>
+        <category>mapper</category>
+        <category>mybatis插件</category>
+      </categories>
+      <tags>
+        <tag>Mybatis</tag>
+        <tag>mapper</tag>
+        <tag>mybatis插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springcloud——Eureka入门</title>
+    <url>/posts/43f5250c.html</url>
+    <content><![CDATA[<h1 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h1><h2 id="服务治理"><a href="#服务治理" class="headerlink" title="服务治理"></a>服务治理</h2><p><img src="http://img.jared.top/202011011027_580.png" alt="服务治理"></p>
+<h2 id="服务注册与发现"><a href="#服务注册与发现" class="headerlink" title="服务注册与发现"></a>服务注册与发现</h2><p><img src="http://img.jared.top/202011011027_96.png" alt="服务注册与发现"></p>
+<h2 id="Eureka系统结构"><a href="#Eureka系统结构" class="headerlink" title="Eureka系统结构"></a>Eureka系统结构</h2><p><img src="http://img.jared.top/202011011028_379.png" alt="Eureka系统结构"></p>
+<h2 id="Eureka的两个组件"><a href="#Eureka的两个组件" class="headerlink" title="Eureka的两个组件"></a>Eureka的两个组件</h2><h3 id="Eureka-Server"><a href="#Eureka-Server" class="headerlink" title="Eureka Server"></a>Eureka Server</h3><p><strong>Eureka Server提供服务注册服务</strong></p>
+<p>各个微服务节点通过配置启动后，会在EurekaServer中进行注册，这样EurekaServer中的服务注册表中将会存储所有可用服务节点的信息，服务节点的信息可以在界面中直观看到。</p>
+<h3 id="Eureka-Client"><a href="#Eureka-Client" class="headerlink" title="Eureka Client"></a>Eureka Client</h3><p><strong>EurekaClient通过注册中心进行访问</strong></p>
+<p>是一个Java客户端，用于简化Eureka Server的交互，客户端同时也具备一个内置的、使用轮询（round-robin）负载算法的负载均衡器。在应用启动后，将会向Eureka Server发送心跳（默认周期为30秒）。如果Eureka Server在多个心跳周期内没有接受到某个节点的心跳，EurekaServer将会从服务注册表中将这个服务节点移除（默认90秒）</p>
+<h2 id="单机Eureka构建步骤"><a href="#单机Eureka构建步骤" class="headerlink" title="单机Eureka构建步骤"></a>单机Eureka构建步骤</h2><h3 id="IDEA生成EurekaServer端服务注册中心"><a href="#IDEA生成EurekaServer端服务注册中心" class="headerlink" title="IDEA生成EurekaServer端服务注册中心"></a>IDEA生成EurekaServer端服务注册中心</h3><p><strong>建module</strong></p>
+<p><strong>cloud-eureka-server7001</strong></p>
+<p><strong>改POM</strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--eureka-server--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>写YML</strong></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">7001</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">localhost</span> <span class="comment">#eureka服务端的实例名称</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment"># false 表示不向注册中心注册自己</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># false 表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务</span></span><br><span class="line">    <span class="attr">fetch-registry:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="comment">#设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://$&#123;eureka.instance.hostname&#125;:$&#123;server.port&#125;/eureka/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>主启动</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaServer</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EurekaMain7001</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(EurekaMain7001.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>测试</strong></p>
+<p><img src="http://img.jared.top/202011011049_957.png"></p>
+<h3 id="EurekaClient端cloud-provider-payment8001"><a href="#EurekaClient端cloud-provider-payment8001" class="headerlink" title="EurekaClient端cloud-provider-payment8001"></a>EurekaClient端cloud-provider-payment8001</h3><p>将注册进EurekaServer成为服务提供者provider</p>
+<p><strong>改POM</strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--eureka-client--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>写YML</strong></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8001</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-payment-service</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">com.alibaba.druid.pool.DruidDataSource</span> <span class="comment">#当前数据源操作类型</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span>    <span class="comment">#mysql驱动包</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://localhost:3306/db2019?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment">#表示是否将自己注册进EurekaServer默认为true。</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment">#是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡</span></span><br><span class="line">    <span class="attr">fetchRegistry:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="comment">#单机版</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:7001/eureka</span></span><br><span class="line"></span><br><span class="line"><span class="attr">mybatis:</span></span><br><span class="line">  <span class="attr">mapper-locations:</span> <span class="string">classpath:mapper/*.xml</span></span><br><span class="line">  <span class="attr">type-aliases-package:</span> <span class="string">com.atguigu.springcloud.entities</span> <span class="comment">#所有Entity别名类所在包</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>主启动</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentMain8001</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(PaymentMain8001.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>测试</strong></p>
+<p><img src="http://img.jared.top/202011011054_205.png"></p>
+<h3 id="EurekaClient端cloud-consumer-order80"><a href="#EurekaClient端cloud-consumer-order80" class="headerlink" title="EurekaClient端cloud-consumer-order80"></a>EurekaClient端cloud-consumer-order80</h3><p>将注册进EurekaServer成为服务消费者consumer</p>
+<p><strong>改POM</strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--eureka-client--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>写YML</strong></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-order-service</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment">#表示是否将自己注册进EurekaServer默认为true。</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment">#是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡</span></span><br><span class="line">    <span class="attr">fetchRegistry:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line"><span class="comment">#      单机版</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:7001/eureka</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>主启动</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentMain8001</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(PaymentMain8001.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>测试</strong></p>
+<p><strong>测试</strong></p>
+<p><img src="http://img.jared.top/202011011102_602.png"></p>
+<h2 id="集群Eureka构建步骤"><a href="#集群Eureka构建步骤" class="headerlink" title="集群Eureka构建步骤"></a>集群Eureka构建步骤</h2><p>服务注册：将服务信息注册进注册中心</p>
+<p>服务发现：从注册中心上获取服务信息</p>
+<p>实质：存key服务命令 取value调用地址</p>
+<p>步骤：</p>
+<ol>
+<li>先启动eureka注册中心</li>
+<li>启动服务提供者payment支付服务</li>
+<li>支付服务启动后会把自身信息（比如服务地址以别名方式注册进eureka）</li>
+<li>消费者order服务在需要调用接口时，使用服务别名去注册中心获取实际的RPC远程调用地址</li>
+<li>消费者获取调用地址后，底层实际是利用HttpClient技术实现远程调用</li>
+<li>消费者获得服务地址后会缓存在本地jvm内存中，默认每间隔30秒更新一次服务调用地址</li>
+</ol>
+<p>微服务RPC远程服务调用最核心的是<strong>高可用</strong>，如果注册中心只有一个，出故障就over了。</p>
+<p>解决办法：搭建Eureka注册中心集群，实现负载均衡+故障容错</p>
+<h3 id="參考cloud-eureka-server7001"><a href="#參考cloud-eureka-server7001" class="headerlink" title="參考cloud-eureka-server7001"></a>參考cloud-eureka-server7001</h3><h3 id="新建cloud-eureka-server7002"><a href="#新建cloud-eureka-server7002" class="headerlink" title="新建cloud-eureka-server7002"></a>新建cloud-eureka-server7002</h3><h3 id="改pom"><a href="#改pom" class="headerlink" title="改pom"></a>改pom</h3><h3 id="修改映射配置改hosts"><a href="#修改映射配置改hosts" class="headerlink" title="修改映射配置改hosts"></a>修改映射配置改hosts</h3><p><code>127.0.0.1    eureka7001.com 127.0.0.1    eureka7002.com</code></p>
+<h3 id="7001改yml"><a href="#7001改yml" class="headerlink" title="7001改yml"></a>7001改yml</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">7001</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">eureka7001.com</span> <span class="comment">#eureka服务端的实例名称</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment"># false 表示不向注册中心注册自己</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># false 表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务</span></span><br><span class="line">    <span class="attr">fetch-registry:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="comment">#设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://eureka7002.com:7002/eureka/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="7002改yml"><a href="#7002改yml" class="headerlink" title="7002改yml"></a>7002改yml</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">7002</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">eureka7002.com</span> <span class="comment">#eureka服务端的实例名称</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="comment"># false 表示不向注册中心注册自己</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># false 表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务</span></span><br><span class="line">    <span class="attr">fetch-registry:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="comment">#设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://eureka7001.com:7001/eureka/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="7002主启动"><a href="#7002主启动" class="headerlink" title="7002主启动"></a>7002主启动</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaServer</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EurekaMain7002</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(EurekaMain7002.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="LoadBalanced-注解赋予RestTemplate负载均衡的能力"><a href="#LoadBalanced-注解赋予RestTemplate负载均衡的能力" class="headerlink" title="@LoadBalanced 注解赋予RestTemplate负载均衡的能力"></a>@LoadBalanced 注解赋予RestTemplate负载均衡的能力</h3><h2 id="actuator微服务信息完善"><a href="#actuator微服务信息完善" class="headerlink" title="actuator微服务信息完善"></a>actuator微服务信息完善</h2><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">instance:</span></span><br><span class="line">    <span class="attr">instance-id:</span> <span class="string">payment8001</span></span><br><span class="line">    <span class="attr">prefer-ip-address:</span> <span class="literal">true</span>  <span class="comment"># 访问路径可以显示ip地址</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="服务发现Discovery"><a href="#服务发现Discovery" class="headerlink" title="服务发现Discovery"></a>服务发现Discovery</h2><p>对于注册进Eureka里面的微服务，可以通过服务发现来获得该服务的信息</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="keyword">private</span> DiscoveryClient discoveryClient;</span><br><span class="line"><span class="meta">@GetMapping(value = &quot;/payment/discovery&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">discovery</span><span class="params">()</span></span>&#123;</span><br><span class="line">        List&lt;String&gt; list=discoveryClient.getServices();</span><br><span class="line">        <span class="keyword">for</span> (String element : list) &#123;</span><br><span class="line">            log.info(<span class="string">&quot;******element: &quot;</span>+element);</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(<span class="string">&quot;CLOUD-PAYMENT-SERVICE&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (ServiceInstance instance : instances) &#123;</span><br><span class="line">            log.info(<span class="string">&quot;******instance: &quot;</span>+instance.getServiceId()+<span class="string">&quot;\t&quot;</span>+instance.getHost()+<span class="string">&quot;\t&quot;</span>+instance.getPort()+<span class="string">&quot;\t&quot;</span>+instance.getUri());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.discoveryClient;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Eureka自我保护"><a href="#Eureka自我保护" class="headerlink" title="Eureka自我保护"></a>Eureka自我保护</h2><p>导致原因：某时刻某一个微服务不可用了，eureka不会立刻清理，依旧会对该微服务的信息进行保存，属于CAP里面的AP分支</p>
+]]></content>
+      <categories>
+        <category>springcloud</category>
+        <category>Eureka</category>
+      </categories>
+      <tags>
+        <tag>springcloud</tag>
+        <tag>Eureka</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springcloud——consul入门</title>
+    <url>/posts/ca26ff8a.html</url>
+    <content><![CDATA[<h1 id="consul-入门"><a href="#consul-入门" class="headerlink" title="consul 入门"></a>consul 入门</h1><p>Consul是一款由<a href="https://www.hashicorp.com/">HashiCorp</a>公司开源的，用于服务治理的软件，<a href="https://spring.io/projects/spring-cloud-consul">Spring Cloud Consul</a>对其进行了封装。Consul具有如下特点:</p>
+<ol>
+<li>服务注册 - 自动注册和取消注册服务实例的网络位置</li>
+<li>运行状况检查 - 检测服务实例何时启动并运行</li>
+<li>分布式配置 - 确保所有服务实例使用相同的配置</li>
+</ol>
+<p>Consul agent有两种运行模式：Server和Client。这里的Server和Client只是Consul集群层面的区分，与搭建在Cluster之上 的应用服务无关。 以Server模式运行的Consul agent节点用于维护Consul集群的状态，官方建议每个Consul Cluster至少有3个或以上的运行在Server mode的Agent，Client节点不限。</p>
+<h2 id="安装consul"><a href="#安装consul" class="headerlink" title="安装consul"></a>安装consul</h2><p>Consul下载地址：<a href="https://www.consul.io/downloads.html">https://www.consul.io/downloads.html</a></p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><p>查看版本：<code>consul --version</code></p>
+<p>启动：<code>consul agent -dev</code></p>
+<p>访问consul首页：<code>http://localhost:8500</code></p>
+]]></content>
+      <categories>
+        <category>springcloud</category>
+        <category>consul</category>
+      </categories>
+      <tags>
+        <tag>springcloud</tag>
+        <tag>consul</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springcloud——openFeign入门</title>
+    <url>/posts/4fc25143.html</url>
+    <content><![CDATA[<h2 id="OpenFeign超时控制"><a href="#OpenFeign超时控制" class="headerlink" title="OpenFeign超时控制"></a>OpenFeign超时控制</h2><p>服务端故意设置延时时间</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><img src="http://img.jared.top/202011251251_722.png" alt="OpenFeign超时控制"></h3><p><img src="http://img.jared.top/202011251253_728.png" alt="啊啊啊"></p>
+<p>客户端默认等待一秒钟，超过后报错</p>
+<p>有时候需要设置Feign客户端的超时时间。在yml文件中开启配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置Feign客户端超时时间</span></span><br><span class="line"><span class="attr">ribbon:</span></span><br><span class="line">  <span class="comment"># 指的是建立连接所用的时间，适用于网络状况正常的情况下，两端连接所用的时间</span></span><br><span class="line">  <span class="attr">ReadTimeout:</span> <span class="number">5000</span></span><br><span class="line">  <span class="comment"># 指的是建立连接后从服务器读取到可用资源所用的时间</span></span><br><span class="line">  <span class="attr">ConnectTimeout:</span> <span class="number">5000</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="OpenFeign日志打印功能"><a href="#OpenFeign日志打印功能" class="headerlink" title="OpenFeign日志打印功能"></a>OpenFeign日志打印功能</h2><p>Feign提供了日志打印功能，我们可以通过配置来调整日志级别，从而了解Feign中Http请求的细节，就是对Feign接口的调用情况进行监控和输出。</p>
+<h3 id="日志级别"><a href="#日志级别" class="headerlink" title="日志级别"></a>日志级别</h3><ul>
+<li>NONE：默认的，不显示任何日志；</li>
+<li>BASIC：仅记录请求方法、URL、响应状态码及执行时间；</li>
+<li>HEADERS：除了BASIC中定义的信息之外，还有请求和响应的头信息；</li>
+<li>FULL：除了HEADERS中定义的信息之外，还有请求和响应的正文及元数据。</li>
+</ul>
+<h3 id="配置日志Bean"><a href="#配置日志Bean" class="headerlink" title="配置日志Bean"></a>配置日志Bean</h3><p><img src="http://img.jared.top/202011251312_946.png" alt="配置日志Bean"></p>
+<p>在yml里面配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">  <span class="attr">level:</span></span><br><span class="line">    <span class="comment"># feign日志以什么级别监控那个接口</span></span><br><span class="line">    <span class="attr">com.atguigu.springcloud.service.PaymentFeignService:</span> <span class="string">debug</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
-        <category>kafka</category>
-        <category>zookeeper</category>
+        <category>springcloud</category>
+        <category>openFeign</category>
       </categories>
       <tags>
-        <tag>kafka</tag>
-        <tag>zookeeper</tag>
+        <tag>springcloud</tag>
+        <tag>openFeign</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springcloud——Hystrix入门</title>
+    <url>/posts/8b5c7a85.html</url>
+    <content><![CDATA[<p>服务雪崩</p>
+<p>当你发现一个模块下的某个实例失败后，这时候这个模块依然还会接受流量，然后这个有问题的模块还调用了其它模块，这样就会发生级联故障，或者叫雪崩。</p>
+<h1 id="Hystrix概述"><a href="#Hystrix概述" class="headerlink" title="Hystrix概述"></a>Hystrix概述</h1><p>Hystrix是一个用于处理分布式系统的延迟和容错的开源库，在分布式系统里，许多依赖不可避的会调用失败，比如超时、异常等，Hystrix能够保证在一个依赖出问题的情况下，不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性。</p>
+<p>“断路器”本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控，向调用方返回一个符合预期的、可处理的备选响应（FallBack），而不是长时间的等待或者抛出调用方无法处理的异常，这样就保证了服务调用放的线程不会被长时间、不必要地占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。</p>
+<h2 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h2><h3 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h3><p>服务器忙，请稍后再试，不让客户端等待并立刻返回一个友好提示，fallback</p>
+<p><strong>哪些情况会触发降级</strong></p>
+<ul>
+<li>程序运行异常</li>
+<li>超时</li>
+<li>服务熔断触发服务降级</li>
+<li>线程池/信号量打满也会导致服务降级</li>
+</ul>
+<h4 id="降级配置"><a href="#降级配置" class="headerlink" title="降级配置"></a>降级配置</h4><p><code>@HystrixCommand</code>：一旦调用服务方法失败并抛出了错误信息后，会自动调用<code>@HystrixCommand</code>标注好的<code>fallbackMethod</code>调用类中的指定方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@HystrixCommand(fallbackMethod = &quot;paymentInfo_TimeOutHandler&quot;,commandProperties = &#123;</span></span><br><span class="line"><span class="meta">            @HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;,value = &quot;3000&quot;)</span></span><br><span class="line"><span class="meta">    &#125;)</span></span><br></pre></td></tr></table></figure>
+
+<p>如果每一个方法都有降级方法，形成代码冗余</p>
+<p>所以就有<code>全局fallback</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//类上加入这行</span></span><br><span class="line"><span class="meta">@DefaultProperties(defaultFallback = &quot;paymentGlobalFallbackMethod&quot;)</span></span><br><span class="line">	<span class="comment">//方法上</span></span><br><span class="line">	<span class="meta">@HystrixCommand</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span>Integer id)</span></span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//下面是全局fallback</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">paymentGlobalFallbackMethod</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Global异常处理信息，请稍后再试。o(╯□╰)o&quot;</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者为<code>FeignClient</code>接口新建一个类实现该接口，统一为接口里面的方法进行异常处理。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentFallbackService</span> <span class="keyword">implements</span> <span class="title">PaymentHystrixService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_OK</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;---- PaymentFallbackService fall back-paymentInfo_OK,o(╥﹏╥)o&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;---- PaymentFallbackService fall back-paymentInfo_TimeOut,o(╥﹏╥)o&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="服务熔断"><a href="#服务熔断" class="headerlink" title="服务熔断"></a>服务熔断</h3><p>类比保险丝达到最大服务访问后，直接拒绝访问，拉闸限电，然后调用服务降级的方法并返回友好提示</p>
+<p>服务的降级→进而熔断→恢复调用链路</p>
+<h4 id="断路器"><a href="#断路器" class="headerlink" title="断路器"></a>断路器</h4><h4 id="熔断是什么"><a href="#熔断是什么" class="headerlink" title="熔断是什么"></a>熔断是什么</h4><p>熔断机制是应对雪崩效应的一种微服务链路保护机制。当扇出链路的某个微服务出错不可用或者响应时间太长时，会进行服务的降级，进而熔断该节点微服务的调用，快速返回错误的响应信息。</p>
+<p><strong>当检测到该节点微服务调用响应正常后，恢复调用链路</strong></p>
+<p>在cloud里面，熔断机制是通过<code>Hystrix</code>实现，<code>Hystrix</code>会监控微服务间调用的状况，当失败的调用到一定阈值，缺省是5秒内20次调用失败，就会启动熔断机制。熔断机制的注解是<code>@HystrixCommand</code></p>
+<h4 id="断路器开启或者关闭的条件"><a href="#断路器开启或者关闭的条件" class="headerlink" title="断路器开启或者关闭的条件"></a>断路器开启或者关闭的条件</h4><ol>
+<li>当满足一定的阈值的时候（默认10s内超过20个请求次数）</li>
+<li>当失败率达到一定的时候（默认10s内超过50%请求失败）</li>
+<li>到达以上阈值，断路器将会开启</li>
+<li>当开启的时候，所有请求都不会进行转发</li>
+<li>一段时间之后（默认是5s）,这个时候断路器是半开状态，会让其中一个请求进行转发。如果成功，断路器会关闭，若失败，继续开启。重复4和5</li>
+</ol>
+<h4 id="断路器打开之后"><a href="#断路器打开之后" class="headerlink" title="断路器打开之后"></a>断路器打开之后</h4><p><img src="http://img.jared.top/202011251803_823.png"></p>
+<h3 id="服务限流"><a href="#服务限流" class="headerlink" title="服务限流"></a>服务限流</h3><p>秒杀高并发等操作，严禁一蜂窝的过来拥挤，大家排队，一秒钟N个，有序进行</p>
+<h2 id="Hystrix工作流程"><a href="#Hystrix工作流程" class="headerlink" title="Hystrix工作流程"></a><code>Hystrix</code>工作流程</h2><p><img src="https://segmentfault.com/img/bV0mfx?w=1372&h=667/view"></p>
+<h2 id="服务监控HystrixDashboard"><a href="#服务监控HystrixDashboard" class="headerlink" title="服务监控HystrixDashboard"></a>服务监控<code>HystrixDashboard</code></h2>]]></content>
+      <categories>
+        <category>springcloud</category>
+        <category>Hystrix</category>
+      </categories>
+      <tags>
+        <tag>springcloud</tag>
+        <tag>Hystrix</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springcloud——gateway入门</title>
+    <url>/posts/cb14d55c.html</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h2><p>SpringCloud Gateway 使用的Webflux中的reactor-netty响应式编程组件，底层使用了Netty通讯框架。</p>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p><img src="http://img.jared.top/202011261147_826.png" alt="特性"></p>
+<h3 id="和zuul的区别"><a href="#和zuul的区别" class="headerlink" title="和zuul的区别"></a>和zuul的区别</h3><p><img src="http://img.jared.top/202011261149_215.png"></p>
+<h1 id="三大核心概念"><a href="#三大核心概念" class="headerlink" title="三大核心概念"></a>三大核心概念</h1><h2 id="Route路由"><a href="#Route路由" class="headerlink" title="Route路由"></a>Route路由</h2><p>路由是构建网关的基本模块，它由ID，目标URI，一系列的断言和过滤器组成，如果断言为true则匹配该路由</p>
+<h2 id="Predicate断言"><a href="#Predicate断言" class="headerlink" title="Predicate断言"></a>Predicate断言</h2><p>参考的是Java8的java.util.function.Predicate</p>
+<p>可以匹配HTTP请求中的所有内容（例如请求头和请求参数），如果请求与断言相匹配则进行路由。</p>
+<h2 id="Filter过滤"><a href="#Filter过滤" class="headerlink" title="Filter过滤"></a>Filter过滤</h2><p>指的是Spring框架中GatewayFilter的实例，使用过滤器，可以在请求被路由前或者之后对请求进行修改。</p>
+]]></content>
+      <categories>
+        <category>springcloud</category>
+        <category>gateway</category>
+      </categories>
+      <tags>
+        <tag>springcloud</tag>
+        <tag>gateway</tag>
       </tags>
   </entry>
 </search>

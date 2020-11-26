@@ -19,21 +19,24 @@
     var CONFIG = {"hostname":"www.jared.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
   </script>
 
-  <meta name="description" content="Spring 常见面试题">
+  <meta name="description" content="springcloud——Hystrix入门">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring 常见面试题">
-<meta property="og:url" content="http://www.jared.top/posts/228e4888.html">
+<meta property="og:title" content="springcloud——Hystrix入门">
+<meta property="og:url" content="http://www.jared.top/posts/8b5c7a85.html">
 <meta property="og:site_name" content="Jared">
-<meta property="og:description" content="Spring 常见面试题">
+<meta property="og:description" content="springcloud——Hystrix入门">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-09-04T11:06:17.000Z">
-<meta property="article:modified_time" content="2020-09-15T14:12:02.337Z">
+<meta property="og:image" content="http://img.jared.top/202011251803_823.png">
+<meta property="og:image" content="https://segmentfault.com/img/bV0mfx?w=1372&h=667/view">
+<meta property="article:published_time" content="2020-11-25T05:19:10.000Z">
+<meta property="article:modified_time" content="2020-11-25T10:16:41.357Z">
 <meta property="article:author" content="Jared">
-<meta property="article:tag" content="面试题">
-<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="springcloud">
+<meta property="article:tag" content="Hystrix">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.jared.top/202011251803_823.png">
 
-<link rel="canonical" href="http://www.jared.top/posts/228e4888.html">
+<link rel="canonical" href="http://www.jared.top/posts/8b5c7a85.html">
 
 
 <script id="page-configurations">
@@ -46,7 +49,7 @@
   };
 </script>
 
-  <title>Spring 常见面试题 | Jared</title>
+  <title>springcloud——Hystrix入门 | Jared</title>
   
 
 
@@ -205,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.jared.top/posts/228e4888.html">
+    <link itemprop="mainEntityOfPage" href="http://www.jared.top/posts/8b5c7a85.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -218,7 +221,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Spring 常见面试题
+          springcloud——Hystrix入门
         </h1>
 
         <div class="post-meta">
@@ -228,27 +231,21 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-09-04 19:06:17" itemprop="dateCreated datePublished" datetime="2020-09-04T19:06:17+08:00">2020-09-04</time>
+              <time title="创建时间：2020-11-25 13:19:10 / 修改时间：18:16:41" itemprop="dateCreated datePublished" datetime="2020-11-25T13:19:10+08:00">2020-11-25</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-15 22:12:02" itemprop="dateModified" datetime="2020-09-15T22:12:02+08:00">2020-09-15</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/testQuestions/" itemprop="url" rel="index"><span itemprop="name">面试题</span></a>
+                  <a href="/categories/springcloud/" itemprop="url" rel="index"><span itemprop="name">springcloud</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index"><span itemprop="name">Spring</span></a>
+                  <a href="/categories/Hystrix/" itemprop="url" rel="index"><span itemprop="name">Hystrix</span></a>
                 </span>
             </span>
 
@@ -268,8 +265,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/posts/228e4888.html#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/posts/228e4888.html" itemprop="commentCount"></span>
+    <a title="valine" href="/posts/8b5c7a85.html#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/8b5c7a85.html" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -279,16 +276,16 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
+              <span>2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
+              <span>4 分钟</span>
             </span>
-            <div class="post-description">Spring 常见面试题</div>
+            <div class="post-description">springcloud——Hystrix入门</div>
 
         </div>
       </header>
@@ -299,73 +296,46 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h1><h2 id="什么是Spring框架？包含哪些主要模块？"><a href="#什么是Spring框架？包含哪些主要模块？" class="headerlink" title="什么是Spring框架？包含哪些主要模块？"></a>什么是Spring框架？包含哪些主要模块？</h2><blockquote>
-<p>Spring框架是一个为Java应用程序的开发提供了综合、广泛的基础性支持的Java平台。<br>主要模块： 核心容器、数据访问/集成、Web、AOP（面向切面编程）、工具、消息和测试模块</p>
-</blockquote>
-<hr>
-<h2 id="使用Spring框架的好处？"><a href="#使用Spring框架的好处？" class="headerlink" title="使用Spring框架的好处？"></a>使用Spring框架的好处？</h2><ul>
-<li>Dependency Injection（DI）方法使得构造器和JavaBean properties文件中的依赖关系一目了然</li>
-<li>与EJB容器相比较，IoC容器更加趋向于轻量级。这样一来IoC容器在有限的内存和CPU资源的情况下进行应用程序的开发和发布就变得十分有利</li>
-<li>Spring利用了已有的技术，比如ORM框架、logging框架、J2EE、Quartz和JDK Timer，以及其他视图技术</li>
-<li>Spring框架是按照模块的形式来组织的。</li>
-<li>Spring提供了一个便捷的事务管理接口</li>
-<li>提供相应的测试环境代码</li>
-</ul>
-<hr>
-<h2 id="什么是控制反转（IOC）？什么是依赖注入？"><a href="#什么是控制反转（IOC）？什么是依赖注入？" class="headerlink" title="什么是控制反转（IOC）？什么是依赖注入？"></a>什么是控制反转（IOC）？什么是依赖注入？</h2><p>在Java中依赖注入有三种实现方式：构造器注入，setter方法注入，接口注入</p>
-<h2 id="BeanFactory和ApplicationContext-有什么区别？"><a href="#BeanFactory和ApplicationContext-有什么区别？" class="headerlink" title="BeanFactory和ApplicationContext 有什么区别？"></a>BeanFactory和ApplicationContext 有什么区别？</h2><p>BeanFactory可以理解为含有bean集合的工厂类。BeanFactory包含了种bean的定义，以便在接收到客户端请求时将对应的bean实例化。<br>BeanFactory还能在实例化对象时生成协作类之间的关系。此举将bean自身与bean客户端的配置中解放出来。BeanFactory还包含了bean生命周期的控制，调用客户端的初始化方法(initialization methods)和销毁方法(destruction methods)。<br>从表面上看，ApplicationContext如同BeanFactory一样具有bean定义、bean关联关系的设置，根据请求分发bean的功能。但ApplicationContext在此基础上还提供了其它的功能：</p>
-<blockquote>
-<ol>
-<li>提供了支持国际化的文本消息</li>
-<li>统一的资源文件读取方式</li>
-<li>已在监听器中注册的bean的事件</li>
-</ol>
-</blockquote>
-<p>以下是较常见的ApplicationContext实现方式：</p>
-<ol>
-<li>ClassPathXmlApplicationContext:从classpath的XML配置文件中读取上下文，并生成上下文定义。应用程序上下文从程序环境变量中<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;bean.xml&quot;</span>);</span><br></pre></td></tr></table></figure></li>
-<li>FileSystemXmlApplicationContext:由文件系统中的XML配置文件读取上下文。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext context = <span class="keyword">new</span> FileSystemXmlApplicationContext(<span class="string">&quot;bean.xml&quot;</span>);</span><br></pre></td></tr></table></figure></li>
-<li>XmlWebApplicationContext:由Web应用的XML文件读取上下文。</li>
-<li>AnnotationConfigApplicationContext(基于Java配置启动容器)</li>
-</ol>
-<hr>
-<h2 id="Spring有几种配置方式？"><a href="#Spring有几种配置方式？" class="headerlink" title="Spring有几种配置方式？"></a>Spring有几种配置方式？</h2><p>将Spring配置到应用开发中有以下三种方式：</p>
-<blockquote>
-<p>1.基于XML的配置<br>2.基于注解的配置<br>3.基于Java的配置</p>
-</blockquote>
-<h3 id="如何用基于XML配置的方式配置Spring？"><a href="#如何用基于XML配置的方式配置Spring？" class="headerlink" title="如何用基于XML配置的方式配置Spring？"></a>如何用基于XML配置的方式配置Spring？</h3><p>========</p>
-<h3 id="如何用基于Java配置的方式配置Spring？"><a href="#如何用基于Java配置的方式配置Spring？" class="headerlink" title="如何用基于Java配置的方式配置Spring？"></a>如何用基于Java配置的方式配置Spring？</h3><p>========</p>
-<h3 id="如何用基于注解配置的方式配置Spring？"><a href="#如何用基于注解配置的方式配置Spring？" class="headerlink" title="如何用基于注解配置的方式配置Spring？"></a>如何用基于注解配置的方式配置Spring？</h3><p>========</p>
-<h2 id="解释Spring-Bean的生命周期？"><a href="#解释Spring-Bean的生命周期？" class="headerlink" title="解释Spring Bean的生命周期？"></a>解释Spring Bean的生命周期？</h2><p>========</p>
-<h2 id="Spring-Bean的作用域区别？"><a href="#Spring-Bean的作用域区别？" class="headerlink" title="Spring Bean的作用域区别？"></a>Spring Bean的作用域区别？</h2><p>5个范围</p>
-<ol>
-<li>singleton：是默认的，这种范围确保不管接受到多个请求，每个容器中只有一个bean的实例，单例的模式由beanFactory自身来维护</li>
-<li>prototype：原型范围与单例范围相反，为每一个bean请求提供一个实例</li>
-<li>request：在请求bean范围内会为每一个来自客户端的网络请求创建一个实例，在请求完成以后，bean会失效并被垃圾回收器回收。</li>
-<li>session：与请求范围类似，确保每个session中有一个bean的实例，在session过去后，bean会随之失效。</li>
-<li>global-session：global-session和Portlet应用有关。当你的应用部署在Portlet容器中工作时，它包含很多portlet。如果你想要声明让所有的portlet共用全局的存储变量的话，那么这全局变量需要存储在global-session中。<br>全局作用域与Servlet中的session作用域效果相同。</li>
-</ol>
-<h2 id="请举例说明如何在Spring中注入一个Java-Collection？"><a href="#请举例说明如何在Spring中注入一个Java-Collection？" class="headerlink" title="请举例说明如何在Spring中注入一个Java Collection？"></a>请举例说明如何在Spring中注入一个Java Collection？</h2><p>Spring提供了以下四种集合类的配置元素：</p>
+        <p>服务雪崩</p>
+<p>当你发现一个模块下的某个实例失败后，这时候这个模块依然还会接受流量，然后这个有问题的模块还调用了其它模块，这样就会发生级联故障，或者叫雪崩。</p>
+<h1 id="Hystrix概述"><a href="#Hystrix概述" class="headerlink" title="Hystrix概述"></a>Hystrix概述</h1><p>Hystrix是一个用于处理分布式系统的延迟和容错的开源库，在分布式系统里，许多依赖不可避的会调用失败，比如超时、异常等，Hystrix能够保证在一个依赖出问题的情况下，不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性。</p>
+<p>“断路器”本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控，向调用方返回一个符合预期的、可处理的备选响应（FallBack），而不是长时间的等待或者抛出调用方无法处理的异常，这样就保证了服务调用放的线程不会被长时间、不必要地占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。</p>
+<h2 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h2><h3 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h3><p>服务器忙，请稍后再试，不让客户端等待并立刻返回一个友好提示，fallback</p>
+<p><strong>哪些情况会触发降级</strong></p>
 <ul>
-<li><code>&lt;list&gt;</code>: 该标签用来装配可重复的list值。</li>
-<li><code>&lt;set&gt;</code>：该标签用来装配没有重复的set值。</li>
-<li><code>&lt;map&gt;</code>：该标签可用来注入键和值可以为任何类型的键值对。</li>
-<li><code>&lt;props&gt;</code>：该标签支持注入键和值都是字符串类型的键值对。</li>
+<li>程序运行异常</li>
+<li>超时</li>
+<li>服务熔断触发服务降级</li>
+<li>线程池/信号量打满也会导致服务降级</li>
 </ul>
-<h2 id="请解释自动装配模式的区别？"><a href="#请解释自动装配模式的区别？" class="headerlink" title="请解释自动装配模式的区别？"></a>请解释自动装配模式的区别？</h2><ul>
-<li>no:这是Spring的默认设置，在该设置下自动装配是关闭的，开发者需要自行在bean定义中用标签明确的设置依赖关系。</li>
-<li>byName：该选项可以根据bean名称设置依赖关系。当向一个bean中自动装配一个属性时，容器将根据bean的名称自动在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。</li>
-<li>byType：该选项可以根据bean的类型设置依赖关系。当想一个bean中自动装配一个属性时，容器将根据bean的类型自动在配置文件中查询一个匹配的bean。如果找到的话，就装配这个属性，如果没找到的话就报错。</li>
-<li>constructor：构造器的自动装配和byType模式类似，但是仅仅适用于与有构造器相同参数的bean，如果在容器总没有找到与构造器参数类型一致的bean，那么将会抛出异常。</li>
-<li>autodetect：该模式自动探测使用构造器自动装配或byType自动装配。首先，会尝试找合适的带参数的构造器，如果找到的话就是用构造器自动装配，如果在bean内部没有找到相应的构造器或者是无参构造器，容器就会自动选择byType的自动装配方式。</li>
-</ul>
-<h2 id="如何开启基于注解的自动装配？"><a href="#如何开启基于注解的自动装配？" class="headerlink" title="如何开启基于注解的自动装配？"></a>如何开启基于注解的自动装配？</h2><p>要使用<code>@Autowired</code>，需要注册<code>AutowiredAnnotationBeanPostProcessor</code>，可以有以下两种方式来实现：</p>
-<ol>
-<li>引入配置文件中的<code>&lt;beans&gt;</code>下引入<code>&lt;context:annotation-config&gt;</code><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;context:annotation-config&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></li>
-<li>在配置文件中直接引入<code>AutowiredAnnotationBeanPostProcessor</code><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;bean <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor&quot;</span>&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<h4 id="降级配置"><a href="#降级配置" class="headerlink" title="降级配置"></a>降级配置</h4><p><code>@HystrixCommand</code>：一旦调用服务方法失败并抛出了错误信息后，会自动调用<code>@HystrixCommand</code>标注好的<code>fallbackMethod</code>调用类中的指定方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HystrixCommand(fallbackMethod = &quot;paymentInfo_TimeOutHandler&quot;,commandProperties = &#123;</span></span><br><span class="line"><span class="meta">            @HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;,value = &quot;3000&quot;)</span></span><br><span class="line"><span class="meta">    &#125;)</span></span><br></pre></td></tr></table></figure>
 
+<p>如果每一个方法都有降级方法，形成代码冗余</p>
+<p>所以就有<code>全局fallback</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类上加入这行</span></span><br><span class="line"><span class="meta">@DefaultProperties(defaultFallback = &quot;paymentGlobalFallbackMethod&quot;)</span></span><br><span class="line">	<span class="comment">//方法上</span></span><br><span class="line">	<span class="meta">@HystrixCommand</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span>Integer id)</span></span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//下面是全局fallback</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">paymentGlobalFallbackMethod</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Global异常处理信息，请稍后再试。o(╯□╰)o&quot;</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者为<code>FeignClient</code>接口新建一个类实现该接口，统一为接口里面的方法进行异常处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentFallbackService</span> <span class="keyword">implements</span> <span class="title">PaymentHystrixService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_OK</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;---- PaymentFallbackService fall back-paymentInfo_OK,o(╥﹏╥)o&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">paymentInfo_TimeOut</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;---- PaymentFallbackService fall back-paymentInfo_TimeOut,o(╥﹏╥)o&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="服务熔断"><a href="#服务熔断" class="headerlink" title="服务熔断"></a>服务熔断</h3><p>类比保险丝达到最大服务访问后，直接拒绝访问，拉闸限电，然后调用服务降级的方法并返回友好提示</p>
+<p>服务的降级→进而熔断→恢复调用链路</p>
+<h4 id="断路器"><a href="#断路器" class="headerlink" title="断路器"></a>断路器</h4><h4 id="熔断是什么"><a href="#熔断是什么" class="headerlink" title="熔断是什么"></a>熔断是什么</h4><p>熔断机制是应对雪崩效应的一种微服务链路保护机制。当扇出链路的某个微服务出错不可用或者响应时间太长时，会进行服务的降级，进而熔断该节点微服务的调用，快速返回错误的响应信息。</p>
+<p><strong>当检测到该节点微服务调用响应正常后，恢复调用链路</strong></p>
+<p>在cloud里面，熔断机制是通过<code>Hystrix</code>实现，<code>Hystrix</code>会监控微服务间调用的状况，当失败的调用到一定阈值，缺省是5秒内20次调用失败，就会启动熔断机制。熔断机制的注解是<code>@HystrixCommand</code></p>
+<h4 id="断路器开启或者关闭的条件"><a href="#断路器开启或者关闭的条件" class="headerlink" title="断路器开启或者关闭的条件"></a>断路器开启或者关闭的条件</h4><ol>
+<li>当满足一定的阈值的时候（默认10s内超过20个请求次数）</li>
+<li>当失败率达到一定的时候（默认10s内超过50%请求失败）</li>
+<li>到达以上阈值，断路器将会开启</li>
+<li>当开启的时候，所有请求都不会进行转发</li>
+<li>一段时间之后（默认是5s）,这个时候断路器是半开状态，会让其中一个请求进行转发。如果成功，断路器会关闭，若失败，继续开启。重复4和5</li>
+</ol>
+<h4 id="断路器打开之后"><a href="#断路器打开之后" class="headerlink" title="断路器打开之后"></a>断路器打开之后</h4><p><img src="http://img.jared.top/202011251803_823.png"></p>
+<h3 id="服务限流"><a href="#服务限流" class="headerlink" title="服务限流"></a>服务限流</h3><p>秒杀高并发等操作，严禁一蜂窝的过来拥挤，大家排队，一秒钟N个，有序进行</p>
+<h2 id="Hystrix工作流程"><a href="#Hystrix工作流程" class="headerlink" title="Hystrix工作流程"></a><code>Hystrix</code>工作流程</h2><p><img src="https://segmentfault.com/img/bV0mfx?w=1372&h=667/view"></p>
+<h2 id="服务监控HystrixDashboard"><a href="#服务监控HystrixDashboard" class="headerlink" title="服务监控HystrixDashboard"></a>服务监控<code>HystrixDashboard</code></h2>
     </div>
 
     
@@ -375,10 +345,16 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\posts\8f175f96.html" rel="bookmark">Mybatis 常见面试题</a></div>
+      <div class="popular-posts-title"><a href="\posts\43f5250c.html" rel="bookmark">springcloud——Eureka入门</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\posts\51b0f5df.html" rel="bookmark">Redis 常见面试题</a></div>
+      <div class="popular-posts-title"><a href="\posts\ca26ff8a.html" rel="bookmark">springcloud——consul入门</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\4fc25143.html" rel="bookmark">springcloud——openFeign入门</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\posts\cb14d55c.html" rel="bookmark">springcloud——gateway入门</a></div>
     </li>
   </ul>
 
@@ -420,7 +396,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.jared.top/posts/228e4888.html" title="Spring 常见面试题">http://www.jared.top/posts/228e4888.html</a>
+    <a href="http://www.jared.top/posts/8b5c7a85.html" title="springcloud——Hystrix入门">http://www.jared.top/posts/8b5c7a85.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -432,10 +408,10 @@
       <footer class="post-footer">
           <div class="post-tags">
               <!--修改后：将 # 替换成 google图标-->
-              <a href="/tags/testQuestions/" rel="tag"><i class="fa fa-tag"></i> 面试题</a>
+              <a href="/tags/springcloud/" rel="tag"><i class="fa fa-tag"></i> springcloud</a>
               
               <!--修改后：将 # 替换成 google图标-->
-              <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
+              <a href="/tags/Hystrix/" rel="tag"><i class="fa fa-tag"></i> Hystrix</a>
               
           </div>
 
@@ -445,12 +421,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/8f175f96.html" rel="prev" title="Mybatis 常见面试题">
-      <i class="fa fa-chevron-left"></i> Mybatis 常见面试题
+    <a href="/posts/4fc25143.html" rel="prev" title="springcloud——openFeign入门">
+      <i class="fa fa-chevron-left"></i> springcloud——openFeign入门
     </a></div>
       <div class="post-nav-item">
-    <a href="/posts/51b0f5df.html" rel="next" title="Redis 常见面试题">
-      Redis 常见面试题 <i class="fa fa-chevron-right"></i>
+    <a href="/posts/cb14d55c.html" rel="next" title="springcloud——gateway入门">
+      springcloud——gateway入门 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -512,7 +488,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">常见面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFSpring%E6%A1%86%E6%9E%B6%EF%BC%9F%E5%8C%85%E5%90%AB%E5%93%AA%E4%BA%9B%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%9D%97%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是Spring框架？包含哪些主要模块？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Spring%E6%A1%86%E6%9E%B6%E7%9A%84%E5%A5%BD%E5%A4%84%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">使用Spring框架的好处？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%EF%BC%88IOC%EF%BC%89%EF%BC%9F%E4%BB%80%E4%B9%88%E6%98%AF%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">什么是控制反转（IOC）？什么是依赖注入？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanFactory%E5%92%8CApplicationContext-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.4.</span> <span class="nav-text">BeanFactory和ApplicationContext 有什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring%E6%9C%89%E5%87%A0%E7%A7%8D%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="nav-number">1.5.</span> <span class="nav-text">Spring有几种配置方式？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8%E5%9F%BA%E4%BA%8EXML%E9%85%8D%E7%BD%AE%E7%9A%84%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AESpring%EF%BC%9F"><span class="nav-number">1.5.1.</span> <span class="nav-text">如何用基于XML配置的方式配置Spring？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8%E5%9F%BA%E4%BA%8EJava%E9%85%8D%E7%BD%AE%E7%9A%84%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AESpring%EF%BC%9F"><span class="nav-number">1.5.2.</span> <span class="nav-text">如何用基于Java配置的方式配置Spring？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AE%E7%9A%84%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AESpring%EF%BC%9F"><span class="nav-number">1.5.3.</span> <span class="nav-text">如何用基于注解配置的方式配置Spring？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%87%8ASpring-Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F"><span class="nav-number">1.6.</span> <span class="nav-text">解释Spring Bean的生命周期？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Bean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.7.</span> <span class="nav-text">Spring Bean的作用域区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E4%B8%BE%E4%BE%8B%E8%AF%B4%E6%98%8E%E5%A6%82%E4%BD%95%E5%9C%A8Spring%E4%B8%AD%E6%B3%A8%E5%85%A5%E4%B8%80%E4%B8%AAJava-Collection%EF%BC%9F"><span class="nav-number">1.8.</span> <span class="nav-text">请举例说明如何在Spring中注入一个Java Collection？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E8%A7%A3%E9%87%8A%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">1.9.</span> <span class="nav-text">请解释自动装配模式的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%BC%80%E5%90%AF%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%EF%BC%9F"><span class="nav-number">1.10.</span> <span class="nav-text">如何开启基于注解的自动装配？</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hystrix%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">Hystrix概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">重要概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7"><span class="nav-number">1.1.1.</span> <span class="nav-text">服务降级</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%8D%E7%BA%A7%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">降级配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%86%94%E6%96%AD"><span class="nav-number">1.1.2.</span> <span class="nav-text">服务熔断</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%AD%E8%B7%AF%E5%99%A8"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">断路器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%86%94%E6%96%AD%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">熔断是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%AD%E8%B7%AF%E5%99%A8%E5%BC%80%E5%90%AF%E6%88%96%E8%80%85%E5%85%B3%E9%97%AD%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">断路器开启或者关闭的条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%AD%E8%B7%AF%E5%99%A8%E6%89%93%E5%BC%80%E4%B9%8B%E5%90%8E"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">断路器打开之后</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E9%99%90%E6%B5%81"><span class="nav-number">1.1.3.</span> <span class="nav-text">服务限流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hystrix%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">Hystrix工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%9B%91%E6%8E%A7HystrixDashboard"><span class="nav-number">1.3.</span> <span class="nav-text">服务监控HystrixDashboard</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
