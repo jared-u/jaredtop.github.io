@@ -1,0 +1,5 @@
+options:
+  lineNumbers: true
+  imagePrefix: jared-
+editor:
+  lineNumbers: true
