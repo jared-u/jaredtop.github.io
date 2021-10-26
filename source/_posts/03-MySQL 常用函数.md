@@ -298,3 +298,293 @@ SELECT strcmp('text', 'text2'),strcmp('text2', 'text');
 -> -1  1
 ```
 
+# 数学函数
+
+## ROUND(X,Y) 
+
+对X值进行四舍五入 保留小数点后面的Y位
+
+```mysql
+select ROUND(-1.55);
+select ROUND(1.567,2);
+-> -2 1.57
+```
+
+## ABS(x)
+
+返回 x 的绝对值
+
+```mysql
+SELECT ABS(-1);
+->1
+```
+
+## AVG(expression)
+
+返回一个表达式的平均值，expression 是一个字段
+
+```mysql
+SELECT AVG(age) FROM user
+-> 22.5000
+```
+
+## CEIL(x) CEILING(x)
+
+返回大于或等于 x 的最小整数　
+
+```mysql
+select CEIL(1.5)
+-> 2
+select CEILING(1.5)
+-> 2
+```
+
+## FLOOR(x)
+
+返回小于或等于 x 的最大整数
+
+```mysql
+select floor(1.5)
+-> 1
+```
+
+## MAX(expression)
+
+ 返回字段 expression 中的最大值
+
+```mysql
+select max(age) from user
+-> 23
+```
+
+## MIN(expression)
+
+返回字段 expression 中的最小值
+
+```mysql
+select min(age) from user
+->22
+```
+
+## SUM(expression)
+
+返回指定字段的总和
+
+```mysql
+select sum(age) from user
+->45
+```
+
+# 日期函数
+
+## ADDDATE(d,n)
+
+计算起始日期 d 加上 n 天的日期
+
+```mysql
+SELECT ADDDATE("2017-06-15", INTERVAL 10 DAY);
+->2017-06-25
+```
+
+## ADDTIME(t,n)
+
+n 是一个时间表达式，时间 t 加上时间表达式 n
+
+```mysql
+加 5 秒：
+SELECT ADDTIME('2011-11-11 11:11:11', 5);
+->2011-11-11 11:11:16 (秒)
+
+添加 2 小时, 10 分钟, 5 秒:
+SELECT ADDTIME("2020-06-15 09:34:21", "2:10:5"); 
+-> 2020-06-15 11:44:26
+```
+
+## DATEDIFF(d1,d2)
+
+计算日期 d1->d2 之间相隔的天数
+
+```mysql
+SELECT DATEDIFF('2001-01-01','2001-02-02')
+-> -32
+```
+
+## DATE_ADD(d，INTERVAL expr type)
+
+计算起始日期 d 加上一个时间段后的日期，type 值可以是：
+
+- MICROSECOND
+- SECOND
+- MINUTE
+- HOUR
+- DAY
+- WEEK
+- MONTH
+- QUARTER
+- YEAR
+- SECOND_MICROSECOND
+- MINUTE_MICROSECOND
+- MINUTE_SECOND
+- HOUR_MICROSECOND
+- HOUR_SECOND
+- HOUR_MINUTE
+- DAY_MICROSECOND
+- DAY_SECOND
+- DAY_MINUTE
+- DAY_HOUR
+- YEAR_MONTH
+
+```mysql
+SELECT DATE_ADD("2017-06-15", INTERVAL 10 DAY);    
+-> 2017-06-25
+
+SELECT DATE_ADD("2017-06-15 09:34:21", INTERVAL 15 MINUTE);
+-> 2017-06-15 09:49:21
+
+SELECT DATE_ADD("2017-06-15 09:34:21", INTERVAL -3 HOUR);
+->2017-06-15 06:34:21
+```
+
+## DATE_FORMAT(d,f)
+
+按表达式 f的要求显示日期 d
+
+```mysql
+SELECT DATE_FORMAT('2011-11-11 11:11:11','%Y-%m-%d %r')
+-> 2011-11-11 11:11:11 AM
+```
+
+## DATE_SUB(date,INTERVAL expr type)
+
+函数从日期减去指定的时间间隔。
+
+```mysql
+SELECT OrderId,DATE_SUB(OrderDate,INTERVAL 2 DAY) AS OrderPayDate
+FROM Orders
+```
+
+## DAY(d)
+
+返回日期值 d 的日期部分
+
+```mysql
+	
+SELECT DAY("2017-06-15");  
+-> 15
+```
+
+## DAYNAME(d)
+
+返回日期 d 是星期几，如 Monday,Tuesday
+
+```mysql
+SELECT DAYNAME('2011-11-11 11:11:11')
+->Friday
+```
+
+## DAYOFMONTH(d)
+
+计算日期 d 是本月的第几天
+
+```mysql
+SELECT DAYOFMONTH('2011-11-11 11:11:11')
+->11
+```
+
+## DAYOFWEEK(d)
+
+日期 d 今天是星期几，1 星期日，2 星期一，以此类推
+
+```mysql
+SELECT DAYOFWEEK('2011-11-11 11:11:11')
+->6
+```
+
+## DAYOFYEAR(d)
+
+ 计算日期 d 是本年的第几天
+
+```mysql
+SELECT DAYOFYEAR('2011-11-11 11:11:11')
+->315
+```
+
+## EXTRACT(type FROM d)
+
+从日期 d 中获取指定的值，type 指定返回的值。
+type可取值为：
+
+- MICROSECOND
+- SECOND
+- MINUTE
+- HOUR
+- DAY
+- WEEK
+- MONTH
+- QUARTER
+- YEAR
+- SECOND_MICROSECOND
+- MINUTE_MICROSECOND
+- MINUTE_SECOND
+- HOUR_MICROSECOND
+- HOUR_SECOND
+- HOUR_MINUTE
+- DAY_MICROSECOND
+- DAY_SECOND
+- DAY_MINUTE
+- DAY_HOUR
+- YEAR_MONTH
+
+```mysql
+SELECT EXTRACT(MINUTE FROM '2011-11-11 11:11:11') 
+-> 11
+```
+
+## HOUR(t)
+
+返回 t 中的小时值
+
+```mysql
+SELECT HOUR('1:2:3')
+-> 1
+```
+
+## LAST_DAY(d)
+
+返回给给定日期的那一月份的最后一天
+
+```mysql
+SELECT LAST_DAY("2017-06-20");
+-> 2017-06-30
+```
+
+# 高级函数
+
+## BIN(x)
+
+ 返回 x 的二进制编码
+
+```mysql
+SELECT BIN(15); 
+-> 1111
+```
+
+## BINARY(s)
+
+将字符串 s 转换为二进制字符串
+
+```mysql
+SELECT BINARY "RUNOOB";
+-> RUNOOB
+```
+
+## CONV(x,f1,f2)
+
+ 返回 f1 进制数变成 f2 进制数
+
+```mysql
+	
+SELECT CONV(15, 10, 2);
+-> 1111
+```
+
